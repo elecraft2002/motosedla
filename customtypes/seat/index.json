@@ -1,0 +1,19 @@
+{
+  "format": "custom",
+  "id": "seat",
+  "label": "Seat",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "configuration": {
+        "type": "Group",
+        "config": {
+          "label": "Configuration",
+          "repeat": true,
+          "fields": {}
+        }
+      }
+    }
+  }
+}

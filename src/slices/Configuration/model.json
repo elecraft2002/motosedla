@@ -1,0 +1,77 @@
+{
+  "id": "configuration",
+  "type": "SharedSlice",
+  "name": "Configuration",
+  "description": "Configuration",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "reference_image": {
+          "type": "Image",
+          "config": {
+            "label": "Reference Image",
+            "constraint": {},
+            "thumbnails": [
+              {
+                "name": "small",
+                "width": 200,
+                "height": null
+              },
+              {
+                "name": "medium",
+                "width": 400,
+                "height": null
+              }
+            ]
+          }
+        },
+        "name": {
+          "type": "Text",
+          "config": {
+            "label": "Name",
+            "placeholder": "Gelová vložka..."
+          }
+        },
+        "options": {
+          "type": "Group",
+          "config": {
+            "label": "Options",
+            "repeat": true,
+            "fields": {
+              "option_name": {
+                "type": "Text",
+                "config": {
+                  "label": "Option name",
+                  "placeholder": "Barva šití..."
+                }
+              },
+              "price": {
+                "type": "Number",
+                "config": {
+                  "label": "Price",
+                  "placeholder": "Cena která se přičte k základu"
+                }
+              }
+            }
+          }
+        },
+        "description": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Description",
+            "placeholder": "Krátký popis o co se jedná (nemusí být žádný)",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
