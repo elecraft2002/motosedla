@@ -4,6 +4,150 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+type ConfigurationDocumentDataSlicesSlice = ConfigurationSlice;
+
+/**
+ * Content for Configuration documents
+ */
+interface ConfigurationDocumentData {
+  /**
+   * Title field in *Configuration*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: configuration.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Short Description field in *Configuration*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: configuration.short_description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  short_description: prismic.RichTextField;
+
+  /**
+   * Description field in *Configuration*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: configuration.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Slice Zone field in *Configuration*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: configuration.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<ConfigurationDocumentDataSlicesSlice> /**
+   * Meta Title field in *Configuration*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: configuration.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Configuration*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: configuration.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+}
+
+/**
+ * Configuration document from Prismic
+ *
+ * - **API ID**: `configuration`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ConfigurationDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<ConfigurationDocumentData>,
+    "configuration",
+    Lang
+  >;
+
+/**
+ * Item in *Footer Navigation → Links*
+ */
+export interface FooterNavigationDocumentDataLinksItem {
+  /**
+   * Label field in *Footer Navigation → Links*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer_navigation.links[].label
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Link field in *Footer Navigation → Links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer_navigation.links[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField;
+}
+
+/**
+ * Content for Footer Navigation documents
+ */
+interface FooterNavigationDocumentData {
+  /**
+   * Links field in *Footer Navigation*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer_navigation.links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  links: prismic.GroupField<Simplify<FooterNavigationDocumentDataLinksItem>>;
+}
+
+/**
+ * Footer Navigation document from Prismic
+ *
+ * - **API ID**: `footer_navigation`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FooterNavigationDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<FooterNavigationDocumentData>,
+    "footer_navigation",
+    Lang
+  >;
+
 /**
  * Item in *Navigation → Links*
  */
@@ -150,27 +294,53 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-/**
- * Item in *Seat → Configuration*
- */
-export interface SeatDocumentDataConfigurationItem {}
+type SeatDocumentDataSlicesSlice = ImageCardsSlice;
 
 /**
  * Content for Seat documents
  */
 interface SeatDocumentData {
   /**
-   * Configuration field in *Seat*
+   * Slice Zone field in *Seat*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Slice Zone
    * - **Placeholder**: *None*
-   * - **API ID Path**: seat.configuration[]
+   * - **API ID Path**: seat.slices[]
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#group
+   * - **Documentation**: https://prismic.io/docs/field#slices
    */
-  configuration: prismic.GroupField<
-    Simplify<SeatDocumentDataConfigurationItem>
-  >;
+  slices: prismic.SliceZone<SeatDocumentDataSlicesSlice> /**
+   * Meta Title field in *Seat*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: seat.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Seat*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: seat.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Seat*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: seat.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
 }
 
 /**
@@ -186,6 +356,41 @@ export type SeatDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<SeatDocumentData>, "seat", Lang>;
 
 /**
+ * Item in *Settings → Currencies*
+ */
+export interface SettingsDocumentDataCurrenciesItem {
+  /**
+   * Currency Name field in *Settings → Currencies*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: CZK
+   * - **API ID Path**: settings.currencies[].currency_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  currency_name: prismic.KeyTextField;
+
+  /**
+   * Currency Image field in *Settings → Currencies*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.currencies[].currency_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  currency_image: prismic.ImageField<"small">;
+
+  /**
+   * Currency Course field in *Settings → Currencies*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Přepočet z výchozí (CZK)
+   * - **API ID Path**: settings.currencies[].currency_course
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  currency_course: prismic.NumberField;
+}
+
+/**
  * Content for Settings documents
  */
 interface SettingsDocumentData {
@@ -198,7 +403,16 @@ interface SettingsDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
-  siteTitle: prismic.TitleField;
+  siteTitle: prismic.TitleField /**
+   * Currencies field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.currencies[]
+   * - **Tab**: Currency
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */;
+  currencies: prismic.GroupField<Simplify<SettingsDocumentDataCurrenciesItem>>;
 }
 
 /**
@@ -218,6 +432,8 @@ export type SettingsDocument<Lang extends string = string> =
   >;
 
 export type AllDocumentTypes =
+  | ConfigurationDocument
+  | FooterNavigationDocument
   | NavigationDocument
   | PageDocument
   | SeatDocument
@@ -814,6 +1030,12 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      ConfigurationDocument,
+      ConfigurationDocumentData,
+      ConfigurationDocumentDataSlicesSlice,
+      FooterNavigationDocument,
+      FooterNavigationDocumentData,
+      FooterNavigationDocumentDataLinksItem,
       NavigationDocument,
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
@@ -822,9 +1044,10 @@ declare module "@prismicio/client" {
       PageDocumentDataSlicesSlice,
       SeatDocument,
       SeatDocumentData,
-      SeatDocumentDataConfigurationItem,
+      SeatDocumentDataSlicesSlice,
       SettingsDocument,
       SettingsDocumentData,
+      SettingsDocumentDataCurrenciesItem,
       AllDocumentTypes,
       ConfigurationSlice,
       ConfigurationSliceDefaultPrimaryOptionsItem,
