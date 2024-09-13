@@ -20,7 +20,6 @@ export default function Configuration({
   const [priceMap, setPriceMap] = useState(new Map<string, number>());
   const [totalPrice, setTotalPrice] = useState(price);
   useEffect(() => {
-    console.log(priceMap);
     let newPrice = price;
     priceMap.forEach((price) => (newPrice += price));
     setTotalPrice(newPrice);

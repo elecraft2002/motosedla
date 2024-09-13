@@ -19,6 +19,7 @@ const ImageCard = ({ card }: ImageCardProps) => {
       {isFilled.image(image) && (
         <div className="bg-gray-100">
           <ConditionalWrap
+          
             condition={isFilled.link(card.buttonLink)}
             wrap={({ children }) => (
               <PrismicNextLink field={card.buttonLink} tabIndex={-1}>

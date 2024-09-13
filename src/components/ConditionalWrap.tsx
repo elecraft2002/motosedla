@@ -9,7 +9,7 @@ type ConditionalWrapProps = {
 /**
  * Adds a wrapper around children if a condition is true.
  */
-export async function ConditionalWrap({
+export  function ConditionalWrap({
   condition,
   wrap: Wrap,
   children,
