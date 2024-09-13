@@ -19,36 +19,35 @@ interface Image {
   alt: string;
 }
 
-
 export default function SliderGallery({ images }: { images: Image[] }) {
   return (
     <div>
-        <Swiper
-          // install Swiper modules
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
-          spaceBetween={50}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
-        >
-          {images.map((image, i) => {
-            return (
-              <SwiperSlide>
-                <figure key={i} className="w-full aspect-1 flex items-center">
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={image.width}
-                    height={image.height}
-                    loading={!i ? "eager" : "lazy"}
-                    className="object-contain rounded-md"
-                  />
-                </figure>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
+      <Swiper
+        // install Swiper modules
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+      >
+        {images.map((image, i) => {
+          return (
+            <SwiperSlide key={i}>
+              <figure className="w-full aspect-1 flex items-center">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={image.width}
+                  height={image.height}
+                  loading={!i ? "eager" : "lazy"}
+                  className="object-contain rounded-md"
+                />
+              </figure>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
     </div>
   );
 }

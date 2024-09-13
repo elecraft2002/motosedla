@@ -24,7 +24,7 @@ export default function Configuration({
     let newPrice = price;
     priceMap.forEach((price) => (newPrice += price));
     setTotalPrice(newPrice);
-  }, [priceMap]);
+  }, [priceMap, price]);
   return (
     <div className="flex flex-col gap-4 col-span-3">
       {/* <LanguageSwitcher locales={locales} /> */}
