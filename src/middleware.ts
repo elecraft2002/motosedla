@@ -1,7 +1,7 @@
 // ./src/middleware.ts
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/prismicio';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/prismicio";
 
 export async function middleware(request: NextRequest) {
   const client = createClient();
@@ -26,5 +26,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|images).*)'],
+  matcher: ["/((?!_next|images).*)", "/"],
 };
