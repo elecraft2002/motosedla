@@ -12,10 +12,12 @@ export default function Configuration({
   slices,
   price,
   shortDescription,
+  name,
 }: {
   slices: SliceZoneLike<SliceLike<string>> | undefined;
   price: number;
   shortDescription?: RichTextField;
+  name: string;
 }) {
   const [priceMap, setPriceMap] = useState(new Map<string, number>());
   const [totalPrice, setTotalPrice] = useState(price);
@@ -27,7 +29,7 @@ export default function Configuration({
   return (
     <div className="flex flex-col gap-4 col-span-3">
       {/* <LanguageSwitcher locales={locales} /> */}
-      <h1 className="mb-2 text-5xl font-medium">Sedlo na motorku CB 1300</h1>
+      <h1 className="mb-2 text-5xl font-medium">Sedlo na motorku {name}</h1>
       <Price currencyCourse={1} currencyName="CZK" price={totalPrice} />
       <Line />
       <ul className="flex flex-col gap-4">

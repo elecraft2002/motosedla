@@ -20,6 +20,7 @@ interface Image {
 }
 
 export default function SliderGallery({ images }: { images: Image[] }) {
+  console.log(images);
   return (
     <div>
       <Swiper
