@@ -15,13 +15,10 @@ class Motosedla {
   private fetchOptions: RequestInit;
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
-    this.fetchOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-cache",
-    };
+    this.fetchOptions =
+      process.env.NODE_ENV === "production"
+        ? { next: { tags: ["motosedla"] }, cache: "force-cache" }
+        : { next: { revalidate: 5 } };
   }
 
   // Vyhledání produktů podle názvu
