@@ -14,7 +14,7 @@ export default function Products({ products,params }: { products: IProduct[],par
               key={product.id}
               layout // Zajistí animaci pouze pro položky, které zůstanou
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1, scale: 1 }} 
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
             >
