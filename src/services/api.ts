@@ -51,7 +51,7 @@ class Motosedla {
     return response.json();
   }
   // Vyhledání produktů podle id více kategorií
-  public async getProductsByCategoryIds(ids: number[]): Promise<Category[]> {
+  public async getProductsByCategoryIds(ids: number[]): Promise<Product[]> {
     const response = await fetch(
       `${this.baseUrl}/products/byCategories?categoryIds=${ids.join(",")}`
     );
