@@ -1,4 +1,9 @@
-interface Product {
+export interface Category {
+  id: number;
+  parent_id: number | null;
+  name: string;
+}
+export interface Product {
   id: number;
   category_id: number;
   uid: string;
@@ -22,7 +27,7 @@ class Motosedla {
   }
 
   // Vyhledání produktů podle názvu
-  public async searchProductsByName(name: string): Promise<any[]> {
+  public async searchProductsByName(name: string): Promise<Product[]> {
     const response = await fetch(
       `${this.baseUrl}/products/search?name=${name}`
     );
@@ -32,8 +37,32 @@ class Motosedla {
     return response.json();
   }
 
+  // Vyhledání podkategorií podle id
+  public async getSubcategoriesById(
+    id: number,
+    recursive: boolean = false
+  ): Promise<Category[]> {
+    const response = await fetch(
+      `${this.baseUrl}/categories/subcategories?categoryId=${id}&recursive=${recursive}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch categories");
+    }
+    return response.json();
+  }
+  // Vyhledání produktů podle id více kategorií
+  public async getProductsByCategoryIds(ids: number[]): Promise<Category[]> {
+    const response = await fetch(
+      `${this.baseUrl}/products/byCategories?categoryIds=${ids.join(",")}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch categories");
+    }
+    return response.json();
+  }
+
   // Vyhledání kategorií podle názvu
-  public async searchCategoriesByName(name: string): Promise<any[]> {
+  public async searchCategoriesByName(name: string): Promise<Category[]> {
     const response = await fetch(
       `${this.baseUrl}/categories/search?name=${name}`
     );
@@ -46,6 +75,17 @@ class Motosedla {
   public async getProductByUid(uid: string): Promise<Product> {
     const response = await fetch(
       `${this.baseUrl}/products/uid?productUid=${uid}`,
+      this.fetchOptions
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch categories");
+    }
+    return response.json();
+  }
+  // Vyhledání produktu podle id kategorie
+  public async getProductsByCategoryId(categoryId: number): Promise<Product[]> {
+    const response = await fetch(
+      `${this.baseUrl}/products/categoryId?categoryId=${categoryId}`,
       this.fetchOptions
     );
     if (!response.ok) {
@@ -73,6 +113,27 @@ class Motosedla {
       throw new Error("Failed to fetch products");
     }
     return response.json();
+  }
+  public async getAllCategories(): Promise<Category[]> {
+    const response = await fetch(
+      `${this.baseUrl}/categories/all`,
+      this.fetchOptions
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch products");
+    }
+    return response.json();
+  }
+  public async getCategoryByPath(path: string): Promise<Category> {
+    const response = await fetch(
+      `${this.baseUrl}/categories/path?path=${path}`,
+      this.fetchOptions
+    );
+    const json = await response.json();
+    if (!response.ok || json === null) {
+      throw new Error("Failed to fetch products");
+    }
+    return json;
   }
 }
 export default new Motosedla("https://motosedla-7644.rostiapp.cz/api");

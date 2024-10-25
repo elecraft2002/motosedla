@@ -1,19 +1,38 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Button, { ButtonType } from "./Button";
+import * as motosedla from "@/services/api";
+import Image from "next/image";
 
 export default function Search() {
+  const [search, handleSearch] = useState("");
+  const [results, handleResults] = useState<motosedla.Product[]>([]);
+  useEffect(() => {
+    if (search === "") {
+      handleResults([]);
+      return;
+    }
+    motosedla.default
+      .searchProductsByName(search)
+      .then((e) => handleResults(e));
+    
+  }, [search]);
   return (
-    <form className="flex items-center max-w-sm mx-auto">
+    <form className="flex items-center max-w-sm mx-auto relative">
       <label htmlFor="simple-search" className="sr-only">
         Hledat
       </label>
       <div className="relative w-full">
         <input
+          value={search}
           type="text"
           id="simple-search"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Najděte Vaše sedlo..."
           required
+          onChange={(e) => {
+            handleSearch(e.target.value);
+          }}
         />
       </div>
       <button
@@ -37,6 +56,17 @@ export default function Search() {
         </svg>
         <span className="sr-only">Search</span>
       </button>
+      <ul className="absolute -bottom-4 w-full bg-red-500">
+        {results.map((result) => {
+          console.log(result)
+          return (
+            <li key={result.id}>
+              <Image src={result.image_url} alt={result.name}  width={100} height={100}/>
+              {result.name}
+            </li>
+          );
+        })}
+      </ul>
     </form>
   );
 }

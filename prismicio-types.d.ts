@@ -403,7 +403,19 @@ interface SettingsDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
-  siteTitle: prismic.TitleField /**
+  siteTitle: prismic.TitleField;
+
+  /**
+   * Show products in subcategories field in *Settings*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: settings.show_products_in_subcategories
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  show_products_in_subcategories: prismic.BooleanField /**
    * Currencies field in *Settings*
    *
    * - **Field Type**: Group
