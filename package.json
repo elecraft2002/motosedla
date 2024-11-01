@@ -28,7 +28,7 @@
     "youtube-player": "^5.6.0"
   },
   "devDependencies": {
-    "@slicemachine/adapter-next": "^0.3.54",
+    "@slicemachine/adapter-next": "^0.3.55",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/node": "^20.14.9",
     "@types/react": "^18.3.3",
@@ -40,7 +40,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
-    "slice-machine-ui": "^2.10.0",
+    "slice-machine-ui": "^2.10.1",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.2"
   }
