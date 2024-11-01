@@ -80,10 +80,11 @@ export default async function Page({ params }: { params: Promise<Params> }) {
 export async function generateMetadata({
   params,
 }: {
-  params: Params;
+  params: Promise<Params>;
 }): Promise<Metadata> {
+  const {uid}=await params;
   const product = await motosedla.default
-    .getProductByUid(params.uid)
+    .getProductByUid(uid)
     .catch(() => notFound());
   const title = `Sedlo na motorku ${product.name}`;
   const client = createClient();
