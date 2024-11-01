@@ -7,11 +7,12 @@ import * as prismic from "@prismicio/client";
 import Products from "@/components/Products";
 type Params = { uid: string };
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   const settings = await client.getSingle("settings").catch(() => notFound());
+  const { uid } = await params;
   const category = await motosedla.default
-    .getCategoryByPath(params.uid.replaceAll("-", "/"))
+    .getCategoryByPath(uid.replaceAll("-", "/"))
     .catch(() => notFound());
   const childrenCategories = await motosedla.default.getSubcategoriesById(
     category.id
@@ -33,7 +34,7 @@ export default async function Page({ params }: { params: Params }) {
             return (
               <a
                 key={subCategory.id}
-                href={`./${params.uid}-${subCategory.name}`}
+                href={`./${uid}-${subCategory.name}`}
                 className="hover:text-blue-400 transition-all"
               >
                 {subCategory.name}
@@ -41,7 +42,7 @@ export default async function Page({ params }: { params: Params }) {
             );
           })}
         </div>
-        <Products  products={products} />
+        <Products products={products} />
       </div>
     </div>
   );
@@ -50,13 +51,14 @@ export default async function Page({ params }: { params: Params }) {
 export async function generateMetadata({
   params,
 }: {
-  params: Params;
+  params: Promise<Params>;
 }): Promise<Metadata> {
   const client = createClient();
+  const {uid}=await params
   const settings = await client.getSingle("settings").catch(() => notFound());
-  console.log(params.uid);
+  console.log(uid);
   const category = await motosedla.default
-    .getCategoryByPath(params.uid.replaceAll("-", "/"))
+    .getCategoryByPath(uid.replaceAll("-", "/"))
     .catch(() => notFound());
 
   return {
