@@ -612,9 +612,67 @@ export type HeroSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Hero → Hero - video → Primary*
+ */
+export interface HeroSliceHeroVideoPrimary {
+  /**
+   * Text field in *Hero → Hero - video → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroVideo.primary.text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  text: prismic.RichTextField;
+
+  /**
+   * Button Link field in *Hero → Hero - video → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroVideo.primary.buttonLink
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  buttonLink: prismic.LinkField;
+
+  /**
+   * Button Text field in *Hero → Hero - video → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroVideo.primary.buttonText
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  buttonText: prismic.KeyTextField;
+
+  /**
+   * Background Video field in *Hero → Hero - video → Primary*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroVideo.primary.background_video
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  background_video: prismic.LinkToMediaField;
+}
+
+/**
+ * Hero - video variation for Hero Slice
+ *
+ * - **API ID**: `heroVideo`
+ * - **Description**: Hero
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroSliceHeroVideo = prismic.SharedSliceVariation<
+  "heroVideo",
+  Simplify<HeroSliceHeroVideoPrimary>,
+  never
+>;
+
+/**
  * Slice variation for *Hero*
  */
-type HeroSliceVariation = HeroSliceDefault;
+type HeroSliceVariation = HeroSliceDefault | HeroSliceHeroVideo;
 
 /**
  * Hero Shared Slice
@@ -1068,8 +1126,10 @@ declare module "@prismicio/client" {
       ConfigurationSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
+      HeroSliceHeroVideoPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      HeroSliceHeroVideo,
       ImageSlice,
       ImageSliceDefaultPrimary,
       ImageSliceBannerPrimary,

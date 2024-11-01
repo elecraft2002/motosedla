@@ -5,5 +5,5 @@ export default async function Footer() {
   const client = createClient();
   const settings = await client.getSingle("settings");
   const footer = await client.getSingle("footer_navigation");
-  return <div>Footer</div>;
+  return <div className="h-screen">Footer</div>;
 }

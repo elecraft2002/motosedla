@@ -20,13 +20,15 @@
     "clsx": "^2.1.1",
     "framer-motion": "^11.5.4",
     "hamburger-react": "^2.5.1",
-    "next": "^14.2.9",
+    "next": "^15.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "swiper": "^11.1.12"
+    "styled-components": "^6.1.13",
+    "swiper": "^11.1.12",
+    "youtube-player": "^5.6.0"
   },
   "devDependencies": {
-    "@slicemachine/adapter-next": "^0.3.49",
+    "@slicemachine/adapter-next": "^0.3.54",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/node": "^20.14.9",
     "@types/react": "^18.3.3",
@@ -38,7 +40,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
-    "slice-machine-ui": "^2.7.1",
+    "slice-machine-ui": "^2.10.0",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.2"
   }

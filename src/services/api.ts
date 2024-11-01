@@ -50,6 +50,16 @@ class Motosedla {
     }
     return response.json();
   }
+  // Vyhledání podkategorie podle jména
+  public async getCategoryByName(name: string): Promise<Category> {
+    const response = await fetch(
+      `${this.baseUrl}/categories/name?name=${name}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch categories");
+    }
+    return response.json();
+  }
   // Vyhledání produktů podle id více kategorií
   public async getProductsByCategoryIds(ids: number[]): Promise<Product[]> {
     const response = await fetch(
@@ -127,6 +137,28 @@ class Motosedla {
   public async getCategoryByPath(path: string): Promise<Category> {
     const response = await fetch(
       `${this.baseUrl}/categories/path?path=${path}`,
+      this.fetchOptions
+    );
+    const json = await response.json();
+    if (!response.ok || json === null) {
+      throw new Error("Failed to fetch products");
+    }
+    return json;
+  }
+  public async getRootCategories(): Promise<Category[]> {
+    const response = await fetch(
+      `${this.baseUrl}/categories/root`,
+      this.fetchOptions
+    );
+    const json = await response.json();
+    if (!response.ok || json === null) {
+      throw new Error("Failed to fetch products");
+    }
+    return json;
+  }
+  public async getCategoryById(id: number | any): Promise<Category> {
+    const response = await fetch(
+      `${this.baseUrl}/categories/id?id=${id}`,
       this.fetchOptions
     );
     const json = await response.json();

@@ -26,19 +26,12 @@ export default async function Page({ params }: { params: Params }) {
   const client = createClient();
   const configuration = await client.getSingle("configuration");
   const settings = await client.getSingle("settings");
+  const { uid } = await params;
   const product = await motosedla.default
-    .getProductByUid(params.uid)
+    .getProductByUid(uid)
     .catch(() => notFound());
   const images = await motosedla.default.getImagesByProductId(product.id);
 
-  /* const brand = "Honda",
-    model = "CB 1300";
-
-  const replaceWords: Replace[] = [
-    { search: "{brand}", replace: brand },
-    { search: "{model}", replace: model },
-  ]; */
-  // .catch(() => notFound());
   const locales = await getLocales(configuration, client);
   return (
     <Bounded>

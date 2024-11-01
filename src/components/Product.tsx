@@ -5,12 +5,13 @@ import React from "react";
 export default function Product({
   product,
   currency,
-  lang,
+  // lang,
 }: {
   product: IProduct;
   currency: string;
-  lang: string;
+  // lang: string;
 }) {
+  console.log(product)
   return (
     <div className="group relative">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -25,7 +26,7 @@ export default function Product({
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700 dark:text-slate-300">
-            <a href={"/" + lang + "/seat/" + product.uid}>
+            <a href={/* "/" + lang +  */"/seat/" + product.uid}>
               <span aria-hidden="true" className="absolute inset-0"></span>
               {product.name}
             </a>

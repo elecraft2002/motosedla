@@ -10,40 +10,38 @@ type Params = { uid: string };
 export default async function Page({ params }: { params: Params }) {
   const client = createClient();
   const settings = await client.getSingle("settings").catch(() => notFound());
-  const category = await motosedla.default.getCategoryByPath(
-    params.uid.replaceAll("-", "/")
-  );
-  // .catch(() => notFound());
+  const category = await motosedla.default
+    .getCategoryByPath(params.uid.replaceAll("-", "/"))
+    .catch(() => notFound());
   const childrenCategories = await motosedla.default.getSubcategoriesById(
     category.id
   );
+  console.log(childrenCategories.map((category) => category.id));
   const products = settings.data.show_products_in_subcategories
     ? await motosedla.default.getProductsByCategoryIds([
         category.id,
         ...childrenCategories.map((category) => category.id),
       ])
     : await motosedla.default.getProductsByCategoryId(category.id);
-  console.log(childrenCategories);
-  // console.log("products", products);
-  //   return <SliceZone slices={page.data.slices} components={components} />;
   return (
     <div className="">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight">{category.name}</h2>
-        <div>
+        <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
           {childrenCategories.map((subCategory) => {
             if (subCategory.parent_id !== category.id) return null;
             return (
               <a
                 key={subCategory.id}
                 href={`./${params.uid}-${subCategory.name}`}
+                className="hover:text-blue-400 transition-all"
               >
                 {subCategory.name}
               </a>
             );
           })}
         </div>
-        <Products params={params} products={products}/>
+        <Products  products={products} />
       </div>
     </div>
   );
@@ -60,7 +58,6 @@ export async function generateMetadata({
   const category = await motosedla.default
     .getCategoryByPath(params.uid.replaceAll("-", "/"))
     .catch(() => notFound());
-  //   console.log(category);
 
   return {
     title: `${prismic.asText(settings.data.siteTitle)} | ${category.name}`,
@@ -70,7 +67,7 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const categories = await motosedla.default.getAllCategories();
-  const categoriesWithUrl = categories.map((category) => {
+  let categoriesWithUrl = categories.map((category) => {
     let path: string[] = [];
     if (category.parent_id === null) {
       return { ...category, path: category.name };

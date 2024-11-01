@@ -20,9 +20,11 @@ export default function Configuration({
   name: string;
 }) {
   const [priceMap, setPriceMap] = useState(new Map<string, number>());
-  const [totalPrice, setTotalPrice] = useState(price);
+  const [totalPrice, setTotalPrice] = useState(
+    parseFloat(price as any as string)
+  );
   useEffect(() => {
-    let newPrice = price;
+    let newPrice = parseFloat(price as any as string);
     priceMap.forEach((price) => (newPrice += price));
     setTotalPrice(newPrice);
   }, [priceMap, price]);
