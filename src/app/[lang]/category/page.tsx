@@ -7,7 +7,7 @@ import * as prismic from "@prismicio/client";
 import Products from "@/components/Products";
 type Params = { uid: string };
 
-export default async function Page({ params }: { params: Promise<Params> }) {
+export default async function Page(/* { params }: { params: Promise<Params> } */) {
   const client = createClient();
   const settings = await client.getSingle("settings").catch(() => notFound());
 
@@ -40,11 +40,11 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   );
 }
 
-export async function generateMetadata({
+export async function generateMetadata(/* {
   params,
 }: {
   params: Params;
-}): Promise<Metadata> {
+} */): Promise<Metadata> {
   const client = createClient();
   const settings = await client.getSingle("settings").catch(() => notFound());
 
