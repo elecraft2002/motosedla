@@ -22,7 +22,7 @@ interface Replace {
   replace: string;
 }
 type Params = { uid: string };
-export default async function Page({ params }: { params: Params }) {
+export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   const configuration = await client.getSingle("configuration");
   const settings = await client.getSingle("settings");

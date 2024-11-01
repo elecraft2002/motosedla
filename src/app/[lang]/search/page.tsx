@@ -8,7 +8,7 @@ import SearchProducts from "@/components/SearchProducts";
 import { Bounded } from "@/components/Bounded";
 type Params = { uid: string };
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   const settings = await client.getSingle("settings").catch(() => notFound());
   return (
@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: Params }) {
 export async function generateMetadata({
   params,
 }: {
-  params: Params;
+  params: Promise<Params>;
 }): Promise<Metadata> {
   const client = createClient();
   const settings = await client.getSingle("settings").catch(() => notFound());
