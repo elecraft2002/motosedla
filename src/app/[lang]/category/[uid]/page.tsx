@@ -16,7 +16,7 @@ export default async function Page({ params }: { params: Params }) {
   const childrenCategories = await motosedla.default.getSubcategoriesById(
     category.id
   );
-  console.log(childrenCategories.map((category) => category.id));
+  // console.log(childrenCategories.map((category) => category.id));
   const products = settings.data.show_products_in_subcategories
     ? await motosedla.default.getProductsByCategoryIds([
         category.id,

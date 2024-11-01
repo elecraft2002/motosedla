@@ -14,9 +14,8 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const client = createClient();
-  const page = await client
-    .getByUID("page", params.uid)
-    .catch(() => notFound());
+  const { uid } = await params;
+  const page = await client.getByUID("page", uid).catch(() => notFound());
 
   return {
     title: asText(page.data.title),
@@ -30,9 +29,8 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Params }) {
   const client = createClient();
-  const page = await client
-    .getByUID("page", params.uid)
-    .catch(() => notFound());
+  const { uid } = await params;
+  const page = await client.getByUID("page", uid).catch(() => notFound());
 
   return <SliceZone slices={page.data.slices} components={components} />;
 }
