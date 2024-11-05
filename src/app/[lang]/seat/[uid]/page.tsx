@@ -21,12 +21,13 @@ interface Replace {
   search: string;
   replace: string;
 }
-type Params = { uid: string };
+type Params = { uid: string ,lang:string};
 export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
-  const configuration = await client.getSingle("configuration");
-  const settings = await client.getSingle("settings");
+  const { lang} = await params;
   const { uid } = await params;
+  const configuration = await client.getSingle("configuration",{lang});
+  const settings = await client.getSingle("settings",{lang});
   const product = await motosedla.default
     .getProductByUid(uid)
     .catch(() => notFound());
@@ -82,7 +83,7 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>;
 }): Promise<Metadata> {
-  const {uid}=await params;
+  const { uid } = await params;
   const product = await motosedla.default
     .getProductByUid(uid)
     .catch(() => notFound());
@@ -102,7 +103,16 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const products = await motosedla.default.getAllProducts();
   // console.log(products);
-  return products.map((product) => {
-    return { uid: product.uid, lang: "cs" };
+  const client = createClient();
+
+  const repository = await client.getRepository();
+  const languages = repository.languages.map((lang) => {
+    return { lang: lang.id };
+  });
+
+  return languages.map((lang) => {
+    return products.map((product) => {
+      return { uid: product.uid, lang: lang };
+    });
   });
 }

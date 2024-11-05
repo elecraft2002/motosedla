@@ -36,7 +36,7 @@ export default function SearchProducts({
     window.history.pushState(
       [0],
       "",
-      `/search?q=${encodeURIComponent(search ?? "")}`
+      `${lang}/search?q=${encodeURIComponent(search ?? "")}`
     );
   }, [search]);
   return (
