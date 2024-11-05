@@ -37,6 +37,7 @@ export async function middleware(request: NextRequest) {
   const client = createClient();
   const redirect = await createLocaleRedirect({ client, request });
 
+
   if (redirect) {
     return redirect;
   }
@@ -44,5 +45,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   // Do not localize these paths
-  matcher: ["/((?!_next|api|slice-simulator|icon.svg).*)"],
+  matcher: ["/((?!_next|api|slice-simulator|icon.svg|sitemap.xml).*)"],
 };
