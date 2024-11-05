@@ -45,5 +45,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   // Do not localize these paths
-  matcher: ["/((?!_next|api|slice-simulator|icon.svg|sitemap.xml).*)"],
+  matcher: ["/((?!_next|api|slice-simulator|icon.svg|sitemap).*)"],
 };
