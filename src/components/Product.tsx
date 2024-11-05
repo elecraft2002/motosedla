@@ -1,15 +1,16 @@
 import { Product as IProduct } from "@/services/api";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export default function Product({
   product,
   currency,
-  // lang,
+  lang,
 }: {
   product: IProduct;
   currency: string;
-  // lang: string;
+  lang: string;
 }) {
   console.log(product)
   return (
@@ -26,10 +27,10 @@ export default function Product({
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700 dark:text-slate-300">
-            <a href={/* "/" + lang +  */"/seat/" + product.uid}>
+            <Link href={"/" + lang + "/seat/" + product.uid}>
               <span aria-hidden="true" className="absolute inset-0"></span>
               {product.name}
-            </a>
+            </Link>
           </h3>
         </div>
         <p className="text-sm font-medium text-gray-900">

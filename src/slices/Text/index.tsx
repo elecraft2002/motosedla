@@ -9,7 +9,7 @@ type TextProps = SliceComponentProps<Content.TextSlice>;
 
 const Text = ({ slice }: TextProps) => {
   return (
-    <Bounded as="section" className="bg-white leading-relaxed">
+    <Bounded as="section" className=" leading-relaxed">
       <div
         className={clsx(
           slice.variation === "twoColumns" && "md:columns-2 md:gap-6",

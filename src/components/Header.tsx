@@ -6,23 +6,27 @@ import { createClient } from "@/prismicio";
 import { asText } from "@prismicio/client";
 import Search from "./Search";
 
-export default async function Header() {
+export default async function Header({ lang }: { lang: string }) {
   const client = createClient();
-  const settings = await client.getSingle("settings");
-  const navigation = await client.getSingle("navigation");
+  const settings = await client.getSingle("settings", { lang });
+  const navigation = await client.getSingle("navigation", { lang });
+  const texts = await client.getSingle("texts", { lang });
 
   return (
     <header className="fixed w-full backdrop-blur-2xl py-2 md:py-4 px-4 ba z-50 dark:bg-black/50">
       <div className="mx-auto w-full max-w-6xl">
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3 leading-none">
           <PrismicNextLink
-            href="/"
+            field={navigation.data.homepage}
             className="text-xl font-semibold tracking-tight mr-auto"
           >
             <PrismicText field={settings.data.siteTitle} />
           </PrismicNextLink>
           <div className="flex">
-           <Search/>
+            <Search
+              lang={lang}
+              placeholder={texts.data.search_seat_placeholder || ""}
+            />
           </div>
           <nav>
             <ul className="flex flex-wrap gap-6 md:gap-10">
@@ -31,7 +35,7 @@ export default async function Header() {
                   key={asText(item.label)}
                   className="font-semibold tracking-tight "
                 >
-                  <PrismicNextLink field={item.link}>
+                  <PrismicNextLink lang={lang} field={item.link}>
                     <PrismicText field={item.label} />
                   </PrismicNextLink>
                 </li>

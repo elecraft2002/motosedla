@@ -6,6 +6,16 @@
   "status": true,
   "json": {
     "Main": {
+      "homepage": {
+        "type": "Link",
+        "config": {
+          "label": "Homepage",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "select": null,
+          "allowText": true
+        }
+      },
       "links": {
         "type": "Group",
         "config": {

@@ -1,0 +1,39 @@
+{
+  "format": "custom",
+  "id": "texts",
+  "label": "Texts",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "copyright_footer": {
+        "type": "Text",
+        "config": {
+          "label": "Copyright footer",
+          "placeholder": ""
+        }
+      },
+      "search_seat_placeholder": {
+        "type": "Text",
+        "config": {
+          "label": "Search seat placeholder",
+          "placeholder": ""
+        }
+      },
+      "search": {
+        "type": "Text",
+        "config": {
+          "label": "Search",
+          "placeholder": ""
+        }
+      },
+      "load_more": {
+        "type": "Text",
+        "config": {
+          "label": "Load more",
+          "placeholder": ""
+        }
+      }
+    }
+  }
+}

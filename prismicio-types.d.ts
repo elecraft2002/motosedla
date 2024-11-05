@@ -121,6 +121,17 @@ export interface FooterNavigationDocumentDataLinksItem {
  */
 interface FooterNavigationDocumentData {
   /**
+   * Homepage field in *Footer Navigation*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer_navigation.homepage
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  homepage: prismic.LinkField;
+
+  /**
    * Links field in *Footer Navigation*
    *
    * - **Field Type**: Group
@@ -177,6 +188,17 @@ export interface NavigationDocumentDataLinksItem {
  * Content for Navigation documents
  */
 interface NavigationDocumentData {
+  /**
+   * Homepage field in *Navigation*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navigation.homepage
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  homepage: prismic.LinkField;
+
   /**
    * Links field in *Navigation*
    *
@@ -415,7 +437,18 @@ interface SettingsDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#boolean
    */
-  show_products_in_subcategories: prismic.BooleanField /**
+  show_products_in_subcategories: prismic.BooleanField;
+
+  /**
+   * Site logo field in *Settings*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.site_logo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  site_logo: prismic.ImageField<"small" | "icon"> /**
    * Currencies field in *Settings*
    *
    * - **Field Type**: Group
@@ -443,13 +476,75 @@ export type SettingsDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Content for Texts documents
+ */
+interface TextsDocumentData {
+  /**
+   * Copyright footer field in *Texts*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: texts.copyright_footer
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  copyright_footer: prismic.KeyTextField;
+
+  /**
+   * Search seat placeholder field in *Texts*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: texts.search_seat_placeholder
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  search_seat_placeholder: prismic.KeyTextField;
+
+  /**
+   * Search field in *Texts*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: texts.search
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  search: prismic.KeyTextField;
+
+  /**
+   * Load more field in *Texts*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: texts.load_more
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  load_more: prismic.KeyTextField;
+}
+
+/**
+ * Texts document from Prismic
+ *
+ * - **API ID**: `texts`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TextsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<TextsDocumentData>, "texts", Lang>;
+
 export type AllDocumentTypes =
   | ConfigurationDocument
   | FooterNavigationDocument
   | NavigationDocument
   | PageDocument
   | SeatDocument
-  | SettingsDocument;
+  | SettingsDocument
+  | TextsDocument;
 
 /**
  * Item in *Configuration → Default → Primary → Options*
@@ -552,6 +647,41 @@ export type ConfigurationSlice = prismic.SharedSlice<
   "configuration",
   ConfigurationSliceVariation
 >;
+
+/**
+ * Item in *Hero → Hero - Slider → Primary → Section*
+ */
+export interface HeroSliceHeroSliderPrimarySectionItem {
+  /**
+   * Background Content field in *Hero → Hero - Slider → Primary → Section*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: Video/Photo
+   * - **API ID Path**: hero.heroSlider.primary.section[].background_content
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  background_content: prismic.LinkToMediaField;
+
+  /**
+   * Link text field in *Hero → Hero - Slider → Primary → Section*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroSlider.primary.section[].link_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  link_text: prismic.KeyTextField;
+
+  /**
+   * Link field in *Hero → Hero - Slider → Primary → Section*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroSlider.primary.section[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField;
+}
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -670,9 +800,50 @@ export type HeroSliceHeroVideo = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Hero → Hero - Slider → Primary*
+ */
+export interface HeroSliceHeroSliderPrimary {
+  /**
+   * Section field in *Hero → Hero - Slider → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroSlider.primary.section[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  section: prismic.GroupField<Simplify<HeroSliceHeroSliderPrimarySectionItem>>;
+
+  /**
+   * Phrase field in *Hero → Hero - Slider → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroSlider.primary.phrase
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  phrase: prismic.KeyTextField;
+}
+
+/**
+ * Hero - Slider variation for Hero Slice
+ *
+ * - **API ID**: `heroSlider`
+ * - **Description**: Hero
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroSliceHeroSlider = prismic.SharedSliceVariation<
+  "heroSlider",
+  Simplify<HeroSliceHeroSliderPrimary>,
+  never
+>;
+
+/**
  * Slice variation for *Hero*
  */
-type HeroSliceVariation = HeroSliceDefault | HeroSliceHeroVideo;
+type HeroSliceVariation =
+  | HeroSliceDefault
+  | HeroSliceHeroVideo
+  | HeroSliceHeroSlider;
 
 /**
  * Hero Shared Slice
@@ -1098,6 +1269,17 @@ declare module "@prismicio/client" {
     ): prismic.Client<AllDocumentTypes>;
   }
 
+  interface CreateWriteClient {
+    (
+      repositoryNameOrEndpoint: string,
+      options: prismic.WriteClientConfig,
+    ): prismic.WriteClient<AllDocumentTypes>;
+  }
+
+  interface CreateMigration {
+    (): prismic.Migration<AllDocumentTypes>;
+  }
+
   namespace Content {
     export type {
       ConfigurationDocument,
@@ -1118,6 +1300,8 @@ declare module "@prismicio/client" {
       SettingsDocument,
       SettingsDocumentData,
       SettingsDocumentDataCurrenciesItem,
+      TextsDocument,
+      TextsDocumentData,
       AllDocumentTypes,
       ConfigurationSlice,
       ConfigurationSliceDefaultPrimaryOptionsItem,
@@ -1127,9 +1311,12 @@ declare module "@prismicio/client" {
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceHeroVideoPrimary,
+      HeroSliceHeroSliderPrimarySectionItem,
+      HeroSliceHeroSliderPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
       HeroSliceHeroVideo,
+      HeroSliceHeroSlider,
       ImageSlice,
       ImageSliceDefaultPrimary,
       ImageSliceBannerPrimary,

@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 
 import { Inter } from "next/font/google";
 import { asText } from "@prismicio/client";
@@ -18,15 +18,30 @@ const inter = Inter({
 
 export default async function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  params,
+}: Readonly<{ children: React.ReactNode; params: Promise<any> }>) {
+  const { lang } = await params;
+  console.log(lang);
+
   return (
-    <html lang="cs" className={inter.variable}>
+    <html lang={lang.split("-")[0]} className={inter.variable}>
       <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
-        <Header />
-        <main /* className="pt-24" */>{children}</main>
-        <Footer />
+        <main className="flex flex-col">
+          <Header lang={lang} />
+          {children}
+          <Footer lang={lang} />
+        </main>
         <PrismicPreview repositoryName={repositoryName} />
       </body>
     </html>
   );
+}
+export async function generateStaticParams() {
+  const client = createClient();
+
+  const repository = await client.getRepository();
+  return repository.languages.map((lang) => {
+    return { lang: lang.id };
+  });
+  // return [locales];
 }

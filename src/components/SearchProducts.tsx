@@ -6,7 +6,17 @@ import Products from "./Products";
 import Input from "./Input";
 import { useRouter } from "next/navigation";
 
-export default function SearchProducts() {
+export default function SearchProducts({
+  placeholder,
+  searchText,
+  lang,
+  loadMore,
+}: {
+  placeholder: string;
+  searchText: string;
+  lang: string;
+  loadMore: string;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const urlSearch = searchParams.get("q");
@@ -32,12 +42,12 @@ export default function SearchProducts() {
   return (
     <div className="flex flex-col items-center">
       <form className="flex flex-wrap gap-4 w-full justify-center items-center">
-        <h2>Vyhledávání</h2>
+        <h2>{searchText}</h2>
         <label htmlFor="simple-search" className="sr-only">
-          Vyhledávání
+          {searchText}
         </label>
         <Input
-          placeholder="Najděte vaše sedlo"
+          placeholder={placeholder}
           value={search ?? ""}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -45,7 +55,9 @@ export default function SearchProducts() {
           className="max-w-96"
         />
       </form>
-      {products && <Products products={products} />}
+      {products && (
+        <Products loadMore={loadMore} lang={lang} products={products} />
+      )}
     </div>
   );
 }

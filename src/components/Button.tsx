@@ -23,7 +23,7 @@ export default function Button({
     return (
       <button
         className={clsx(
-          "w-auto rounded-full bg-blue-600 p-4 text-lg text-white hover:bg-blue-800 transition-all",
+          "w-auto rounded-full bg-blue-600 px-4 py-2 text-lg text-white hover:bg-blue-800 transition-all",
           className
         )}
         onClick={onClick}

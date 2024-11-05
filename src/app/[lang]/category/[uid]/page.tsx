@@ -5,18 +5,20 @@ import { createClient } from "@/prismicio";
 import * as motosedla from "@/services/api";
 import * as prismic from "@prismicio/client";
 import Products from "@/components/Products";
-type Params = { uid: string };
+type Params = { uid: string; lang: string };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   const settings = await client.getSingle("settings").catch(() => notFound());
   const { uid } = await params;
+  const { lang } = await params;
   const category = await motosedla.default
     .getCategoryByPath(uid.replaceAll("-", "/"))
     .catch(() => notFound());
   const childrenCategories = await motosedla.default.getSubcategoriesById(
     category.id
   );
+  const texts = await client.getSingle("texts", { lang });
   // console.log(childrenCategories.map((category) => category.id));
   const products = settings.data.show_products_in_subcategories
     ? await motosedla.default.getProductsByCategoryIds([
@@ -42,7 +44,11 @@ export default async function Page({ params }: { params: Promise<Params> }) {
             );
           })}
         </div>
-        <Products products={products} />
+        <Products
+          loadMore={texts.data.load_more || ""}
+          lang={lang}
+          products={products}
+        />
       </div>
     </div>
   );
@@ -54,8 +60,11 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const client = createClient();
-  const {uid}=await params
-  const settings = await client.getSingle("settings").catch(() => notFound());
+  const { uid } = await params;
+  const { lang } = await params;
+  const settings = await client
+    .getSingle("settings", { lang })
+    .catch(() => notFound());
   console.log(uid);
   const category = await motosedla.default
     .getCategoryByPath(uid.replaceAll("-", "/"))
@@ -84,8 +93,18 @@ export async function generateStaticParams() {
     }
     return { ...category, path: path.reverse().join("/") };
   });
+  const client = createClient();
 
-  return categoriesWithUrl.map((category) => {
-    return { uid: category.path, id: category.id };
+  const repository = await client.getRepository();
+  const languages = repository.languages.map((lang) => {
+    return { lang: lang.id };
   });
+  return languages.map((lang) => {
+    return categoriesWithUrl.map((category) => {
+      return { uid: category.path, id: category.id, lang };
+    });
+  });
+  /* return categoriesWithUrl.map((category) => {
+    return { uid: category.path, id: category.id };
+  }); */
 }

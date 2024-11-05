@@ -89,6 +89,59 @@
       },
       "items": {},
       "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
+    },
+    {
+      "id": "heroSlider",
+      "name": "Hero - Slider",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8626",
+      "description": "Hero",
+      "primary": {
+        "section": {
+          "type": "Group",
+          "config": {
+            "label": "Section",
+            "repeat": true,
+            "fields": {
+              "background_content": {
+                "type": "Link",
+                "config": {
+                  "label": "Background Content",
+                  "placeholder": "Video/Photo",
+                  "select": "media",
+                  "allowText": true
+                }
+              },
+              "link_text": {
+                "type": "Text",
+                "config": {
+                  "label": "Link text",
+                  "placeholder": ""
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "label": "Link",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "select": null,
+                  "allowText": true
+                }
+              }
+            }
+          }
+        },
+        "phrase": {
+          "type": "Text",
+          "config": {
+            "label": "Phrase",
+            "placeholder": ""
+          }
+        }
+      },
+      "items": {},
+      "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
     }
   ]
 }

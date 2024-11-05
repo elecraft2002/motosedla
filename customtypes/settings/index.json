@@ -23,6 +23,25 @@
           "placeholder_true": "true",
           "default_value": true
         }
+      },
+      "site_logo": {
+        "type": "Image",
+        "config": {
+          "label": "Site logo",
+          "constraint": {},
+          "thumbnails": [
+            {
+              "name": "small",
+              "width": 100,
+              "height": ""
+            },
+            {
+              "name": "icon",
+              "width": 64,
+              "height": 64
+            }
+          ]
+        }
       }
     },
     "Currency": {

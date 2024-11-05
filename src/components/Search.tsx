@@ -8,7 +8,13 @@ import Input from "./Input";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function Search() {
+export default function Search({
+  placeholder,
+  lang,
+}: {
+  placeholder: string;
+  lang: string;
+}) {
   const [search, handleSearch] = useState("");
   const router = useRouter();
   const [results, handleResults] = useState<motosedla.Product[]>([]);
@@ -37,7 +43,7 @@ export default function Search() {
         method="post"
         onSubmit={(e) => {
           e.preventDefault();
-          router.push(`/search?q=${encodeURIComponent(search)}`);
+          router.push(`${lang}/search?q=${encodeURIComponent(search)}`);
           handleSearch("");
         }}
       >
@@ -49,7 +55,7 @@ export default function Search() {
             value={search}
             type="search"
             id="simple-search"
-            placeholder="Najděte Vaše sedlo..."
+            placeholder={placeholder}
             className="hidden md:block"
             // required
             onFocus={() => setShownSearchState(true)}
@@ -81,10 +87,8 @@ export default function Search() {
         </button>
 
         <AnimatePresence mode="wait">
-        {shownSearch && (
-            <ul
-              className="absolute top-12 w-full dark:bg-black/90 backdrop-blur-xl rounded-lg"
-            >
+          {shownSearch && (
+            <ul className="absolute top-12 w-full dark:bg-black/90 backdrop-blur-xl rounded-lg">
               {shortResults.map((result) => {
                 return (
                   <motion.li
@@ -97,7 +101,7 @@ export default function Search() {
                     className="hover:bg-slate-200/10 transition-all"
                   >
                     <Link
-                      href={`/seat/${result.uid}`}
+                      href={`${lang}/seat/${result.uid}`}
                       className="flex items-center gap-2"
                       onClick={() => {
                         setShownSearchState(false);
@@ -117,7 +121,7 @@ export default function Search() {
                 );
               })}
             </ul>
-        )}
+          )}
         </AnimatePresence>
       </form>
     </>

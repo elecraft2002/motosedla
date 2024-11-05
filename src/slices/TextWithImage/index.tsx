@@ -4,6 +4,7 @@ import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 
 import { Bounded } from "@/components/Bounded";
 import { PrismicRichText } from "@/components/PrismicRichText";
+import Button from "@/components/Button";
 
 type TextWithImageProps = SliceComponentProps<Content.TextWithImageSlice>;
 
@@ -11,17 +12,19 @@ const TextWithImage = ({ slice }: TextWithImageProps) => {
   const image = slice.primary.image;
 
   return (
-    <Bounded as="section" className="bg-white">
+    <Bounded as="section" className="">
       <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
         <div>
           <PrismicRichText field={slice.primary.text} />
           {slice.variation === "withButton" && slice.primary.buttonLink ? (
-            <PrismicNextLink
-              field={slice.primary.buttonLink}
-              className="font-semibold"
-            >
-              {slice.primary.buttonText || "Learn more"}
-            </PrismicNextLink>
+            <Button>
+              <PrismicNextLink
+                field={slice.primary.buttonLink}
+                className="font-semibold"
+              >
+                {slice.primary.buttonText || "Learn more"}
+              </PrismicNextLink>
+            </Button>
           ) : null}
         </div>
         <div>

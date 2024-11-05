@@ -97,13 +97,74 @@
 			"background_video": {
 				"__TYPE__": "LinkContent",
 				"value": {
+					"__TYPE__": "FileLink",
 					"id": "mock_Media_link",
 					"kind": "image/jpeg",
 					"name": "mock_name",
 					"url": "https://source.unsplash.com/daily",
-					"size": "0",
-					"__TYPE__": "FileLink"
+					"size": "0"
 				}
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "heroSlider",
+		"primary": {
+			"section": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"background_content",
+								{
+									"__TYPE__": "LinkContent",
+									"value": {
+										"__TYPE__": "FileLink",
+										"id": "mock_Media_link",
+										"kind": "file",
+										"name": "mock_name",
+										"url": "https://source.unsplash.com/daily",
+										"size": "0",
+										"text": "shout"
+									}
+								}
+							],
+							[
+								"link_text",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "west",
+									"type": "Text"
+								}
+							],
+							[
+								"link",
+								{
+									"__TYPE__": "LinkContent",
+									"value": {
+										"__TYPE__": "ExternalLink",
+										"url": "https://prismic.io",
+										"text": "his"
+									}
+								}
+							]
+						]
+					}
+				]
+			},
+			"phrase": {
+				"__TYPE__": "FieldContent",
+				"value": "composed",
+				"type": "Text"
 			}
 		},
 		"items": [

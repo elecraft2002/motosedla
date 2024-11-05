@@ -5,11 +5,16 @@ import { createClient } from "@/prismicio";
 import * as motosedla from "@/services/api";
 import * as prismic from "@prismicio/client";
 import Products from "@/components/Products";
-type Params = { uid: string };
+import Link from "next/link";
+type Params = { uid: string; lang: string };
 
-export default async function Page(/* { params }: { params: Promise<Params> } */) {
+export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
-  const settings = await client.getSingle("settings").catch(() => notFound());
+  const { lang } = await params;
+  const settings = await client
+    .getSingle("settings", { lang })
+    .catch(() => notFound());
+    const texts = await client.getSingle("texts", { lang });
 
   const childrenCategories = await motosedla.default.getRootCategories();
   console.log(childrenCategories.map((category) => category.id));
@@ -24,32 +29,44 @@ export default async function Page(/* { params }: { params: Promise<Params> } */
           {childrenCategories.map((subCategory) => {
             if (subCategory.parent_id !== null) return null;
             return (
-              <a
+              <Link
                 key={subCategory.id}
                 className="hover:text-blue-400 transition-all"
-                href={`/category/${subCategory.name}`}
+                href={`/${lang}/category/${subCategory.name}`}
               >
                 {subCategory.name}
-              </a>
+              </Link>
             );
           })}
         </div>
-        <Products products={products} />
+        <Products loadMore={texts.data.load_more||""} lang={lang} products={products} />
       </div>
     </div>
   );
 }
 
-export async function generateMetadata(/* {
+export async function generateMetadata({
   params,
 }: {
-  params: Params;
-} */): Promise<Metadata> {
+  params: Promise<Params>;
+}): Promise<Metadata> {
   const client = createClient();
-  const settings = await client.getSingle("settings").catch(() => notFound());
+  const { lang } = await params;
+  const settings = await client
+    .getSingle("settings", { lang })
+    .catch(() => notFound());
 
   return {
     title: `${prismic.asText(settings.data.siteTitle)}`,
     description: "page.data.meta_description",
   };
+}
+
+export async function generateStaticParams() {
+  const client = createClient();
+
+  const repository = await client.getRepository();
+  return repository.languages.map((lang) => {
+    return { lang: lang.id };
+  });
 }

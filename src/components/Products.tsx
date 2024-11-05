@@ -6,7 +6,15 @@ import { Product as IProduct } from "@/services/api";
 import { useSearchParams } from "next/navigation";
 import Button, { ButtonType } from "./Button";
 
-export default function Products({ products }: { products: IProduct[] }) {
+export default function Products({
+  products,
+  lang,
+  loadMore
+}: {
+  products: IProduct[];
+  lang: string;
+  loadMore:string
+}) {
   const params: any = useSearchParams();
   const offset = 10;
   const [len, setLen] = useState(offset);
@@ -14,7 +22,6 @@ export default function Products({ products }: { products: IProduct[] }) {
     <AnimatePresence mode="wait">
       <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         {products.map((product, i) => {
-          console.log(i, len);
           if (i >= len) return null;
           return (
             <motion.div
@@ -25,7 +32,7 @@ export default function Products({ products }: { products: IProduct[] }) {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
             >
-              <Product key={product.id} currency="CZK" product={product} />
+              <Product key={product.id} currency="CZK" product={product}lang={lang} />
             </motion.div>
           );
         })}
@@ -38,7 +45,7 @@ export default function Products({ products }: { products: IProduct[] }) {
             setLen((oldLen) => oldLen + offset);
           }}
         >
-          Načíst další
+          {loadMore}
         </Button>
       )}
     </AnimatePresence>
