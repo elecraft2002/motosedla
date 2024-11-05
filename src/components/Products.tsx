@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import Product from "./Product";
 import { Product as IProduct } from "@/services/api";
-import { useSearchParams } from "next/navigation";
 import Button, { ButtonType } from "./Button";
 
 export default function Products({
@@ -15,7 +14,6 @@ export default function Products({
   lang: string;
   loadMore:string
 }) {
-  const params: any = useSearchParams();
   const offset = 10;
   const [len, setLen] = useState(offset);
   return (

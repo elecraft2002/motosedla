@@ -6,6 +6,8 @@ import * as motosedla from "@/services/api";
 import * as prismic from "@prismicio/client";
 import SearchProducts from "@/components/SearchProducts";
 import { Bounded } from "@/components/Bounded";
+import { Suspense } from "react";
+import Loading from "@/components/Loading";
 type Params = { uid: string; lang: string };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
@@ -17,12 +19,14 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const texts = await client.getSingle("texts", { lang });
   return (
     <Bounded className="">
-      <SearchProducts
-        loadMore={texts.data.load_more || ""}
-        lang={lang}
-        searchText={texts.data.search || ""}
-        placeholder={texts.data.search_seat_placeholder || ""}
-      />
+      <Suspense fallback={<Loading />}>
+        <SearchProducts
+          loadMore={texts.data.load_more || ""}
+          lang={lang}
+          searchText={texts.data.search || ""}
+          placeholder={texts.data.search_seat_placeholder || ""}
+        />
+      </Suspense>
     </Bounded>
   );
 }
