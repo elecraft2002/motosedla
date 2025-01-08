@@ -27,7 +27,11 @@ const Hero = ({ slice }: HeroProps) => {
           options={{ loop: true }}
           slides={slice.primary.section}
         />
-        {slice.primary.phrase && <div className="m-auto"><TextAnimation text={slice.primary.phrase} /></div>}
+        {slice.primary.phrase && (
+          <div className="m-auto">
+            <TextAnimation text={slice.primary.phrase} />
+          </div>
+        )}
         {/* <span className="text-center">
           <PrismicRichText field={slice.primary.text} />
         </span> */}
