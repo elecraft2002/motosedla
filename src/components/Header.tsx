@@ -13,7 +13,7 @@ export default async function Header({ lang }: { lang: string }) {
   const texts = await client.getSingle("texts", { lang });
 
   return (
-    <header className="fixed w-full backdrop-blur-2xl py-2 md:py-4 px-4 ba z-50 dark:bg-black/50">
+    <header className="fixed w-full backdrop-blur-2xl py-2 md:py-4 px-4 ba z-50 bg-white/50 dark:bg-black/50">
       <div className="mx-auto w-full max-w-6xl">
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3 leading-none">
           <PrismicNextLink

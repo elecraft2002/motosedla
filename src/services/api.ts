@@ -34,7 +34,9 @@ class Motosedla {
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
-    return response.json();
+    const res =await response.json()
+    console.log(res)
+    return res;
   }
 
   // Vyhledání podkategorií podle id

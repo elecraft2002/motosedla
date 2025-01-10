@@ -21,12 +21,11 @@ export default async function RootLayout({
   params,
 }: Readonly<{ children: React.ReactNode; params: Promise<any> }>) {
   const { lang } = await params;
-  console.log(lang);
 
   return (
     <html lang={lang.split("-")[0]} className={inter.variable}>
       <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
-        <main className="flex flex-col">
+        <main className="background flex flex-col">
           <Header lang={lang} />
           {children}
           <Footer lang={lang} />

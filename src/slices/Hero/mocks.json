@@ -104,6 +104,11 @@
 					"url": "https://source.unsplash.com/daily",
 					"size": "0"
 				}
+			},
+			"phrase": {
+				"__TYPE__": "FieldContent",
+				"value": "printed",
+				"type": "Text"
 			}
 		},
 		"items": [

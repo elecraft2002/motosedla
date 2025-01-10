@@ -784,6 +784,16 @@ export interface HeroSliceHeroVideoPrimary {
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
   background_video: prismic.LinkToMediaField;
+
+  /**
+   * Phrase field in *Hero → Hero - video → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroVideo.primary.phrase
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  phrase: prismic.KeyTextField;
 }
 
 /**

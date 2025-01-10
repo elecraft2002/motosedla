@@ -85,6 +85,13 @@
             "placeholder": "",
             "select": "media"
           }
+        },
+        "phrase": {
+          "type": "Text",
+          "config": {
+            "label": "Phrase",
+            "placeholder": ""
+          }
         }
       },
       "items": {},

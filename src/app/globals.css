@@ -5,3 +5,26 @@
 html {
   scroll-behavior: smooth;
 }
+/* .background {
+  background: rgba(102, 51, 153, 0.582) url("../../public/images/leather.jpg");
+  background-size: 100vw;
+  
+} */
+@media (prefers-color-scheme: dark) {
+  .background {
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)) 0% 0% / contain
+        repeat-y,
+      url(../../public/images/leather.jpg);
+    background-size: 100vw;
+  }
+}
+@media (prefers-color-scheme: light) {
+  .background {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)) 0% 0% / contain
+        repeat-y,
+      url(../../public/images/leather-light.jpg);
+    background-size: 100vw;
+  }
+}
