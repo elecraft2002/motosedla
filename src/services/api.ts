@@ -1,3 +1,4 @@
+import { env } from "process";
 export interface Category {
   id: number;
   parent_id: number | null;
@@ -28,6 +29,7 @@ class Motosedla {
 
   // Vyhledání produktů podle názvu
   public async searchProductsByName(name: string): Promise<Product[]> {
+    console.log("xdwaadsdsadsa", this.baseUrl);
     const response = await fetch(
       `${this.baseUrl}/products/search?name=${name}`
     );
@@ -170,4 +172,4 @@ class Motosedla {
     return json;
   }
 }
-export default new Motosedla(process.env.SERVER_URL || "");
+export default new Motosedla(env.SERVER_URL || "https://motosedla-7644.rostiapp.cz/api");
