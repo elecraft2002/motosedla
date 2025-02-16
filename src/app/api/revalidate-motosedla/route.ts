@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" });
   }
   const data = await request.json();
-  console.log(data)
+  console.log(data, process.env.SERVER_URL);
   try {
     const response = await fetch(
       process.env.SERVER_URL /* "http://localhost:8080" */ +
