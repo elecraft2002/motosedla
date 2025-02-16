@@ -170,4 +170,4 @@ class Motosedla {
     return json;
   }
 }
-export default new Motosedla("https://motosedla-7644.rostiapp.cz/api");
+export default new Motosedla(process.env.SERVER_URL);
