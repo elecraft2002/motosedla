@@ -11,8 +11,8 @@ export async function POST(request: Request) {
   console.log(data, process.env.SERVER_URL);
   try {
     const response = await fetch(
-      process.env.SERVER_URL /* "http://localhost:8080" */ +
-        "/api/update-database",
+      process.env.SERVER_URL /* "http://localhost:8080/api" */ +
+        "/update-database",
       {
         method: "POST",
         headers: {
