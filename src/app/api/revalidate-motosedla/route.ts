@@ -8,6 +8,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" });
   }
   const data = await request.json();
+  console.log(data)
   try {
     const response = await fetch(
       process.env.SERVER_URL /* "http://localhost:8080" */ +
@@ -37,5 +38,5 @@ export async function POST(request: Request) {
     console.error("Chyba při odesílání požadavku:", error);
   }
   // console.log(data);
-  return NextResponse.json({ working: true, now: Date.now() });
+  return NextResponse.json({ working: false, now: Date.now() });
 }
