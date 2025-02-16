@@ -34,8 +34,8 @@ class Motosedla {
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
-    const res =await response.json()
-    console.log(res)
+    const res = await response.json();
+    console.log(res);
     return res;
   }
 
@@ -170,4 +170,4 @@ class Motosedla {
     return json;
   }
 }
-export default new Motosedla(process.env.SERVER_URL);
+export default new Motosedla(process.env.SERVER_URL || "");
