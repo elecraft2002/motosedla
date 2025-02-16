@@ -21,47 +21,30 @@ interface Replace {
   search: string;
   replace: string;
 }
-type Params = { uid: string ,lang:string};
+type Params = { uid: string; lang: string };
 export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
-  const { lang} = await params;
+  const { lang } = await params;
   const { uid } = await params;
-  const configuration = await client.getSingle("configuration",{lang});
-  const settings = await client.getSingle("settings",{lang});
+  const configuration = await client.getSingle("configuration", { lang });
+  const settings = await client.getSingle("settings", { lang });
   const product = await motosedla.default
     .getProductByUid(uid)
     .catch(() => notFound());
-  const images = await motosedla.default.getImagesByProductId(product.id);
-
+  // const images = await motosedla.default.getImagesByProductId(product.id);
+  console.log(product);
   const locales = await getLocales(configuration, client);
   return (
     <Bounded>
       <div className="flex flex-col lg:grid lg:grid-cols-8 gap-8">
         <div className="col-span-5">
           <div className="flex flex-col">
-            <SliderGallery
-              /* images={[
-                {
-                  alt: "sedlo",
-                  height: 2300,
-                  width: 2300,
-                  src: "/images/CB-1300-5.jpg",
-                },
-                {
-                  alt: "simson",
-                  height: 3000,
-                  width: 4000,
-                  src: "/images/IMG_20220903_194512.jpg",
-                },
-              ]} */
-              images={images.map((image, index) => {
-                return {
-                  alt: `Sedlo na motorku ${product.name} - ${index + 1}`,
-                  height: 2300,
-                  width: 2300,
-                  src: image.image_url,
-                };
-              })}
+            <Image
+              alt={`Sedlo na motorku ${product.name}`}
+              height={1000}
+              width={1000}
+              src={product.image_url}
+              className="rounded-lg"
             />
           </div>
         </div>

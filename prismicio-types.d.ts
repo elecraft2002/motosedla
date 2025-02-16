@@ -649,6 +649,36 @@ export type ConfigurationSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Default variation for Contact Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *Contact*
+ */
+type ContactSliceVariation = ContactSliceDefault;
+
+/**
+ * Contact Shared Slice
+ *
+ * - **API ID**: `contact`
+ * - **Description**: Contact
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactSlice = prismic.SharedSlice<
+  "contact",
+  ContactSliceVariation
+>;
+
+/**
  * Item in *Hero → Hero - Slider → Primary → Section*
  */
 export interface HeroSliceHeroSliderPrimarySectionItem {
@@ -1318,6 +1348,9 @@ declare module "@prismicio/client" {
       ConfigurationSliceDefaultPrimary,
       ConfigurationSliceVariation,
       ConfigurationSliceDefault,
+      ContactSlice,
+      ContactSliceVariation,
+      ContactSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceHeroVideoPrimary,
