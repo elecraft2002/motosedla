@@ -29,15 +29,15 @@ class Motosedla {
 
   // Vyhledání produktů podle názvu
   public async searchProductsByName(name: string): Promise<Product[]> {
-    // console.log("xdwaadsdsadsa", this.baseUrl);
     const response = await fetch(
       `${this.baseUrl}/products/search?name=${name}`
     );
+    console.log("Fetching... ", `${this.baseUrl}/products/search?name=${name}`);
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
     const res = await response.json();
-    // console.log(res);
+    console.log(res);
     return res;
   }
 
@@ -47,6 +47,10 @@ class Motosedla {
     recursive: boolean = false
   ): Promise<Category[]> {
     const response = await fetch(
+      `${this.baseUrl}/categories/subcategories?categoryId=${id}&recursive=${recursive}`
+    );
+    console.log(
+      "Fetching... ",
       `${this.baseUrl}/categories/subcategories?categoryId=${id}&recursive=${recursive}`
     );
     if (!response.ok) {
@@ -59,6 +63,7 @@ class Motosedla {
     const response = await fetch(
       `${this.baseUrl}/categories/name?name=${name}`
     );
+    console.log("Fetching... ", `${this.baseUrl}/categories/name?name=${name}`);
     if (!response.ok) {
       throw new Error("Failed to fetch categories");
     }
@@ -67,6 +72,10 @@ class Motosedla {
   // Vyhledání produktů podle id více kategorií
   public async getProductsByCategoryIds(ids: number[]): Promise<Product[]> {
     const response = await fetch(
+      `${this.baseUrl}/products/byCategories?categoryIds=${ids.join(",")}`
+    );
+    console.log(
+      "Fetching... ",
       `${this.baseUrl}/products/byCategories?categoryIds=${ids.join(",")}`
     );
     if (!response.ok) {
@@ -80,6 +89,10 @@ class Motosedla {
     const response = await fetch(
       `${this.baseUrl}/categories/search?name=${name}`
     );
+    console.log(
+      "Fetching... ",
+      `${this.baseUrl}/categories/search?name=${name}`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch categories");
     }
@@ -90,6 +103,10 @@ class Motosedla {
     const response = await fetch(
       `${this.baseUrl}/products/uid?productUid=${uid}`,
       this.fetchOptions
+    );
+    console.log(
+      "Fetching... ",
+      `${this.baseUrl}/products/uid?productUid=${uid}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch categories");
@@ -102,6 +119,10 @@ class Motosedla {
       `${this.baseUrl}/products/categoryId?categoryId=${categoryId}`,
       this.fetchOptions
     );
+    console.log(
+      "Fetching... ",
+      `${this.baseUrl}/products/categoryId?categoryId=${categoryId}`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch categories");
     }
@@ -113,6 +134,7 @@ class Motosedla {
       `${this.baseUrl}/images/id?productId=${uid}`,
       this.fetchOptions
     );
+    console.log("Fetching... ", `${this.baseUrl}/images/id?productId=${uid}`);
     if (!response.ok) {
       throw new Error("Failed to fetch images");
     }
@@ -123,6 +145,7 @@ class Motosedla {
       `${this.baseUrl}/products/all`,
       this.fetchOptions
     );
+    console.log("Fetching... ", `${this.baseUrl}/products/all`);
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
@@ -133,6 +156,7 @@ class Motosedla {
       `${this.baseUrl}/categories/all`,
       this.fetchOptions
     );
+    console.log("Fetching... ", `${this.baseUrl}/categories/all`);
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
@@ -143,6 +167,7 @@ class Motosedla {
       `${this.baseUrl}/categories/path?path=${path}`,
       this.fetchOptions
     );
+    console.log("Fetching... ", `${this.baseUrl}/categories/path?path=${path}`);
     const json = await response.json();
     if (!response.ok || json === null) {
       throw new Error("Failed to fetch products");
@@ -154,6 +179,7 @@ class Motosedla {
       `${this.baseUrl}/categories/root`,
       this.fetchOptions
     );
+    console.log("Fetching... ", `${this.baseUrl}/categories/root`);
     const json = await response.json();
     if (!response.ok || json === null) {
       throw new Error("Failed to fetch products");
@@ -165,6 +191,7 @@ class Motosedla {
       `${this.baseUrl}/categories/id?id=${id}`,
       this.fetchOptions
     );
+    console.log("Fetching... ", `${this.baseUrl}/categories/id?id=${id}`);
     const json = await response.json();
     if (!response.ok || json === null) {
       throw new Error("Failed to fetch products");
@@ -172,4 +199,6 @@ class Motosedla {
     return json;
   }
 }
-export default new Motosedla(env.SERVER_URL || "https://motosedla-7644.rostiapp.cz/api");
+export default new Motosedla(
+  env.SERVER_URL || "https://motosedla-7644.rostiapp.cz/api"
+);
