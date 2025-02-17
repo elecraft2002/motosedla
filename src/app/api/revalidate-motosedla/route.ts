@@ -46,10 +46,11 @@
 //   return NextResponse.json({ working: false, now: Date.now() });
 // }
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function POST() {
-  revalidateTag("motosedla");
+  // revalidateTag("motosedla");
+  revalidatePath('/', 'layout')
 
   return NextResponse.json({ revalidated: true, now: Date.now() });
 }
