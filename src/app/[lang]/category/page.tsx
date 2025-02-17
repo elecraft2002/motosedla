@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     const texts = await client.getSingle("texts", { lang });
 
   const childrenCategories = await motosedla.default.getRootCategories();
-  console.log(childrenCategories.map((category) => category.id));
+  // console.log(childrenCategories.map((category) => category.id));
   const products = await motosedla.default.getAllProducts();
   return (
     <div className="">

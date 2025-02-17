@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     .catch(() => notFound());
     
   // const images = await motosedla.default.getImagesByProductId(product.id);
-  console.log(product);
+  // console.log(product);
   const locales = await getLocales(configuration, client);
   return (
     <Bounded>
@@ -96,7 +96,7 @@ export async function generateStaticParams() {
 
   return languages.map((lang) => {
     return products.map((product) => {
-      return { uid: product.uid, lang: lang };
+      return { uid: product.uid, lang: lang.lang };
     });
-  });
+  }).flat();
 }

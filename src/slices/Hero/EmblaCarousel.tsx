@@ -39,7 +39,7 @@ export default function EmblaCarousel(props: PropType) {
         <div className="embla__container flex gap-4 touch-pan-y touch-pinch-zoom ">
           {slides.map((item, i) => {
             const content = item.background_content as any;
-            console.log(content)
+            // console.log(content)
             let animation: HTMLMotionProps<"div"> = {};
             if (i === 0) animation = centerAnimation;
             else {

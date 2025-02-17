@@ -29,7 +29,7 @@ class Motosedla {
 
   // Vyhledání produktů podle názvu
   public async searchProductsByName(name: string): Promise<Product[]> {
-    console.log("xdwaadsdsadsa", this.baseUrl);
+    // console.log("xdwaadsdsadsa", this.baseUrl);
     const response = await fetch(
       `${this.baseUrl}/products/search?name=${name}`
     );
@@ -37,7 +37,7 @@ class Motosedla {
       throw new Error("Failed to fetch products");
     }
     const res = await response.json();
-    console.log(res);
+    // console.log(res);
     return res;
   }
 

@@ -6,7 +6,7 @@ export default function ScrollIcon({ primary = "white", secondary = "black" }) {
   return (
     <span
       onClick={() => {
-        console.log("Posun");
+        // console.log("Posun");
         // window.scroll({ top: window.scrollY + window.screenY * 0.9 });
         window.scroll(0, window.scrollY +window.innerHeight * 0.9); 
       }}
