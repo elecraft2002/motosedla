@@ -65,7 +65,7 @@ export async function generateMetadata({
   const settings = await client
     .getSingle("settings", { lang })
     .catch(() => notFound());
-  console.log(uid);
+  // console.log(uid);
   const category = await motosedla.default
     .getCategoryByPath(uid.replaceAll("-", "/"))
     .catch(() => notFound());
@@ -99,11 +99,18 @@ export async function generateStaticParams() {
   const languages = repository.languages.map((lang) => {
     return { lang: lang.id };
   });
+/*   console.log("Prerender: ",
+    languages.map((lang) => {
+      return categoriesWithUrl.map((category) => {
+        return { uid: category.path, id: category.id, lang };
+      });
+    }).flat()
+  ); */
   return languages.map((lang) => {
     return categoriesWithUrl.map((category) => {
-      return { uid: category.path, id: category.id, lang };
+      return { uid: category.path, id: category.id, lang:lang.lang };
     });
-  });
+  }).flat();
   /* return categoriesWithUrl.map((category) => {
     return { uid: category.path, id: category.id };
   }); */

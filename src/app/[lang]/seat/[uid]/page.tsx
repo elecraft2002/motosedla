@@ -31,6 +31,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const product = await motosedla.default
     .getProductByUid(uid)
     .catch(() => notFound());
+    
   // const images = await motosedla.default.getImagesByProductId(product.id);
   console.log(product);
   const locales = await getLocales(configuration, client);
