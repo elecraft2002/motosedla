@@ -35,16 +35,20 @@ const Hero = ({ slice }: HeroProps) => {
         )}
         {/* <span className="text-center">
           <PrismicRichText field={slice.primary.text} />
-        </span> */}
+          </span> */}
       </section>
     );
-  if (slice.variation === "heroVideo")
+  if (slice.variation === "heroVideo") {
     return (
       <section className="relative h-[100vh]">
         {isFilled.linkToMedia(slice.primary.background_video) && (
           <div className="absolute ">
+            <PrismicNextImage
+              field={slice.primary.loading_image.Preview}
+              className="h-[100vh] w-screen object-cover blur-sm"
+            />
             <video
-              className="h-[100vh] w-screen object-cover"
+              className="h-[100vh] w-screen object-cover absolute top-0"
               src={slice.primary.background_video.url}
               autoPlay
               loop
@@ -52,7 +56,7 @@ const Hero = ({ slice }: HeroProps) => {
             />
           </div>
         )}
-        <div  className="relative h-full bg-black/50">
+        <div className="relative h-full bg-black/50">
           <div className="flex flex-col justify-center h-full items-center">
             <div className="grid justify-items-center gap-8">
               <div className="max-w-2xl text-center">
@@ -68,9 +72,7 @@ const Hero = ({ slice }: HeroProps) => {
               )}
               {isFilled.link(slice.primary.buttonLink) && (
                 <Button>
-                  <PrismicNextLink
-                    field={slice.primary.buttonLink}
-                  >
+                  <PrismicNextLink field={slice.primary.buttonLink}>
                     {slice.primary.buttonText || "Learn More"}
                   </PrismicNextLink>
                 </Button>
@@ -83,6 +85,7 @@ const Hero = ({ slice }: HeroProps) => {
         </div>
       </section>
     );
+  }
 
   return (
     <section className="relative">

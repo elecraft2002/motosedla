@@ -228,6 +228,7 @@ export type NavigationDocument<Lang extends string = string> =
   >;
 
 type PageDocumentDataSlicesSlice =
+  | ContactSlice
   | HeroSlice
   | QuoteSlice
   | TextSlice
@@ -824,6 +825,16 @@ export interface HeroSliceHeroVideoPrimary {
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   phrase: prismic.KeyTextField;
+
+  /**
+   * Loading image field in *Hero → Hero - video → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.heroVideo.primary.loading_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  loading_image: prismic.ImageField<"Preview">;
 }
 
 /**

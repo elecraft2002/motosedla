@@ -43,7 +43,7 @@ export default function Search({
         method="post"
         onSubmit={(e) => {
           e.preventDefault();
-          router.push(`${lang}/search?q=${encodeURIComponent(search)}`);
+          router.push(`/${lang}/search?q=${encodeURIComponent(search)}`);
           handleSearch("");
         }}
       >

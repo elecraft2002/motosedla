@@ -24,7 +24,7 @@ export default function Product({
           className="h-full w-full object-cover object-center lg:h-full lg:w-full"
         />
       </div>
-      <div className="mt-4 flex justify-between">
+      <div className="mt-4 flex justify-between flex-wrap">
         <div>
           <h3 className="text-sm text-gray-700 dark:text-slate-300">
             <Link href={"/" + lang + "/seat/" + product.uid}>
@@ -33,7 +33,7 @@ export default function Product({
             </Link>
           </h3>
         </div>
-        <p className="text-sm font-medium text-gray-900">
+        <p className="text-sm font-medium light:text-gray-900">
           {product.price} {currency}
         </p>
       </div>

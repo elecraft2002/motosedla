@@ -5,6 +5,7 @@ import { createClient } from "@/prismicio";
 import * as motosedla from "@/services/api";
 import * as prismic from "@prismicio/client";
 import Products from "@/components/Products";
+import Link from "next/link";
 type Params = { uid: string; lang: string };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
@@ -12,12 +13,13 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const settings = await client.getSingle("settings").catch(() => notFound());
   const { uid } = await params;
   const { lang } = await params;
+  const path = decodeURIComponent(uid.replaceAll("-", "/"));
   const category = await motosedla.default
-    .getCategoryByPath(uid.replaceAll("-", "/"))
+    .getCategoryByPath(path)
     .catch(() => notFound());
-  const childrenCategories = await motosedla.default.getSubcategoriesById(
-    category.id
-  );
+  const childrenCategories = await motosedla.default
+    .getSubcategoriesById(category.id)
+    .catch(() => notFound());
   const texts = await client.getSingle("texts", { lang });
   // console.log(childrenCategories.map((category) => category.id));
   const products = settings.data.show_products_in_subcategories
@@ -29,7 +31,26 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   return (
     <div className="">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight">{category.name}</h2>
+        <h2 className="text-xl font-bold tracking-tight flex flex-wrap">
+          <Link href={`/${lang}/category/`}>
+            {prismic.asText(settings.data.siteTitle)}
+          </Link>
+          {path.split("/").map((e, index) => {
+            let link = "";
+            for (let i = 0; i <= index; i++) {
+              const word = path.split("/")[i];
+              link += word + "/";
+            }
+
+            return (
+              <Link href={`/${lang}/category/${link}`}>
+                <span className="before:content-['>'] before:text-slate-500 before:px-2 before:scale-50">
+                  {e}
+                </span>
+              </Link>
+            );
+          })}
+        </h2>
         <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
           {childrenCategories.map((subCategory) => {
             if (subCategory.parent_id !== category.id) return null;
@@ -99,18 +120,20 @@ export async function generateStaticParams() {
   const languages = repository.languages.map((lang) => {
     return { lang: lang.id };
   });
-/*   console.log("Prerender: ",
+  /*   console.log("Prerender: ",
     languages.map((lang) => {
       return categoriesWithUrl.map((category) => {
         return { uid: category.path, id: category.id, lang };
       });
     }).flat()
   ); */
-  return languages.map((lang) => {
-    return categoriesWithUrl.map((category) => {
-      return { uid: category.path, id: category.id, lang:lang.lang };
-    });
-  }).flat();
+  return languages
+    .map((lang) => {
+      return categoriesWithUrl.map((category) => {
+        return { uid: category.path, id: category.id, lang: lang.lang };
+      });
+    })
+    .flat();
   /* return categoriesWithUrl.map((category) => {
     return { uid: category.path, id: category.id };
   }); */

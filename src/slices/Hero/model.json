@@ -92,6 +92,20 @@
             "label": "Phrase",
             "placeholder": ""
           }
+        },
+        "loading_image": {
+          "type": "Image",
+          "config": {
+            "label": "Loading image",
+            "constraint": {},
+            "thumbnails": [
+              {
+                "name": "Preview",
+                "width": 300,
+                "height": null
+              }
+            ]
+          }
         }
       },
       "items": {},
