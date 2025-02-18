@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
             }
 
             return (
-              <Link href={`/${lang}/category/${link}`}>
+              <Link key={index} href={`/${lang}/category/${link}`}>
                 <span className="before:content-['>'] before:text-slate-500 before:px-2 before:scale-50">
                   {e}
                 </span>
