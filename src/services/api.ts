@@ -6,6 +6,7 @@ export interface Category {
 }
 export interface Product {
   id: number;
+  id_google:string;
   category_id: number;
   uid: string;
   name: string;
