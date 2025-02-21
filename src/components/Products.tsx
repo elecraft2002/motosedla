@@ -14,7 +14,7 @@ export default function Products({
   lang: string;
   loadMore:string
 }) {
-  const offset = 10;
+  const offset = 20;
   const [len, setLen] = useState(offset);
   return (
     <AnimatePresence mode="wait">

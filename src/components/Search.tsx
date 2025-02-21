@@ -120,6 +120,12 @@ export default function Search({
                   </motion.li>
                 );
               })}
+              <Link
+                href={`/${lang}/search?q=${encodeURIComponent(search)}`}
+                className="flex items-center justify-center my-4"
+              >
+                <Button type={ButtonType.secondary}>Více</Button>
+              </Link>
             </ul>
           )}
         </AnimatePresence>
