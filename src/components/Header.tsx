@@ -16,7 +16,6 @@ export default async function Header({ lang }: { lang: string }) {
     lang: langReverse,
   });
   const texts = await client.getSingle("texts", { lang: langReverse });
-  console.log("xddd",lang,localeLookup(lang))
   return (
     <header className="fixed w-full backdrop-blur-2xl py-2 md:py-4 px-4 ba z-50 bg-white/50 dark:bg-black/50">
       <div className="mx-auto w-full max-w-6xl">
