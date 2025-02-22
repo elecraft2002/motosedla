@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const product = await motosedla.default
     .getProductByUid(uid)
     .catch(() => notFound());
-    
+
   // const images = await motosedla.default.getImagesByProductId(product.id);
   // console.log(product);
   const locales = await getLocales(configuration, client);
@@ -39,13 +39,20 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     <Bounded>
       <div className="flex flex-col lg:grid lg:grid-cols-8 gap-8">
         <div className="col-span-5">
-          <div className="flex flex-col">
+          <div className="flex flex-col relative">
+            <Image
+              alt={`Sedlo na motorku ${product.name} náhled`}
+              height={1000}
+              width={1000}
+              src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_medium.jpg`}
+              className="rounded-lg absolute"
+            />
             <Image
               alt={`Sedlo na motorku ${product.name}`}
               height={1000}
               width={1000}
               src={product.image_url}
-              className="rounded-lg"
+              className="rounded-lg relative"
             />
           </div>
         </div>
@@ -94,9 +101,11 @@ export async function generateStaticParams() {
     return { lang: lang.id };
   });
 
-  return languages.map((lang) => {
-    return products.map((product) => {
-      return { uid: product.uid, lang: lang.lang };
-    });
-  }).flat();
+  return languages
+    .map((lang) => {
+      return products.map((product) => {
+        return { uid: product.uid, lang: lang.lang };
+      });
+    })
+    .flat();
 }

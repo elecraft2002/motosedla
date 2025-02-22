@@ -31,7 +31,7 @@ export default function Product({
           <h3 className="text-sm text-gray-700 dark:text-slate-300">
             <Link href={"/" + lang + "/seat/" + product.uid}>
               <span aria-hidden="true" className="absolute inset-0"></span>
-              {product.name}
+              Úprava sedla {product.name}
             </Link>
           </h3>
         </div>

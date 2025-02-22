@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "author": "Prismic <contact@prismic.io> (https://prismic.io)",
   "scripts": {
-    "dev": "concurrently \"npm:next:dev\" \"npm:slicemachine\" --names \"next,slicemachine\" --prefix-colors blue,magenta",
+    "dev": "concurrently \"npm:next:dev --turbopack\" \"npm:slicemachine\" --names \"next,slicemachine\" --prefix-colors blue,magenta",
     "next:dev": "next",
     "build": "next build",
     "postbuild": "next-sitemap",
@@ -23,7 +23,7 @@
     "embla-carousel-react": "^8.3.1",
     "framer-motion": "^11.5.4",
     "hamburger-react": "^2.5.1",
-    "next": "^15.0.2",
+    "next": "^15.2.0-canary.69",
     "next-sitemap": "^4.2.3",
     "nodemailer": "^6.9.16",
     "react": "^18.3.1",
