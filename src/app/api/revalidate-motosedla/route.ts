@@ -50,7 +50,8 @@ import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function POST() {
   // revalidateTag("motosedla");
-  revalidatePath('/', 'layout')
+  // revalidatePath('/', 'layout')
+  revalidatePath("*")
 
   return NextResponse.json({ revalidated: true, now: Date.now() });
 }

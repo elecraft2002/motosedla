@@ -15,9 +15,9 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const langReverse = reverseLocaleLookup(lang);
 
   const settings = await client
-    .getSingle("settings", { lang:langReverse })
+    .getSingle("settings", { lang: langReverse })
     .catch(() => notFound());
-  const texts = await client.getSingle("texts", { lang:langReverse });
+  const texts = await client.getSingle("texts", { lang: langReverse });
 
   const childrenCategories = await motosedla.default.getRootCategories();
   // console.log(childrenCategories.map((category) => category.id));
@@ -32,7 +32,6 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         </Link>
         <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
           {childrenCategories.map((subCategory) => {
-            if (subCategory.parent_id !== null) return null;
             return (
               <Link
                 key={subCategory.id}

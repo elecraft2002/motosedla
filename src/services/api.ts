@@ -180,7 +180,6 @@ class Motosedla {
       `${this.baseUrl}/categories/root`,
       this.fetchOptions
     );
-    // console.log("Fetching... ", `${this.baseUrl}/categories/root`);
     const json = await response.json();
     if (!response.ok || json === null) {
       throw new Error("Failed to fetch products");
