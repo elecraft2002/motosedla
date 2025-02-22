@@ -22,6 +22,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const childrenCategories = await motosedla.default.getRootCategories();
   // console.log(childrenCategories.map((category) => category.id));
   const products = await motosedla.default.getAllProducts();
+  console.log(products)
   return (
     <div className="">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -36,7 +37,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
               <Link
                 key={subCategory.id}
                 className="hover:text-blue-400 transition-all"
-                href={`/${lang}/category/${subCategory.name}`}
+                href={`/${encodeURIComponent(lang)}/category/${encodeURIComponent(subCategory.name)}`}
               >
                 {subCategory.name}
               </Link>
@@ -44,6 +45,8 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           })}
         </div>
         <Products
+          currency_course={settings.data.currency_course || 1}
+          currency_name={settings.data.currency_name || ""}
           loadMore={texts.data.load_more || ""}
           lang={lang}
           products={products}
@@ -64,7 +67,6 @@ export async function generateMetadata({
   const settings = await client
     .getSingle("settings", { lang })
     .catch(() => notFound());
-
   return {
     title: `${prismic.asText(settings.data.siteTitle)}`,
     description: "page.data.meta_description",

@@ -11,10 +11,12 @@ type Params = { uid: string; lang: any };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
-  const settings = await client.getSingle("settings").catch(() => notFound());
   const { uid } = await params;
   const { lang } = await params;
   const langReverse = reverseLocaleLookup(lang);
+  const settings = await client
+    .getSingle("settings", { lang: langReverse })
+    .catch(() => notFound());
   const path = decodeURIComponent(uid.replaceAll("-", "/"));
   const category = await motosedla.default
     .getCategoryByPath(uid.replaceAll("-", "/"))
@@ -68,6 +70,8 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           })}
         </div>
         <Products
+          currency_course={settings.data.currency_course||1}
+          currency_name={settings.data.currency_name||""}
           loadMore={texts.data.load_more || ""}
           lang={lang}
           products={products}

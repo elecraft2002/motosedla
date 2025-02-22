@@ -5,14 +5,16 @@ import React from "react";
 
 export default function Product({
   product,
-  currency,
+  currency_name,
+  currency_course,
   lang,
 }: {
   product: IProduct;
-  currency: string;
+  currency_name: string;
+  currency_course: number;
   lang: string;
 }) {
-  // console.log(product)
+  console.log(product)
   return (
     <div className="group relative">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -29,14 +31,14 @@ export default function Product({
       <div className="mt-4 flex justify-between flex-wrap">
         <div>
           <h3 className="text-sm text-gray-700 dark:text-slate-300">
-            <Link href={"/" + lang + "/seat/" + product.uid}>
+            <Link href={"/" + encodeURIComponent(lang) + "/seat/" + encodeURIComponent(product.id_google)}>
               <span aria-hidden="true" className="absolute inset-0"></span>
               Úprava sedla {product.name}
             </Link>
           </h3>
         </div>
         <p className="text-sm font-medium light:text-gray-900">
-          {product.price} {currency}
+          {(product.price / currency_course).toFixed(0)} {currency_name}
         </p>
       </div>
     </div>

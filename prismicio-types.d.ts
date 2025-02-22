@@ -379,41 +379,6 @@ export type SeatDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<SeatDocumentData>, "seat", Lang>;
 
 /**
- * Item in *Settings → Currencies*
- */
-export interface SettingsDocumentDataCurrenciesItem {
-  /**
-   * Currency Name field in *Settings → Currencies*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: CZK
-   * - **API ID Path**: settings.currencies[].currency_name
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  currency_name: prismic.KeyTextField;
-
-  /**
-   * Currency Image field in *Settings → Currencies*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: settings.currencies[].currency_image
-   * - **Documentation**: https://prismic.io/docs/field#image
-   */
-  currency_image: prismic.ImageField<"small">;
-
-  /**
-   * Currency Course field in *Settings → Currencies*
-   *
-   * - **Field Type**: Number
-   * - **Placeholder**: Přepočet z výchozí (CZK)
-   * - **API ID Path**: settings.currencies[].currency_course
-   * - **Documentation**: https://prismic.io/docs/field#number
-   */
-  currency_course: prismic.NumberField;
-}
-
-/**
  * Content for Settings documents
  */
 interface SettingsDocumentData {
@@ -450,15 +415,37 @@ interface SettingsDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   site_logo: prismic.ImageField<"small" | "icon"> /**
-   * Currencies field in *Settings*
+   * Currency Name field in *Settings*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: settings.currencies[]
+   * - **API ID Path**: settings.currency_name
    * - **Tab**: Currency
-   * - **Documentation**: https://prismic.io/docs/field#group
+   * - **Documentation**: https://prismic.io/docs/field#key-text
    */;
-  currencies: prismic.GroupField<Simplify<SettingsDocumentDataCurrenciesItem>>;
+  currency_name: prismic.KeyTextField;
+
+  /**
+   * Currency Image field in *Settings*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.currency_image
+   * - **Tab**: Currency
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  currency_image: prismic.ImageField<"Small">;
+
+  /**
+   * Currency Course field in *Settings*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.currency_course
+   * - **Tab**: Currency
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  currency_course: prismic.NumberField;
 }
 
 /**
@@ -1350,7 +1337,6 @@ declare module "@prismicio/client" {
       SeatDocumentDataSlicesSlice,
       SettingsDocument,
       SettingsDocumentData,
-      SettingsDocumentDataCurrenciesItem,
       TextsDocument,
       TextsDocumentData,
       AllDocumentTypes,

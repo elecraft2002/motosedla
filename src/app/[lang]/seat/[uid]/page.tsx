@@ -14,7 +14,7 @@ import { PrismicRichText } from "@/components/PrismicRichText";
 import SliderGallery from "@/components/SliderGallery";
 import * as motosedla from "@/services/api";
 import { reverseLocaleLookup } from "@/i18n";
-
+import * as prismic from "@prismicio/client";
 type Page = {
   uid: string;
 };
@@ -22,11 +22,11 @@ interface Replace {
   search: string;
   replace: string;
 }
-type Params = { uid: string; lang: string };
+type Params = { uid: string; lang: any };
 export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   let { lang } = await params;
-  lang = reverseLocaleLookup(lang) || "cs-cz";
+  lang = reverseLocaleLookup(lang);
 
   const { uid } = await params;
   const configuration = await client.getSingle("configuration", { lang });
@@ -64,6 +64,8 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           shortDescription={configuration.data.short_description}
           price={product.price}
           slices={configuration.data.slices}
+          currencyCourse={settings.data.currency_course || 1}
+          currencyName={settings.data.currency_name || ""}
         />
       </div>
       <div className="mt-8">
@@ -77,13 +79,15 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>;
 }): Promise<Metadata> {
-  const { uid } = await params;
+  const { uid, lang } = await params;
   const product = await motosedla.default
     .getProductByUid(uid)
     .catch(() => notFound());
   const title = `Sedlo na motorku ${product.name}`;
   const client = createClient();
-  const configuration = await client.getSingle("configuration");
+  const configuration = await client.getSingle("configuration", {
+    lang: reverseLocaleLookup(lang),
+  });
   return {
     title: title,
     description: configuration.data.meta_description,

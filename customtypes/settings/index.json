@@ -30,57 +30,28 @@
           "label": "Site logo",
           "constraint": {},
           "thumbnails": [
-            {
-              "name": "small",
-              "width": 100,
-              "height": ""
-            },
-            {
-              "name": "icon",
-              "width": 64,
-              "height": 64
-            }
+            { "name": "small", "width": 100, "height": null },
+            { "name": "icon", "width": 64, "height": 64 }
           ]
         }
       }
     },
     "Currency": {
-      "currencies": {
-        "type": "Group",
+      "currency_name": {
+        "type": "Text",
+        "config": { "label": "Currency Name", "placeholder": "" }
+      },
+      "currency_image": {
+        "type": "Image",
         "config": {
-          "label": "Currencies",
-          "repeat": true,
-          "fields": {
-            "currency_name": {
-              "type": "Text",
-              "config": {
-                "label": "Currency Name",
-                "placeholder": "CZK"
-              }
-            },
-            "currency_image": {
-              "type": "Image",
-              "config": {
-                "label": "Currency Image",
-                "constraint": {},
-                "thumbnails": [
-                  {
-                    "name": "small",
-                    "width": 64,
-                    "height": 64
-                  }
-                ]
-              }
-            },
-            "currency_course": {
-              "type": "Number",
-              "config": {
-                "label": "Currency Course",
-                "placeholder": "Přepočet z výchozí (CZK)"
-              }
-            }
-          }
+          "label": "Currency Image",
+          "constraint": {},
+          "thumbnails": [{ "name": "Small", "width": 64, "height": 64 }]
         }
+      },
+      "currency_course": {
+        "type": "Number",
+        "config": { "label": "Currency Course", "placeholder": "" }
       }
     }
   }
