@@ -23,6 +23,8 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     <Bounded className="">
       <Suspense fallback={<Loading />}>
         <SearchProducts
+          currency_course={settings.data.currency_course || 1}
+          currency_name={settings.data.currency_name || ""}
           loadMore={texts.data.load_more || ""}
           lang={lang}
           searchText={texts.data.search || ""}
@@ -40,9 +42,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const client = createClient();
   const { lang } = await params;
-  const reverseLang = reverseLocaleLookup(lang)
+  const reverseLang = reverseLocaleLookup(lang);
   const settings = await client
-    .getSingle("settings", { lang:reverseLang })
+    .getSingle("settings", { lang: reverseLang })
     .catch(() => notFound());
 
   return {

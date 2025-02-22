@@ -11,11 +11,15 @@ export default function SearchProducts({
   searchText,
   lang,
   loadMore,
+  currency_name,
+  currency_course,
 }: {
   placeholder: string;
   searchText: string;
   lang: string;
   loadMore: string;
+  currency_name: string;
+  currency_course: number;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -56,7 +60,13 @@ export default function SearchProducts({
         />
       </form>
       {products && (
-        <Products loadMore={loadMore} lang={lang} products={products} />
+        <Products
+          loadMore={loadMore}
+          lang={lang}
+          products={products}
+          currency_course={currency_course}
+          currency_name={currency_name}
+        />
       )}
     </div>
   );
