@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const langReverse = reverseLocaleLookup(lang);
   const path = decodeURIComponent(uid.replaceAll("-", "/"));
   const category = await motosedla.default
-    .getCategoryByPath(path)
+    .getCategoryByPath(uid.replaceAll("-", "/"))
     .catch(() => notFound());
   const childrenCategories = await motosedla.default
     .getSubcategoriesById(category.id)
