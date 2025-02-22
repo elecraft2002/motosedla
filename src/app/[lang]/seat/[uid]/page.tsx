@@ -13,6 +13,7 @@ import Configuration from "@/components/Configuration";
 import { PrismicRichText } from "@/components/PrismicRichText";
 import SliderGallery from "@/components/SliderGallery";
 import * as motosedla from "@/services/api";
+import { reverseLocaleLookup } from "@/i18n";
 
 type Page = {
   uid: string;
@@ -24,7 +25,9 @@ interface Replace {
 type Params = { uid: string; lang: string };
 export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
-  const { lang } = await params;
+  let { lang } = await params;
+  lang = reverseLocaleLookup(lang) || "cs-cz";
+
   const { uid } = await params;
   const configuration = await client.getSingle("configuration", { lang });
   const settings = await client.getSingle("settings", { lang });

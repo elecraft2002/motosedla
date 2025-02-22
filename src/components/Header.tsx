@@ -5,13 +5,18 @@ import { PrismicText } from "@prismicio/react";
 import { createClient } from "@/prismicio";
 import { asText } from "@prismicio/client";
 import Search from "./Search";
+import { localeLookup, reverseLocaleLookup } from "@/i18n";
 
 export default async function Header({ lang }: { lang: string }) {
+  // console.log(lang,)
+  const langReverse = reverseLocaleLookup(lang);
   const client = createClient();
-  const settings = await client.getSingle("settings", { lang });
-  const navigation = await client.getSingle("navigation", { lang });
-  const texts = await client.getSingle("texts", { lang });
-
+  const settings = await client.getSingle("settings", { lang: langReverse });
+  const navigation = await client.getSingle("navigation", {
+    lang: langReverse,
+  });
+  const texts = await client.getSingle("texts", { lang: langReverse });
+  console.log("xddd",lang,localeLookup(lang))
   return (
     <header className="fixed w-full backdrop-blur-2xl py-2 md:py-4 px-4 ba z-50 bg-white/50 dark:bg-black/50">
       <div className="mx-auto w-full max-w-6xl">
@@ -24,7 +29,7 @@ export default async function Header({ lang }: { lang: string }) {
           </PrismicNextLink>
           <div className="flex">
             <Search
-              lang={lang}
+              lang={localeLookup(lang) || ""}
               placeholder={texts.data.search_seat_placeholder || ""}
             />
           </div>

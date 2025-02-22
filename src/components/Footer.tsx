@@ -4,12 +4,17 @@ import React from "react";
 import * as prismic from "@prismicio/client";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import Link from "next/link";
+import { reverseLocaleLookup } from "@/i18n";
 
 export default async function Footer({ lang }: { lang: string }) {
   const client = createClient();
-  const settings = await client.getSingle("settings", { lang });
-  const footer = await client.getSingle("footer_navigation", { lang });
-  const texts = await client.getSingle("texts", { lang });
+  const langReverse = reverseLocaleLookup(lang);
+
+  const settings = await client.getSingle("settings", { lang: langReverse });
+  const footer = await client.getSingle("footer_navigation", {
+    lang: langReverse,
+  });
+  const texts = await client.getSingle("texts", { lang: langReverse });
   return (
     <footer className="bg-white rounded-lg shadow dark:bg-black mt-4">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">

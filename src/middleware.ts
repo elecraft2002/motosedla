@@ -29,18 +29,21 @@
 //   matcher: ["/((?!_next|images).*)", "/"],
 // };
 
-import { createLocaleRedirect } from "@prismicio/next";
-import { createClient } from "@/prismicio";
+// import { createLocaleRedirect } from "@prismicio/next";
+import { createLocaleRedirect, pathnameHasLocale } from "@/i18n";
+// import { createClient } from "@/prismicio";
 import { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const client = createClient();
-  const redirect = await createLocaleRedirect({ client, request });
-
-
-  if (redirect) {
-    return redirect;
+  if (!pathnameHasLocale(request)) {
+    return createLocaleRedirect(request);
   }
+  // const client = createClient();
+  // const redirect = await createLocaleRedirect({ client, request });
+
+  // if (redirect) {
+  //   return redirect;
+  // }
 }
 
 export const config = {

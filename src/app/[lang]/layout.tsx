@@ -9,6 +9,7 @@ import { createClient, repositoryName } from "@/prismicio";
 import { Bounded } from "@/components/Bounded";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { reverseLocaleLookup } from "@/i18n";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,6 +22,7 @@ export default async function RootLayout({
   params,
 }: Readonly<{ children: React.ReactNode; params: Promise<any> }>) {
   const { lang } = await params;
+
 
   return (
     <html lang={lang.split("-")[0]} className={inter.variable}>

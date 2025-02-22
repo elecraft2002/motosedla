@@ -8,15 +8,17 @@ import SearchProducts from "@/components/SearchProducts";
 import { Bounded } from "@/components/Bounded";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
+import { reverseLocaleLookup } from "@/i18n";
 type Params = { uid: string; lang: string };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   const { lang } = await params;
+  const reverseLang = reverseLocaleLookup(lang);
   const settings = await client
-    .getSingle("settings", { lang })
+    .getSingle("settings", { lang: reverseLang })
     .catch(() => notFound());
-  const texts = await client.getSingle("texts", { lang });
+  const texts = await client.getSingle("texts", { lang: reverseLang });
   return (
     <Bounded className="">
       <Suspense fallback={<Loading />}>
@@ -38,8 +40,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const client = createClient();
   const { lang } = await params;
+  const reverseLang = reverseLocaleLookup(lang)
   const settings = await client
-    .getSingle("settings", { lang })
+    .getSingle("settings", { lang:reverseLang })
     .catch(() => notFound());
 
   return {

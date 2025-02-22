@@ -6,15 +6,18 @@ import * as motosedla from "@/services/api";
 import * as prismic from "@prismicio/client";
 import Products from "@/components/Products";
 import Link from "next/link";
-type Params = { uid: string; lang: string };
+import { reverseLocaleLookup } from "@/i18n";
+type Params = { uid: string; lang: any };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
   const client = createClient();
   const { lang } = await params;
+  const langReverse = reverseLocaleLookup(lang);
+
   const settings = await client
-    .getSingle("settings", { lang })
+    .getSingle("settings", { lang:langReverse })
     .catch(() => notFound());
-    const texts = await client.getSingle("texts", { lang });
+  const texts = await client.getSingle("texts", { lang:langReverse });
 
   const childrenCategories = await motosedla.default.getRootCategories();
   // console.log(childrenCategories.map((category) => category.id));
@@ -41,7 +44,11 @@ export default async function Page({ params }: { params: Promise<Params> }) {
             );
           })}
         </div>
-        <Products loadMore={texts.data.load_more||""} lang={lang} products={products} />
+        <Products
+          loadMore={texts.data.load_more || ""}
+          lang={lang}
+          products={products}
+        />
       </div>
     </div>
   );
@@ -53,7 +60,8 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const client = createClient();
-  const { lang } = await params;
+  let { lang } = await params;
+  lang = reverseLocaleLookup(lang);
   const settings = await client
     .getSingle("settings", { lang })
     .catch(() => notFound());
