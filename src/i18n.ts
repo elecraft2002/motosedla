@@ -20,12 +20,12 @@ const LOCALES = {
 
 /** Creates a redirect with an auto-detected locale prepended to the URL. */
 export function createLocaleRedirect(request: NextRequest): Response {
-  const headers = {
+  const headers:any = {
     "accept-language": request.headers.get("accept-language"),
   };
   const languages = new Negotiator({ headers }).languages();
   const locales = Object.keys(LOCALES);
-  const locale = match(languages, locales, locales[0]);
+  const locale = match(languages, locales, locales[0]) as keyof typeof LOCALES;
 
   request.nextUrl.pathname = `/${LOCALES[locale]}${request.nextUrl.pathname}`;
 
@@ -45,11 +45,11 @@ export function pathnameHasLocale(request: NextRequest): boolean {
  */
 export function reverseLocaleLookup(locale: string): string | undefined {
   for (const key in LOCALES) {
-    if (LOCALES[key] === locale) {
+    if (LOCALES[key as keyof typeof LOCALES] === locale) {
       return key;
     }
   }
 }
 export function localeLookup(locale: string): string | undefined {
-  return LOCALES[locale];
+  return LOCALES[locale as keyof typeof LOCALES];
 }
