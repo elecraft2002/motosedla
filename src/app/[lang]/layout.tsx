@@ -1,5 +1,5 @@
 import "../globals.css";
-
+import {HeroUIProvider} from "@heroui/react";
 import { /* Inter, */ Montserrat } from "next/font/google";
 import { asText } from "@prismicio/client";
 import { PrismicText } from "@prismicio/react";
@@ -32,12 +32,14 @@ export default async function RootLayout({
   return (
     <html lang={lang.split("-")[0]} className={montserrat.variable}>
       <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
-        <main className="background flex flex-col">
-          <Header lang={lang} />
-          {children}
-          <Footer lang={lang} />
-        </main>
-        <PrismicPreview repositoryName={repositoryName} />
+        <HeroUIProvider>
+          <main className="background flex flex-col min-h-screen">
+            <Header lang={lang} />
+            {children}
+            <Footer lang={lang} />
+          </main>
+          <PrismicPreview repositoryName={repositoryName} />
+        </HeroUIProvider>
       </body>
     </html>
   );

@@ -228,6 +228,7 @@ export type NavigationDocument<Lang extends string = string> =
   >;
 
 type PageDocumentDataSlicesSlice =
+  | ConfigurationSlice
   | MapSlice
   | ContactSlice
   | HeroSlice
@@ -317,6 +318,97 @@ interface PageDocumentData {
  */
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
+
+type PriceDocumentDataSlicesSlice =
+  | TextSlice
+  | TextWithImageSlice
+  | HeroSlice
+  | ImageSlice
+  | QuoteSlice
+  | ImageCardsSlice
+  | MapSlice
+  | ContactSlice;
+
+/**
+ * Content for Price documents
+ */
+interface PriceDocumentData {
+  /**
+   * Name field in *Price*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: price.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Description field in *Price*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: price.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Slice Zone field in *Price*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: price.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<PriceDocumentDataSlicesSlice> /**
+   * Meta Title field in *Price*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: price.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Price*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: price.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Price*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: price.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Price document from Prismic
+ *
+ * - **API ID**: `price`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PriceDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<PriceDocumentData>, "price", Lang>;
 
 type SeatDocumentDataSlicesSlice = ImageCardsSlice;
 
@@ -531,6 +623,7 @@ export type AllDocumentTypes =
   | FooterNavigationDocument
   | NavigationDocument
   | PageDocument
+  | PriceDocument
   | SeatDocument
   | SettingsDocument
   | TextsDocument;
@@ -1375,6 +1468,9 @@ declare module "@prismicio/client" {
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
+      PriceDocument,
+      PriceDocumentData,
+      PriceDocumentDataSlicesSlice,
       SeatDocument,
       SeatDocumentData,
       SeatDocumentDataSlicesSlice,

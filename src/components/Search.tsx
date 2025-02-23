@@ -43,7 +43,7 @@ export default function Search({
         method="post"
         onSubmit={(e) => {
           e.preventDefault();
-          router.push(`/${lang}/search?q=${encodeURIComponent(search)}`);
+          router.push(`./${lang}/search?q=${encodeURIComponent(search)}`);
           handleSearch("");
         }}
       >
@@ -56,7 +56,6 @@ export default function Search({
             type="search"
             id="simple-search"
             placeholder={placeholder}
-            className="hidden md:block"
             // required
             onFocus={() => setShownSearchState(true)}
             onChange={(e) => {
@@ -101,7 +100,7 @@ export default function Search({
                     className="hover:bg-slate-200/10 transition-all"
                   >
                     <Link
-                      href={`/${lang}/seat/${result.uid}`}
+                      href={`./${lang}/seat/${result.uid}`}
                       className="flex items-center gap-2"
                       onClick={() => {
                         setShownSearchState(false);

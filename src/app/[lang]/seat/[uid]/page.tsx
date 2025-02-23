@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           </div>
         </div>
         <Configuration
-          name={product.name}
+          name={"Sedlo na motorku "+product.name}
           shortDescription={configuration.data.short_description}
           price={product.price}
           slices={configuration.data.slices}
