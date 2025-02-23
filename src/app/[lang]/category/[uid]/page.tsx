@@ -121,7 +121,8 @@ export async function generateStaticParams() {
       ) as motosedla.Category;
       path.push(tempCategory.name);
     }
-    return { ...category, path: path.reverse().join("/") };
+    // console.log(path.reverse().join("-"));
+    return { ...category, path: path.reverse().join("-") };
   });
   const client = createClient();
 
