@@ -16,7 +16,8 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
   const [message, setMessage] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isLoading, setLoadingState] = useState(false);
-  const params = Object.fromEntries(new URLSearchParams(location?.search));
+  const params =
+    konfigurace && Object.fromEntries(new URLSearchParams(location.search));
   // console.log(params);
   const handleSubmit = async (e: React.FormEvent) => {
     const info = konfigurace
