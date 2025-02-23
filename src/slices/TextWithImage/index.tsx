@@ -32,6 +32,7 @@ const TextWithImage = ({ slice }: TextWithImageProps) => {
             <div className="bg-gray-100">
               <PrismicNextImage
                 field={image}
+                loading="lazy"
                 sizes="100vw"
                 className="w-full"
               />

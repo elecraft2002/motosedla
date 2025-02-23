@@ -1,0 +1,14 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"search_term": {
+				"__TYPE__": "FieldContent",
+				"value": "themselves",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]

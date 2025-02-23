@@ -56,22 +56,24 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           })}
         </h2>
         <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
-          {childrenCategories.map((subCategory) => {
-            if (subCategory.parent_id !== category.id) return null;
-            return (
-              <a
-                key={subCategory.id}
-                href={`./${uid}-${subCategory.name}`}
-                className="hover:text-blue-400 transition-all"
-              >
-                {subCategory.name}
-              </a>
-            );
-          })}
+          {childrenCategories
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((subCategory) => {
+              if (subCategory.parent_id !== category.id) return null;
+              return (
+                <a
+                  key={subCategory.id}
+                  href={`./${uid}-${subCategory.name}`}
+                  className="hover:text-blue-400 transition-all"
+                >
+                  {subCategory.name}
+                </a>
+              );
+            })}
         </div>
         <Products
-          currency_course={settings.data.currency_course||1}
-          currency_name={settings.data.currency_name||""}
+          currency_course={settings.data.currency_course || 1}
+          currency_name={settings.data.currency_name || ""}
           loadMore={texts.data.load_more || ""}
           lang={lang}
           products={products}

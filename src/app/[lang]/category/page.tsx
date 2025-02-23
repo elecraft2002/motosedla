@@ -22,7 +22,6 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const childrenCategories = await motosedla.default.getRootCategories();
   // console.log(childrenCategories.map((category) => category.id));
   const products = await motosedla.default.getAllProducts();
-  console.log(products)
   return (
     <div className="">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -32,7 +31,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           </h2>
         </Link>
         <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
-          {childrenCategories.map((subCategory) => {
+          {childrenCategories.sort((a, b) => (a.name > b.name ? 1 : -1)).map((subCategory) => {
             return (
               <Link
                 key={subCategory.id}

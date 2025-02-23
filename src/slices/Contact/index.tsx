@@ -1,3 +1,5 @@
+import { Bounded } from "@/components/Bounded";
+import { Form } from "@/components/Configuration";
 import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 
@@ -15,7 +17,9 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
     >
-      Placeholder component for contact (variation: {slice.variation}) Slices
+      <Bounded>
+        <Form konfigurace={false} />
+      </Bounded>
     </section>
   );
 };

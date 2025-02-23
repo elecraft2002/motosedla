@@ -10,15 +10,18 @@ import { PrismicRichText } from "./PrismicRichText";
 import Input from "./Input";
 import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion";
 
-const Form = () => {
+export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
   const [message, setMessage] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isLoading, setLoadingState] = useState(false);
-  const params = Object.fromEntries(new URLSearchParams(location.search));
+  const params = Object.fromEntries(new URLSearchParams(location?.search));
   // console.log(params);
   const handleSubmit = async (e: React.FormEvent) => {
+    const info = konfigurace
+      ? { telefon: tel, zprava: message, konfigurace: params }
+      : { telefon: tel, zprava: message };
     e.preventDefault();
     setLoadingState(true);
     const response = await fetch("/api/send-email", {
@@ -28,7 +31,7 @@ const Form = () => {
       },
       body: JSON.stringify({
         email,
-        data: { tel, message, konfigurace: params },
+        info,
       }),
     });
 
@@ -91,7 +94,8 @@ export default function Configuration({
   price,
   shortDescription,
   name,
-  currencyCourse,currencyName
+  currencyCourse,
+  currencyName,
 }: {
   slices: SliceZoneLike<SliceLike<string>> | undefined;
   price: number;
@@ -114,7 +118,11 @@ export default function Configuration({
     <div className="flex flex-col gap-4 col-span-3">
       {/* <LanguageSwitcher locales={locales} /> */}
       <h1 className="mb-2 text-5xl font-medium">Sedlo na motorku {name}</h1>
-      <Price currencyCourse={currencyCourse} currencyName={currencyName} price={totalPrice} />
+      <Price
+        currencyCourse={currencyCourse}
+        currencyName={currencyName}
+        price={totalPrice}
+      />
       <Line />
       <ul className="flex flex-col gap-4">
         <SliceZone
@@ -152,7 +160,7 @@ export default function Configuration({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25, duration: 0.25 }}
           >
-            <Form />
+            <Form konfigurace />
           </motion.div>
         )}
       </AnimatePresence>

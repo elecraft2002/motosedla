@@ -228,6 +228,7 @@ export type NavigationDocument<Lang extends string = string> =
   >;
 
 type PageDocumentDataSlicesSlice =
+  | MapSlice
   | ContactSlice
   | HeroSlice
   | QuoteSlice
@@ -1063,6 +1064,48 @@ export type ImageCardsSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *Map → Default → Primary*
+ */
+export interface MapSliceDefaultPrimary {
+  /**
+   * Search term field in *Map → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Rutan performance...
+   * - **API ID Path**: map.default.primary.search_term
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  search_term: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for Map Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type MapSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<MapSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Map*
+ */
+type MapSliceVariation = MapSliceDefault;
+
+/**
+ * Map Shared Slice
+ *
+ * - **API ID**: `map`
+ * - **Description**: Map
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type MapSlice = prismic.SharedSlice<"map", MapSliceVariation>;
+
+/**
  * Primary content in *Quote → Default → Primary*
  */
 export interface QuoteSliceDefaultPrimary {
@@ -1368,6 +1411,10 @@ declare module "@prismicio/client" {
       ImageCardsSliceDefaultPrimary,
       ImageCardsSliceVariation,
       ImageCardsSliceDefault,
+      MapSlice,
+      MapSliceDefaultPrimary,
+      MapSliceVariation,
+      MapSliceDefault,
       QuoteSlice,
       QuoteSliceDefaultPrimary,
       QuoteSliceVariation,
