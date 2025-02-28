@@ -154,6 +154,7 @@ import { localeLookup, reverseLocaleLookup } from "@/i18n";
 import { headers } from "next/headers";
 import clsx from "clsx";
 import * as prismic from "@prismicio/client";
+import Link from "next/link";
 
 export default async function Header({ lang }: { lang: string }) {
   const langReverse = reverseLocaleLookup(lang);
@@ -187,7 +188,9 @@ export default async function Header({ lang }: { lang: string }) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="logo">
-            <PrismicNextImage field={settings.data.site_logo} />
+            <Link href={`/${lang }`}>
+              <PrismicNextImage field={settings.data.site_logo} />
+            </Link>
           </div>
           <div className="info flex flex-col gap-4 justify-between items-center md:items-end">
             <div className="flex flex-wrap gap-4">
@@ -215,7 +218,7 @@ export default async function Header({ lang }: { lang: string }) {
         </div>
         <div>
           <ul className="flex flex-wrap flex-col md:flex-row  md:gap-10 bg-white/20 p-3 rounded-sm mt-6">
-            {navigation.data?.links.map((item,i) => {
+            {navigation.data?.links.map((item, i) => {
               return (
                 <li
                   key={i}
