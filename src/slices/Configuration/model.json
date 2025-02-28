@@ -38,6 +38,15 @@
             "placeholder": "Gelová vložka..."
           }
         },
+        "description": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Description",
+            "placeholder": "Krátký popis o co se jedná (nemusí být žádný)",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
         "options": {
           "type": "Group",
           "config": {
@@ -57,17 +66,22 @@
                   "label": "Price",
                   "placeholder": "Cena která se přičte k základu"
                 }
+              },
+              "image": {
+                "type": "Image",
+                "config": {
+                  "label": "Image",
+                  "constraint": {},
+                  "thumbnails": [
+                    {
+                      "name": "small",
+                      "width": 200,
+                      "height": null
+                    }
+                  ]
+                }
               }
             }
-          }
-        },
-        "description": {
-          "type": "StructuredText",
-          "config": {
-            "label": "Description",
-            "placeholder": "Krátký popis o co se jedná (nemusí být žádný)",
-            "allowTargetBlank": true,
-            "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
           }
         }
       },

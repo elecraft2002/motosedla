@@ -737,6 +737,16 @@ export interface ConfigurationSliceDefaultPrimaryOptionsItem {
    * - **Documentation**: https://prismic.io/docs/field#number
    */
   price: prismic.NumberField;
+
+  /**
+   * Image field in *Configuration → Default → Primary → Options*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: configuration.default.primary.options[].image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<"small">;
 }
 
 /**
@@ -764,6 +774,16 @@ export interface ConfigurationSliceDefaultPrimary {
   name: prismic.KeyTextField;
 
   /**
+   * Description field in *Configuration → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Krátký popis o co se jedná (nemusí být žádný)
+   * - **API ID Path**: configuration.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
    * Options field in *Configuration → Default → Primary*
    *
    * - **Field Type**: Group
@@ -774,16 +794,6 @@ export interface ConfigurationSliceDefaultPrimary {
   options: prismic.GroupField<
     Simplify<ConfigurationSliceDefaultPrimaryOptionsItem>
   >;
-
-  /**
-   * Description field in *Configuration → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Krátký popis o co se jedná (nemusí být žádný)
-   * - **API ID Path**: configuration.default.primary.description
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  description: prismic.RichTextField;
 }
 
 /**
