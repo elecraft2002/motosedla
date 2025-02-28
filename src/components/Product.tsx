@@ -15,7 +15,7 @@ export default function Product({
   lang: string;
 }) {
   return (
-    <div className="group relative">
+    <div className="group relative bg-white p-2 rounded-md">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
         <Image
           width={300}
@@ -29,14 +29,14 @@ export default function Product({
       </div>
       <div className="mt-4 flex justify-between flex-wrap">
         <div>
-          <h3 className="text-sm text-gray-700 dark:text-slate-300">
+          <h3 className="text-sm text-gray-700 ">
             <Link href={"/" + encodeURIComponent(lang) + "/seat/" + encodeURIComponent(product.id_google)}>
               <span aria-hidden="true" className="absolute inset-0"></span>
               Úprava sedla {product.name}
             </Link>
           </h3>
         </div>
-        <p className="text-sm font-medium light:text-gray-900">
+        <p className="text-sm font-medium text-gray-900">
           {(product.price / currency_course).toFixed(0)} {currency_name}
         </p>
       </div>

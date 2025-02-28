@@ -7,6 +7,7 @@ import * as prismic from "@prismicio/client";
 import Products from "@/components/Products";
 import Link from "next/link";
 import { reverseLocaleLookup } from "@/i18n";
+import Categories from "@/components/Categories";
 type Params = { uid: string; lang: any };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
@@ -33,7 +34,8 @@ export default async function Page({ params }: { params: Promise<Params> }) {
       ])
     : await motosedla.default.getProductsByCategoryId(category.id);
   return (
-    <div className="">
+    <div>
+      <Categories lang={lang} path={path}/>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="text-xl font-bold tracking-tight flex flex-wrap">
           <Link href={`/${lang}/category/`}>

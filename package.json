@@ -29,7 +29,7 @@
     "framer-motion": "^12.4.7",
     "hamburger-react": "^2.5.1",
     "negotiator": "^1.0.0",
-    "next": "^15.2.0-canary.69",
+    "next": "^15.2.1-canary.2",
     "next-sitemap": "^4.2.3",
     "nodemailer": "^6.9.16",
     "react": "^18.3.1",

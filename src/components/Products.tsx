@@ -48,7 +48,7 @@ export default function Products({
       </div>
       {len < products.length && (
         <Button
-          className="m-auto"
+          className="m-auto mt-4"
           type={ButtonType.secondary}
           onClick={() => {
             setLen((oldLen) => oldLen + offset);

@@ -7,6 +7,7 @@ import * as prismic from "@prismicio/client";
 import Products from "@/components/Products";
 import Link from "next/link";
 import { reverseLocaleLookup } from "@/i18n";
+import Categories from "@/components/Categories";
 type Params = { uid: string; lang: any };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
@@ -24,6 +25,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const products = await motosedla.default.getAllProducts();
   return (
     <div className="">
+      <Categories lang={lang} path={"/"} />
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <Link href={`/${lang}/category/`}>
           <h2 className="text-2xl font-bold tracking-tight">
@@ -31,17 +33,19 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           </h2>
         </Link>
         <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
-          {childrenCategories.sort((a, b) => (a.name > b.name ? 1 : -1)).map((subCategory) => {
-            return (
-              <Link
-                key={subCategory.id}
-                className="hover:text-blue-400 transition-all"
-                href={`/${encodeURIComponent(lang)}/category/${encodeURIComponent(subCategory.name)}`}
-              >
-                {subCategory.name}
-              </Link>
-            );
-          })}
+          {childrenCategories
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((subCategory) => {
+              return (
+                <Link
+                  key={subCategory.id}
+                  className="hover:text-blue-400 transition-all"
+                  href={`/${encodeURIComponent(lang)}/category/${encodeURIComponent(subCategory.name)}`}
+                >
+                  {subCategory.name}
+                </Link>
+              );
+            })}
         </div>
         <Products
           currency_course={settings.data.currency_course || 1}

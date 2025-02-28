@@ -13,11 +13,11 @@ export default function Price({
   const priceRate = (price / currencyCourse).toFixed(0);
 
   return (
-    <div className="mr-auto w-auto rounded-full bg-blue-600 p-2 px-4 text-sm text-white relative">
+    <div className="mr-auto w-auto rounded-full bg-red-600 p-2 px-4 text-white relative text-xl">
       <p className="invisible">
         {priceRate} {currencyName}
       </p>
-      <div className="absolute overflow-hidden h-5 w-96 top-2" >
+      <div className="absolute overflow-hidden h-7 w-96 top-2" >
         <AnimatePresence mode="wait">
           <motion.div
             key={price} // důležité pro správnou animaci

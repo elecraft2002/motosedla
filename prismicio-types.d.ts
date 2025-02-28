@@ -113,7 +113,7 @@ export interface FooterNavigationDocumentDataLinksItem {
    * - **API ID Path**: footer_navigation.links[].link
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  link: prismic.LinkField;
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -129,7 +129,13 @@ interface FooterNavigationDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  homepage: prismic.LinkField;
+  homepage: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Links field in *Footer Navigation*
@@ -181,7 +187,7 @@ export interface NavigationDocumentDataLinksItem {
    * - **API ID Path**: navigation.links[].link
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  link: prismic.LinkField;
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -197,7 +203,13 @@ interface NavigationDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  homepage: prismic.LinkField;
+  homepage: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Links field in *Navigation*
@@ -472,6 +484,56 @@ export type SeatDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<SeatDocumentData>, "seat", Lang>;
 
 /**
+ * Item in *Settings → main_contacts*
+ */
+export interface SettingsDocumentDataMainContactsItem {
+  /**
+   * Link field in *Settings → main_contacts*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.main_contacts[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Contact Image field in *Settings → main_contacts*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.main_contacts[].contact_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  contact_image: prismic.ImageField<"small">;
+}
+
+/**
+ * Item in *Settings → secondary_contacts*
+ */
+export interface SettingsDocumentDataSecondaryContactsItem {
+  /**
+   * Link field in *Settings → secondary_contacts*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.secondary_contacts[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Contact Image field in *Settings → secondary_contacts*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.secondary_contacts[].contact_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  contact_image: prismic.ImageField<"Small">;
+}
+
+/**
  * Content for Settings documents
  */
 interface SettingsDocumentData {
@@ -538,7 +600,31 @@ interface SettingsDocumentData {
    * - **Tab**: Currency
    * - **Documentation**: https://prismic.io/docs/field#number
    */
-  currency_course: prismic.NumberField;
+  currency_course: prismic.NumberField /**
+   * main_contacts field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.main_contacts[]
+   * - **Tab**: Contact
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */;
+  main_contacts: prismic.GroupField<
+    Simplify<SettingsDocumentDataMainContactsItem>
+  >;
+
+  /**
+   * secondary_contacts field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.secondary_contacts[]
+   * - **Tab**: Contact
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  secondary_contacts: prismic.GroupField<
+    Simplify<SettingsDocumentDataSecondaryContactsItem>
+  >;
 }
 
 /**
@@ -772,7 +858,7 @@ export interface HeroSliceHeroSliderPrimarySectionItem {
    * - **API ID Path**: hero.heroSlider.primary.section[].background_content
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  background_content: prismic.LinkToMediaField;
+  background_content: prismic.LinkToMediaField<prismic.FieldState, never>;
 
   /**
    * Link text field in *Hero → Hero - Slider → Primary → Section*
@@ -792,7 +878,7 @@ export interface HeroSliceHeroSliderPrimarySectionItem {
    * - **API ID Path**: hero.heroSlider.primary.section[].link
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  link: prismic.LinkField;
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -817,7 +903,13 @@ export interface HeroSliceDefaultPrimary {
    * - **API ID Path**: hero.default.primary.buttonLink
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  buttonLink: prismic.LinkField;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Button Text field in *Hero → Default → Primary*
@@ -875,7 +967,13 @@ export interface HeroSliceHeroVideoPrimary {
    * - **API ID Path**: hero.heroVideo.primary.buttonLink
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  buttonLink: prismic.LinkField;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Button Text field in *Hero → Hero - video → Primary*
@@ -895,7 +993,7 @@ export interface HeroSliceHeroVideoPrimary {
    * - **API ID Path**: hero.heroVideo.primary.background_video
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  background_video: prismic.LinkToMediaField;
+  background_video: prismic.LinkToMediaField<prismic.FieldState, never>;
 
   /**
    * Phrase field in *Hero → Hero - video → Primary*
@@ -1088,7 +1186,13 @@ export interface ImageCardsSliceDefaultPrimaryCardsItem {
    * - **API ID Path**: image_cards.default.primary.cards[].buttonLink
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  buttonLink: prismic.LinkField;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Button Text field in *ImageCards → Default → Primary → Cards*
@@ -1380,7 +1484,13 @@ export interface TextWithImageSliceWithButtonPrimary {
    * - **API ID Path**: text_with_image.withButton.primary.buttonLink
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  buttonLink: prismic.LinkField;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Button Text field in *TextWithImage → With Button → Primary*
@@ -1476,6 +1586,8 @@ declare module "@prismicio/client" {
       SeatDocumentDataSlicesSlice,
       SettingsDocument,
       SettingsDocumentData,
+      SettingsDocumentDataMainContactsItem,
+      SettingsDocumentDataSecondaryContactsItem,
       TextsDocument,
       TextsDocumentData,
       AllDocumentTypes,

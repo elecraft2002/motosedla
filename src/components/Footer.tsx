@@ -27,9 +27,9 @@ export default async function Footer({ lang }: { lang: string }) {
               {prismic.isFilled.image(settings.data.site_logo) && (
                 <PrismicNextImage field={settings.data.site_logo.small} />
               )}
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+             {/*  <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 {prismic.asText(settings.data.siteTitle)}
-              </span>
+              </span> */}
             </Link>
             <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
               {footer.data.links.map((link, i) => {

@@ -31,7 +31,7 @@ export default async function RootLayout({
 
   return (
     <html lang={lang.split("-")[0]} className={montserrat.variable}>
-      <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
+      <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-red-300 ">
         <HeroUIProvider>
           <main className="background flex flex-col min-h-screen">
             <Header lang={lang} />
