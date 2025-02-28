@@ -1,5 +1,5 @@
 import "../globals.css";
-import {HeroUIProvider} from "@heroui/react";
+import { HeroUIProvider } from "@heroui/react";
 import { /* Inter, */ Montserrat } from "next/font/google";
 import { asText } from "@prismicio/client";
 import { PrismicText } from "@prismicio/react";
@@ -10,7 +10,7 @@ import { Bounded } from "@/components/Bounded";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { reverseLocaleLookup } from "@/i18n";
-
+import * as prismic from "@prismicio/client";
 /* const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -28,9 +28,18 @@ export default async function RootLayout({
   params,
 }: Readonly<{ children: React.ReactNode; params: Promise<any> }>) {
   const { lang } = await params;
+  const client = createClient();
+  const langReverse = reverseLocaleLookup(lang);
+
+  const settings = await client.getSingle("settings", { lang: langReverse });
 
   return (
     <html lang={lang.split("-")[0]} className={montserrat.variable}>
+      <link
+        rel="icon"
+        href={prismic.asImageSrc(settings.data.favicon) || ""}
+        sizes="any"
+      />
       <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-red-300 ">
         <HeroUIProvider>
           <main className="background flex flex-col min-h-screen">

@@ -42,6 +42,17 @@
             }
           ]
         }
+      },
+      "favicon": {
+        "type": "Image",
+        "config": {
+          "label": "Favicon",
+          "constraint": {
+            "width": 64,
+            "height": 64
+          },
+          "thumbnails": []
+        }
       }
     },
     "Currency": {

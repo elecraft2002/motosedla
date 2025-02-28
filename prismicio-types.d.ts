@@ -569,7 +569,18 @@ interface SettingsDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#image
    */
-  site_logo: prismic.ImageField<"small" | "icon"> /**
+  site_logo: prismic.ImageField<"small" | "icon">;
+
+  /**
+   * Favicon field in *Settings*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.favicon
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  favicon: prismic.ImageField<never> /**
    * Currency Name field in *Settings*
    *
    * - **Field Type**: Text
