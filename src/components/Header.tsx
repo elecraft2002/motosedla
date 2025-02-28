@@ -176,7 +176,7 @@ export default async function Header({ lang }: { lang: string }) {
           <ul className="flex gap-4 flex-wrap text-sm text-gray-300">
             {bottomNavigation.data.links.map((item, i) => {
               return (
-                <li className="hover:underline transition-all">
+                <li key={i} className="hover:underline transition-all">
                   <PrismicNextLink lang={lang} field={item.link}>
                     {item.label}
                   </PrismicNextLink>
@@ -215,10 +215,10 @@ export default async function Header({ lang }: { lang: string }) {
         </div>
         <div>
           <ul className="flex flex-wrap flex-col md:flex-row  md:gap-10 bg-white/20 p-3 rounded-sm mt-6">
-            {navigation.data?.links.map((item) => {
+            {navigation.data?.links.map((item,i) => {
               return (
                 <li
-                  key={asText(item.label)}
+                  key={i}
                   className={clsx(
                     "font-semibold tracking-tight hover:text-red-500 transition-all text-center border-b-1 border-black p-2 last:border-none md:border-none",
                     prismic.asText(item.label).toLowerCase() ===

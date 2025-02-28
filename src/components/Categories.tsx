@@ -12,14 +12,13 @@ export default async function Categories({
   const childrenCategories = (await motosedla.default.getRootCategories()).sort(
     (a, b) => (a.name > b.name ? 1 : -1)
   );
-  return null
   return (
     <div>
       <ul>
         {childrenCategories.map((item, i) => {
             
           return (
-            <li>
+            <li key={i}>
               <Link key={i} href={`/${lang}/category/${item.name}`}>
                 <span className="before:content-['>'] before:text-slate-500 before:px-2 before:scale-50">
                   {item.name}
