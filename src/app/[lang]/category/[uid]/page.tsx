@@ -35,33 +35,32 @@ export default async function Page({ params }: { params: Promise<Params> }) {
       ])
     : await motosedla.default.getProductsByCategoryId(category.id);
   return (
+    <Bounded>
+      <div className="grid grid-cols-4">
+        <Categories lang={lang} path={path} />
+        <div className="col-span-3">
+          <div className="px-6">
+            <h2 className="text-xl font-bold tracking-tight flex flex-wrap">
+              <Link href={`/${lang}/category/`}>
+                {prismic.asText(settings.data.siteTitle)}
+              </Link>
+              {path.split("/").map((e, index) => {
+                let link = "";
+                for (let i = 0; i <= index; i++) {
+                  const word = path.split("/")[i];
+                  link += word + "/";
+                }
 
-       <Bounded>
-       <div className="grid grid-cols-4">
-         <Categories lang={lang} path={"/"} />
-         <div className="col-span-3">
-           <div className="px-6">
-           <h2 className="text-xl font-bold tracking-tight flex flex-wrap">
-            <Link href={`/${lang}/category/`}>
-              {prismic.asText(settings.data.siteTitle)}
-            </Link>
-            {path.split("/").map((e, index) => {
-              let link = "";
-              for (let i = 0; i <= index; i++) {
-                const word = path.split("/")[i];
-                link += word + "/";
-              }
-  
-              return (
-                <Link key={index} href={`/${lang}/category/${link}`}>
-                  <span className="before:content-['>'] before:text-slate-500 before:px-2 before:scale-50">
-                    {e}
-                  </span>
-                </Link>
-              );
-            })}
-          </h2>
-               {/* <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
+                return (
+                  <Link key={index} href={`/${lang}/category/${link}`}>
+                    <span className="before:content-['>'] before:text-slate-500 before:px-2 before:scale-50">
+                      {e}
+                    </span>
+                  </Link>
+                );
+              })}
+            </h2>
+            {/* <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
                  {childrenCategories
                    .sort((a, b) => (a.name > b.name ? 1 : -1))
                    .map((subCategory) => {
@@ -76,17 +75,17 @@ export default async function Page({ params }: { params: Promise<Params> }) {
                      );
                    })}
                </div> */}
-             <Products
-               currency_course={settings.data.currency_course || 1}
-               currency_name={settings.data.currency_name || ""}
-               loadMore={texts.data.load_more || ""}
-               lang={lang}
-               products={products}
-             />
-           </div>
-         </div>
-       </div>
-     </Bounded>
+            <Products
+              currency_course={settings.data.currency_course || 1}
+              currency_name={settings.data.currency_name || ""}
+              loadMore={texts.data.load_more || ""}
+              lang={lang}
+              products={products}
+            />
+          </div>
+        </div>
+      </div>
+    </Bounded>
   );
 }
 
