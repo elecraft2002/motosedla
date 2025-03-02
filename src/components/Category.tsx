@@ -11,10 +11,10 @@ export default function Category({
   lang,
   pathArray,
   item,
-  children,
+  childrenProp,
   previous,
 }: {
-  children?: CategoryData[];
+  childrenProp?: CategoryData[];
   lang: string;
   pathArray: string[];
   item: motosedla.Category;
@@ -25,7 +25,7 @@ export default function Category({
       ? false
       : item.name.toLocaleLowerCase() == pathArray[0]?.toLocaleLowerCase();
   const [childrenData, setChildrenData] = useState<CategoryData[] | undefined>(
-    children
+    childrenProp
   );
   const [state, setState] = useState<"loading" | "loaded">("loaded");
   const [isActive, setActive] = useState<boolean>(active);
@@ -72,7 +72,7 @@ export default function Category({
                 <Category
                   previous={`${previous}-${e.name}`}
                   key={e.id}
-                  children={e.children}
+                  childrenProp={e.children}
                   item={e}
                   lang={lang}
                   pathArray={newPathArr}

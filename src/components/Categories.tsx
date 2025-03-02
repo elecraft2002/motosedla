@@ -86,7 +86,7 @@ export default async function Categories({
             return (
               <Category
                 previous={`.${prefix}/${item.name}`}
-                children={data[i].children}
+                childrenProp={data[i].children}
                 item={item}
                 key={i}
                 pathArray={pathArray}
