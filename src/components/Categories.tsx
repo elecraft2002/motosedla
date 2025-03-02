@@ -1,9 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import * as motosedla from "@/services/api";
 import Link from "next/link";
 import clsx from "clsx";
 import Category from "./Category";
 import { AnimatePresence } from "framer-motion";
+import NavContainer from "./NavContainer";
 
 export interface CategoryData extends motosedla.Category {
   children?: motosedla.Category[];
@@ -79,9 +80,9 @@ export default async function Categories({
   // console.log(data)
   const data = sortCategories(await transformCategories());
   return (
-    <nav>
-      <ul className="bg-white p-4 rounded-md mb-auto">
-        <AnimatePresence>
+    <AnimatePresence>
+      <NavContainer>
+        <ul>
           {data.map((item, i) => {
             return (
               <Category
@@ -94,8 +95,8 @@ export default async function Categories({
               />
             );
           })}
-        </AnimatePresence>
-      </ul>
-    </nav>
+        </ul>
+      </NavContainer>
+    </AnimatePresence>
   );
 }

@@ -26,16 +26,16 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const products = await motosedla.default.getAllProducts();
   return (
     <Bounded>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 ">
         <Categories prefix="/category" lang={lang} path={"/"} />
-        <div className="col-span-3">
+        <div className="col-span-3 mt-8 md:mt-0">
           <div className="px-6">
             <Link href={`/${lang}/category/`}>
               <h2 className="text-2xl font-bold tracking-tight">
                 {prismic.asText(settings.data.siteTitle)}
               </h2>
             </Link>
-              {/* <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
+            {/* <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
                 {childrenCategories
                   .sort((a, b) => (a.name > b.name ? 1 : -1))
                   .map((subCategory) => {

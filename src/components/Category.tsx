@@ -51,7 +51,6 @@ export default function Category({
           onClick={() => {
             setActive((oldActive) => !oldActive);
             setData();
-            console.log("click");
           }}
         >
           <Image {...arrow} />
@@ -61,11 +60,11 @@ export default function Category({
         <span className={clsx(active && "text-red-500")}>{item.name}</span>
         {isActive && (
           <motion.ul
-          className="ml-4 overflow-hidden"
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="ml-4 overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             {childrenData?.map((e) => {
               return (
