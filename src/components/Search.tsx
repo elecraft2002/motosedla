@@ -87,7 +87,7 @@ export default function Search({
 
         <AnimatePresence mode="wait">
           {shownSearch && (
-            <ul className="absolute top-12 w-full dark:bg-black/90 backdrop-blur-xl rounded-lg">
+            <ul className="absolute top-12 w-full dark:bg-black/90 backdrop-blur-xl rounded-lg z-50">
               {shortResults.map((result) => {
                 return (
                   <motion.li

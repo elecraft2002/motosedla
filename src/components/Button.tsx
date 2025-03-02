@@ -35,7 +35,7 @@ export default function Button({
     return (
       <button
         className={clsx(
-          "flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm border-neutral-800 transition duration-300 ease-in-out",
+          "flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm border-neutral-800 transition duration-300 ease-in-out text-black",
           selected
             ? "cursor-default ring-2 ring-red-600"
             : "ring-1 ring-transparent hover:ring-red-600",

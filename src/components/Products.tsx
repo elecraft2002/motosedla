@@ -22,7 +22,7 @@ export default function Products({
   const [len, setLen] = useState(offset);
   return (
     <>
-      <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+      <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
         <AnimatePresence>
           {products.sort((a, b) => (a.name > b.name ? 1 : -1)).slice(0, len).map((product, i) => {
             return (

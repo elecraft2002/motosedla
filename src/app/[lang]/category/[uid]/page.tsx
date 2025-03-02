@@ -8,6 +8,7 @@ import Products from "@/components/Products";
 import Link from "next/link";
 import { reverseLocaleLookup } from "@/i18n";
 import Categories from "@/components/Categories";
+import { Bounded } from "@/components/Bounded";
 type Params = { uid: string; lang: any };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
@@ -34,54 +35,58 @@ export default async function Page({ params }: { params: Promise<Params> }) {
       ])
     : await motosedla.default.getProductsByCategoryId(category.id);
   return (
-    <div>
-      <Categories lang={lang} path={path}/>
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <h2 className="text-xl font-bold tracking-tight flex flex-wrap">
-          <Link href={`/${lang}/category/`}>
-            {prismic.asText(settings.data.siteTitle)}
-          </Link>
-          {path.split("/").map((e, index) => {
-            let link = "";
-            for (let i = 0; i <= index; i++) {
-              const word = path.split("/")[i];
-              link += word + "/";
-            }
 
-            return (
-              <Link key={index} href={`/${lang}/category/${link}`}>
-                <span className="before:content-['>'] before:text-slate-500 before:px-2 before:scale-50">
-                  {e}
-                </span>
-              </Link>
-            );
-          })}
-        </h2>
-        <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
-          {childrenCategories
-            .sort((a, b) => (a.name > b.name ? 1 : -1))
-            .map((subCategory) => {
-              if (subCategory.parent_id !== category.id) return null;
+       <Bounded>
+       <div className="grid grid-cols-4">
+         <Categories lang={lang} path={"/"} />
+         <div className="col-span-3">
+           <div className="px-6">
+           <h2 className="text-xl font-bold tracking-tight flex flex-wrap">
+            <Link href={`/${lang}/category/`}>
+              {prismic.asText(settings.data.siteTitle)}
+            </Link>
+            {path.split("/").map((e, index) => {
+              let link = "";
+              for (let i = 0; i <= index; i++) {
+                const word = path.split("/")[i];
+                link += word + "/";
+              }
+  
               return (
-                <a
-                  key={subCategory.id}
-                  href={`./${uid}-${subCategory.name}`}
-                  className="hover:text-blue-400 transition-all"
-                >
-                  {subCategory.name}
-                </a>
+                <Link key={index} href={`/${lang}/category/${link}`}>
+                  <span className="before:content-['>'] before:text-slate-500 before:px-2 before:scale-50">
+                    {e}
+                  </span>
+                </Link>
               );
             })}
-        </div>
-        <Products
-          currency_course={settings.data.currency_course || 1}
-          currency_name={settings.data.currency_name || ""}
-          loadMore={texts.data.load_more || ""}
-          lang={lang}
-          products={products}
-        />
-      </div>
-    </div>
+          </h2>
+               {/* <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
+                 {childrenCategories
+                   .sort((a, b) => (a.name > b.name ? 1 : -1))
+                   .map((subCategory) => {
+                     return (
+                       <Link
+                         key={subCategory.id}
+                         className="hover:text-blue-400 transition-all"
+                         href={`/${encodeURIComponent(lang)}/category/${encodeURIComponent(subCategory.name)}`}
+                       >
+                         {subCategory.name}
+                       </Link>
+                     );
+                   })}
+               </div> */}
+             <Products
+               currency_course={settings.data.currency_course || 1}
+               currency_name={settings.data.currency_name || ""}
+               loadMore={texts.data.load_more || ""}
+               lang={lang}
+               products={products}
+             />
+           </div>
+         </div>
+       </div>
+     </Bounded>
   );
 }
 

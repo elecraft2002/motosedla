@@ -8,6 +8,7 @@ import Products from "@/components/Products";
 import Link from "next/link";
 import { reverseLocaleLookup } from "@/i18n";
 import Categories from "@/components/Categories";
+import { Bounded } from "@/components/Bounded";
 type Params = { uid: string; lang: any };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
@@ -24,38 +25,42 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   // console.log(childrenCategories.map((category) => category.id));
   const products = await motosedla.default.getAllProducts();
   return (
-    <div className="">
-      <Categories lang={lang} path={"/"} />
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <Link href={`/${lang}/category/`}>
-          <h2 className="text-2xl font-bold tracking-tight">
-            {prismic.asText(settings.data.siteTitle)}
-          </h2>
-        </Link>
-        <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
-          {childrenCategories
-            .sort((a, b) => (a.name > b.name ? 1 : -1))
-            .map((subCategory) => {
-              return (
-                <Link
-                  key={subCategory.id}
-                  className="hover:text-blue-400 transition-all"
-                  href={`/${encodeURIComponent(lang)}/category/${encodeURIComponent(subCategory.name)}`}
-                >
-                  {subCategory.name}
-                </Link>
-              );
-            })}
+    <Bounded>
+      <div className="grid grid-cols-4">
+        <Categories prefix="/category" lang={lang} path={"/"} />
+        <div className="col-span-3">
+          <div className="px-6">
+            <Link href={`/${lang}/category/`}>
+              <h2 className="text-2xl font-bold tracking-tight">
+                {prismic.asText(settings.data.siteTitle)}
+              </h2>
+            </Link>
+              {/* <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
+                {childrenCategories
+                  .sort((a, b) => (a.name > b.name ? 1 : -1))
+                  .map((subCategory) => {
+                    return (
+                      <Link
+                        key={subCategory.id}
+                        className="hover:text-blue-400 transition-all"
+                        href={`/${encodeURIComponent(lang)}/category/${encodeURIComponent(subCategory.name)}`}
+                      >
+                        {subCategory.name}
+                      </Link>
+                    );
+                  })}
+              </div> */}
+            <Products
+              currency_course={settings.data.currency_course || 1}
+              currency_name={settings.data.currency_name || ""}
+              loadMore={texts.data.load_more || ""}
+              lang={lang}
+              products={products}
+            />
+          </div>
         </div>
-        <Products
-          currency_course={settings.data.currency_course || 1}
-          currency_name={settings.data.currency_name || ""}
-          loadMore={texts.data.load_more || ""}
-          lang={lang}
-          products={products}
-        />
       </div>
-    </div>
+    </Bounded>
   );
 }
 
