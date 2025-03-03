@@ -30,7 +30,14 @@ export default function Product({
       <div className="mt-4 flex justify-between flex-wrap">
         <div>
           <h3 className="text-sm text-gray-700 ">
-            <Link href={"/" + encodeURIComponent(lang) + "/seat/" + encodeURIComponent(product.id_google)}>
+            <Link
+              href={
+                "/" +
+                encodeURIComponent(lang) +
+                "/seat/" +
+                encodeURIComponent(product.id_google)
+              }
+            >
               <span aria-hidden="true" className="absolute inset-0"></span>
               Úprava sedla {product.name}
             </Link>

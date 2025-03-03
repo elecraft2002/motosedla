@@ -1,6 +1,7 @@
 // app/api/send-email/route.ts
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import {  } from "next-recaptcha-v3";
 
 const recursiveHTMLParser = (data: any, key?: string): string => {
   let string = "";
@@ -16,10 +17,10 @@ const recursiveHTMLParser = (data: any, key?: string): string => {
 };
 
 export async function POST(request: Request) {
-  const { email, data } = await request.json();
+  const { email, data, token } = await request.json();
   let message = recursiveHTMLParser(data);
-
-  // Konfigurace transportéru nodemailer
+  console.log(token)
+  // Konfigurace transportéru nodemailer  
   const transporter = nodemailer.createTransport({
     service: "gmail", // nebo jiná služba (např. SMTP server)
     auth: {
@@ -35,6 +36,7 @@ export async function POST(request: Request) {
     text: message,
   };
 
+  return NextResponse.json({ success: true, data,token });
   try {
     // Odeslání e-mailu
     await transporter.sendMail(mailOptions);

@@ -9,6 +9,8 @@ import { RichTextField } from "@prismicio/client";
 import { PrismicRichText } from "./PrismicRichText";
 import Input from "./Input";
 import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion";
+import {  useReCaptcha } from "next-recaptcha-v3";
+import { env } from "process";
 
 export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
   const [email, setEmail] = useState("");
@@ -16,14 +18,16 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
   const [message, setMessage] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isLoading, setLoadingState] = useState(false);
+  const { executeRecaptcha } = useReCaptcha();
   const params =
     konfigurace && Object.fromEntries(new URLSearchParams(location.search));
-  // console.log(params);
-  const handleSubmit = async (e: React.FormEvent) => {
+
+    const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const token = await executeRecaptcha("form_submit");
     const info = konfigurace
       ? { telefon: tel, zprava: message, konfigurace: params }
       : { telefon: tel, zprava: message };
-    e.preventDefault();
     setLoadingState(true);
     const response = await fetch("/api/send-email", {
       method: "POST",
@@ -32,61 +36,64 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
       },
       body: JSON.stringify({
         email,
-        info,
+        data:info,
+        token,
       }),
     });
 
     const data = await response.json();
+    console.log(data)
     setResponseMessage(data.message);
     setLoadingState(false);
   };
   return (
-    <form
-      onSubmit={(e) => {
-        handleSubmit(e);
-      }}
-      className="flex flex-col gap-4"
-    >
-      <span>
-        <label htmlFor="email">Email</label>
-        <Input
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          value={email}
-          id="email"
-          required
-          type="email"
-          placeholder="jan.novak@gmail.com"
-        />
-      </span>
-      <span>
-        <label htmlFor="tel">Telefon</label>
+      <form
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+        className="flex flex-col gap-4"
+      >
+        <span>
+          <label htmlFor="email">Email</label>
+          <Input
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            value={email}
+            id="email"
+            required
+            type="email"
+            placeholder="jan.novak@gmail.com"
+          />
+        </span>
+        <span>
+          <label htmlFor="tel">Telefon</label>
 
-        <Input
-          onChange={(e) => {
-            setTel(e.target.value);
-          }}
-          value={tel}
-          required
-          id="tel"
-          type="tel"
-          placeholder="+420 123 456 789"
-        />
-      </span>
-      <span>
-        <label htmlFor="message">Vaše zpráva</label>
-        <textarea
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-          value={message}
-          className="min-h-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          id="message"
-        />
-      </span>
-      <Button>Odeslat</Button>
-    </form>
+          <Input
+            onChange={(e) => {
+              setTel(e.target.value);
+            }}
+            value={tel}
+            required
+            id="tel"
+            type="tel"
+            placeholder="+420 123 456 789"
+          />
+        </span>
+        <span>
+          <label htmlFor="message">Vaše zpráva</label>
+          <textarea
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+            placeholder="Vaše zpráva..."
+            value={message}
+            className="min-h-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full  p-2.5 "
+            id="message"
+          />
+        </span>
+        <Button>Odeslat</Button>
+      </form>
   );
 };
 

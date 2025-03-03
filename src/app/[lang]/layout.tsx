@@ -4,6 +4,7 @@ import { /* Inter, */ Montserrat } from "next/font/google";
 import { asText } from "@prismicio/client";
 import { PrismicText } from "@prismicio/react";
 import { PrismicNextLink, PrismicPreview } from "@prismicio/next";
+import { ReCaptchaProvider, useReCaptcha } from "next-recaptcha-v3";
 
 import { createClient, repositoryName } from "@/prismicio";
 import { Bounded } from "@/components/Bounded";
@@ -40,16 +41,18 @@ export default async function RootLayout({
         href={prismic.asImageSrc(settings.data.favicon) || ""}
         sizes="any"
       />
-      <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-red-300 ">
-        <HeroUIProvider>
-          <main className="background flex flex-col min-h-screen">
-            <Header lang={lang} />
-            {children}
-            <Footer lang={lang} />
-          </main>
-          <PrismicPreview repositoryName={repositoryName} />
-        </HeroUIProvider>
-      </body>
+      <ReCaptchaProvider reCaptchaKey="6LdxQugqAAAAACpHTecSnh3cHKU6owV66U-S380d">
+        <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-red-300 ">
+          <HeroUIProvider>
+            <main className="background flex flex-col min-h-screen">
+              <Header lang={lang} />
+              {children}
+              <Footer lang={lang} />
+            </main>
+            <PrismicPreview repositoryName={repositoryName} />
+          </HeroUIProvider>
+        </body>
+      </ReCaptchaProvider>
     </html>
   );
 }
