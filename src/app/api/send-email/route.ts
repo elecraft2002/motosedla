@@ -1,7 +1,7 @@
 // app/api/send-email/route.ts
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import {  } from "next-recaptcha-v3";
+import {} from "next-recaptcha-v3";
 
 const recursiveHTMLParser = (data: any, key?: string): string => {
   let string = "";
@@ -16,11 +16,30 @@ const recursiveHTMLParser = (data: any, key?: string): string => {
   return string;
 };
 
+async function validateCaptcha(captchaToken: string): Promise<boolean> {
+  const minimumCaptchaScore = 0.7;
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY || "";
+  const data = new FormData();
+  data.append("secret", secretKey);
+  data.append("response", captchaToken);
+  const captchaResponse = await fetch(
+    "https://www.google.com/recaptcha/api/siteverify",
+    {
+      method: "POST",
+      body: data,
+    }
+  );
+  const res = await captchaResponse.json();
+  console.log(`captcha score: ${res.score}`);
+  return res.score && res.score >= minimumCaptchaScore;
+}
+
 export async function POST(request: Request) {
   const { email, data, token } = await request.json();
+  const isValid = await validateCaptcha(token);
   let message = recursiveHTMLParser(data);
-  console.log(token)
-  // Konfigurace transportéru nodemailer  
+  console.log("isValid: ",isValid);
+  // Konfigurace transportéru nodemailer
   const transporter = nodemailer.createTransport({
     service: "gmail", // nebo jiná služba (např. SMTP server)
     auth: {
@@ -35,8 +54,7 @@ export async function POST(request: Request) {
     subject: `Motosedla - ${email}`,
     text: message,
   };
-
-  return NextResponse.json({ success: true, data,token });
+  return NextResponse.json({ success: true, data, captcha: isValid });
   try {
     // Odeslání e-mailu
     await transporter.sendMail(mailOptions);
