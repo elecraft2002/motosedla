@@ -11,7 +11,6 @@ import Input from "./Input";
 import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { env } from "process";
-import ReCAPTCHA from "react-google-recaptcha";
 export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
@@ -92,10 +91,10 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
           id="message"
         />
       </span>
-      <ReCAPTCHA
+      {/* <ReCAPTCHA
         sitekey="6LdxQugqAAAAACpHTecSnh3cHKU6owV66U-S380d"
         onChange={(token) => setMessage(token || "")}
-      />
+      /> */}
       <Button>Odeslat</Button>
     </form>
   );

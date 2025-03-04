@@ -16,29 +16,23 @@ const recursiveHTMLParser = (data: any, key?: string): string => {
   return string;
 };
 
-async function validateCaptcha(captchaToken: string): Promise<boolean> {
-  const minimumCaptchaScore = 0.7;
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY || "";
-  const data = new FormData();
-  data.append("secret", secretKey);
-  data.append("response", captchaToken);
-  const captchaResponse = await fetch(
-    "https://www.google.com/recaptcha/api/siteverify",
-    {
-      method: "POST",
-      body: data,
-    }
-  );
-  const res = await captchaResponse.json();
-  console.log(`captcha score: ${res.score}`);
-  return res.score && res.score >= minimumCaptchaScore;
+async function validateCaptcha(captchaToken: string): Promise<any> {
+  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${"6LdxQugqAAAAAEpa7OnyaBlIe0m3HhY2IevbLlq-"}&response=${captchaToken}`;
+
+  const response = await fetch(verifyUrl, { method: "POST" });
+  return await response.json();
 }
 
 export async function POST(request: Request) {
   const { email, data, token } = await request.json();
-  const isValid = await validateCaptcha(token);
+  const reCaptcha = await validateCaptcha(token);
+  if (!reCaptcha.success)
+    NextResponse.json(
+      { success: false, message: "Neplatná reCAPTCHA." },
+      { status: 500 }
+    );
   let message = recursiveHTMLParser(data);
-  console.log("isValid: ",isValid);
+  console.log("reCaptcha: ", reCaptcha);
   // Konfigurace transportéru nodemailer
   const transporter = nodemailer.createTransport({
     service: "gmail", // nebo jiná služba (např. SMTP server)
@@ -54,7 +48,6 @@ export async function POST(request: Request) {
     subject: `Motosedla - ${email}`,
     text: message,
   };
-  return NextResponse.json({ success: true, data, captcha: isValid });
   try {
     // Odeslání e-mailu
     await transporter.sendMail(mailOptions);

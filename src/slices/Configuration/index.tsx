@@ -5,6 +5,7 @@ import { Content } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
 import clsx from "clsx";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 /**
@@ -23,6 +24,7 @@ const Configuration = ({
   slice,
   context,
 }: ConfigurationProps & Context): JSX.Element => {
+  const searchParams = useSearchParams();
   const formatString = (text: string | null) => {
     if (!text) return "";
     return text.replaceAll(" ", "-").toLowerCase();
@@ -42,7 +44,7 @@ const Configuration = ({
         return newMap;
       });
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <section
