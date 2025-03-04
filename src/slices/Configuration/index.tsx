@@ -1,5 +1,6 @@
 "use client";
 import Button, { ButtonType } from "@/components/Button";
+import Price from "@/components/Price";
 import { PrismicRichText } from "@/components/PrismicRichText";
 import { Content } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
@@ -18,12 +19,15 @@ export type ConfigurationProps =
  * Component for "Configuration" Slices.
  */
 interface Context {
-  context: React.Dispatch<React.SetStateAction<Map<string, number>>>;
+  currencyCourse: number;
+  currencyName: string;
+  setPriceMap: React.Dispatch<React.SetStateAction<Map<string, number>>>;
 }
 const Configuration = ({
   slice,
   context,
-}: ConfigurationProps & Context): JSX.Element => {
+}: ConfigurationProps & { context: Context }): JSX.Element => {
+  const [price, setPrice] = useState<number | undefined>(undefined);
   const searchParams = useSearchParams();
   const formatString = (text: string | null) => {
     if (!text) return "";
@@ -38,12 +42,15 @@ const Configuration = ({
       const price = slice.primary.options.find((option) => {
         return formatString(option.option_name) == formatString(selectedParam);
       });
+      setPrice(price?.price || undefined);
       if (!price) return;
-      context((map) => {
+      context.setPriceMap((map) => {
         const newMap = new Map(map);
         newMap.set(formatString(slice.primary.name), price.price ?? 0);
         return newMap;
       });
+    } else {
+      setPrice(undefined);
     }
   }, [searchParams]);
 
@@ -60,7 +67,17 @@ const Configuration = ({
           />
         </div> */}
         <form className="flex flex-col gap-3">
-          <h3 className="font-bold">{slice.primary.name}</h3>
+          <span className="flex items-center gap-4 h-10">
+            <h3 className="font-bold">{slice.primary.name}</h3>
+            {price && (
+              <Price
+                currencyCourse={context.currencyCourse}
+                currencyName={context.currencyName}
+                price={price}
+                type="secondary"
+              />
+            )}
+          </span>
           <span>
             <PrismicRichText field={slice.primary.description} />
           </span>
@@ -68,12 +85,12 @@ const Configuration = ({
             {slice.primary.options.map((option, i) => {
               return (
                 <div key={i} className="flex flex-col items-center gap-4">
-                  <div className="">
+                  {/* <div className="">
                     <PrismicNextImage
                       className={clsx(
-                        "rounded-md h-32 w-32 bg-white transition-all cursor-pointer object-contain border-red-500 ",
+                        "rounded-md h-32 w-32 bg-white transition-all cursor-pointer object-contain border-2",
                         selected == formatString(option.option_name) &&
-                          "border-2"
+                          "border-red-500"
                       )}
                       loading="lazy"
                       onClick={(e) => {
@@ -95,7 +112,7 @@ const Configuration = ({
                             option.option_name
                           ),
                         };
-                        context((map) => {
+                        context.setPriceMap((map) => {
                           const newMap = new Map(map);
                           newMap.set(
                             formatString(slice.primary.name),
@@ -104,7 +121,7 @@ const Configuration = ({
                           return newMap;
                         });
                         if (selected == formatString(option.option_name)) {
-                          context((map) => {
+                          context.setPriceMap((map) => {
                             const newMap = new Map(map);
                             newMap.delete(formatString(slice.primary.name));
                             return newMap;
@@ -117,7 +134,7 @@ const Configuration = ({
                       }}
                       field={option.image.small}
                     />
-                  </div>
+                  </div> */}
                   <Button
                     className="m-auto"
                     type={ButtonType.secondary}
@@ -142,7 +159,7 @@ const Configuration = ({
                           option.option_name
                         ),
                       };
-                      context((map) => {
+                      context.setPriceMap((map) => {
                         const newMap = new Map(map);
                         newMap.set(
                           formatString(slice.primary.name),
@@ -151,7 +168,7 @@ const Configuration = ({
                         return newMap;
                       });
                       if (selected == formatString(option.option_name)) {
-                        context((map) => {
+                        context.setPriceMap((map) => {
                           const newMap = new Map(map);
                           newMap.delete(formatString(slice.primary.name));
                           return newMap;

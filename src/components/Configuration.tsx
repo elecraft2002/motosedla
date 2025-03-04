@@ -20,12 +20,15 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
   const { executeRecaptcha } = useReCaptcha();
   const params =
     konfigurace && Object.fromEntries(new URLSearchParams(location.search));
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = await executeRecaptcha("form_submit");
     const info = konfigurace
-      ? { telefon: tel, zprava: message, konfigurace: params }
+      ? {
+          telefon: tel,
+          zprava: message,
+          konfigurace: params,
+        }
       : { telefon: tel, zprava: message };
     setLoadingState(true);
     const response = await fetch("/api/send-email", {
@@ -37,11 +40,11 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
         email,
         data: info,
         token,
+        link: location.href,
       }),
     });
 
     const data = await response.json();
-    console.log(data);
     setResponseMessage(data.message);
     setLoadingState(false);
   };
@@ -126,30 +129,30 @@ export default function Configuration({
     setTotalPrice(newPrice);
   }, [priceMap, price]);
   return (
-    <div className="flex flex-col gap-4 col-span-3">
-      {/* <LanguageSwitcher locales={locales} /> */}
-      <h1 className="mb-2 text-2xl font-semibold">{name}</h1>
-      <div className="sticky top-6 mr-auto">
-        <Price
-          currencyCourse={currencyCourse}
-          currencyName={currencyName}
-          price={totalPrice}
-        />
-      </div>
-      <Line />
-      <ul className="flex flex-col gap-4">
-        <Suspense fallback={<p>Loading...</p>}>
-          <SliceZone
-            context={setPriceMap}
-            slices={slices}
-            components={components}
+    <AnimatePresence mode="wait">
+      <div className="flex flex-col gap-4 col-span-3">
+        {/* <LanguageSwitcher locales={locales} /> */}
+        <h1 className="mb-2 text-2xl font-semibold">{name}</h1>
+        <div className="sticky top-6 mr-auto">
+          <Price
+            currencyCourse={currencyCourse}
+            currencyName={currencyName}
+            price={totalPrice}
           />
-        </Suspense>
-      </ul>
-      <span className="text-sm dark:text-slate-200 text-slate-800">
-        <PrismicRichText field={shortDescription} />
-      </span>
-      <AnimatePresence mode="wait">
+        </div>
+        <Line />
+        <ul className="flex flex-col gap-4">
+          <Suspense fallback={<p>Loading...</p>}>
+            <SliceZone
+              context={{ setPriceMap, currencyCourse, currencyName }}
+              slices={slices}
+              components={components}
+            />
+          </Suspense>
+        </ul>
+        <span className="text-sm text-slate-800">
+          <PrismicRichText field={shortDescription} />
+        </span>
         {!isInterested && (
           <motion.div
             animate={{ opacity: 1 }}
@@ -178,7 +181,7 @@ export default function Configuration({
             <Form konfigurace />
           </motion.div>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+    </AnimatePresence>
   );
 }

@@ -95,7 +95,6 @@ export default function EmblaCarousel(props: PropType) {
         <div className="embla__container flex -ml-[1.2rem] touch-pan-y touch-pinch-zoom">
           {slides.map((item, i) => {
             const content = item.background_content as any;
-            console.log(content);
             return (
               <div className="bg-red-400 aspect-[3/4] max-w-[70vw] max-h-[50vh] w-full h-full overflow-hidden rounded-3xl">
                 {content.kind === "video" && (

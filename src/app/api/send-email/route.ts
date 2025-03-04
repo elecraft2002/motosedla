@@ -13,7 +13,7 @@ const recursiveHTMLParser = (data: any, key?: string): string => {
     string += recursiveHTMLParser(data[key], key);
   });
   string += "</ul>";
-  return string;
+  return string.replaceAll("-", " ");
 };
 
 async function validateCaptcha(captchaToken: string): Promise<any> {
@@ -24,7 +24,7 @@ async function validateCaptcha(captchaToken: string): Promise<any> {
 }
 
 export async function POST(request: Request) {
-  const { email, data, token } = await request.json();
+  const { email, data, token, link } = await request.json();
   const reCaptcha = await validateCaptcha(token);
   if (!reCaptcha.success)
     NextResponse.json(
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   let message = recursiveHTMLParser(data);
+  const htmlLink = `<a href="${(link)}">Detail sedla</a>`;
   console.log("reCaptcha: ", reCaptcha);
   // Konfigurace transportéru nodemailer
   const transporter = nodemailer.createTransport({
@@ -46,7 +47,7 @@ export async function POST(request: Request) {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_TO_USER,
     subject: `Motosedla - ${email}`,
-    text: message,
+    html: message + htmlLink,
   };
   try {
     // Odeslání e-mailu

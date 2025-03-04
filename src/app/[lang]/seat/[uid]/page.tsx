@@ -15,6 +15,9 @@ import SliderGallery from "@/components/SliderGallery";
 import * as motosedla from "@/services/api";
 import { reverseLocaleLookup } from "@/i18n";
 import * as prismic from "@prismicio/client";
+import Button from "@/components/Button";
+import Link from "next/link";
+import { AnimatePresence } from "framer-motion";
 type Page = {
   uid: string;
 };
@@ -37,7 +40,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
 
   // const images = await motosedla.default.getImagesByProductId(product.id);
   // console.log(product);
-  const locales = await getLocales(configuration, client);
+  // const locales = await getLocales(configuration, client);
   return (
     <Bounded>
       <div className="flex flex-col lg:grid lg:grid-cols-8 gap-8">
@@ -49,6 +52,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
               width={1000}
               src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_medium.jpg`}
               className="rounded-lg absolute"
+              unoptimized
             />
             <Image
               alt={`Sedlo na motorku ${product.name}`}
@@ -56,20 +60,36 @@ export default async function Page({ params }: { params: Promise<Params> }) {
               width={1000}
               src={product.image_url}
               className="rounded-lg relative"
+              unoptimized
             />
           </div>
         </div>
+        <div className="mt-8 col-span-3">
+          <h1 className="mb-2 text-2xl font-semibold">
+            {"Sedlo na motorku " + product.name}
+          </h1>
+          <PrismicRichText field={configuration.data.description} />
+          {/* <AnimatePresence>
+            <Price
+              currencyCourse={settings.data.currency_course || 1}
+              currencyName={settings.data.currency_name || ""}
+              price={product.price}
+            />
+          </AnimatePresence> */}
+          <Link href={"#configuration"} className="text-center">
+            <Button>Konfigurovat</Button>
+          </Link>
+        </div>
+      </div>
+      <div id="configuration">
         <Configuration
-          name={"Sedlo na motorku "+product.name}
+          name={"Konfigurace"}
           shortDescription={configuration.data.short_description}
           price={product.price}
           slices={configuration.data.slices}
           currencyCourse={settings.data.currency_course || 1}
           currencyName={settings.data.currency_name || ""}
         />
-      </div>
-      <div className="mt-8">
-        <PrismicRichText field={configuration.data.description} />
       </div>
     </Bounded>
   );
