@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Price from "./Price";
 import Line from "./Line";
 import { SliceLike, SliceZone, SliceZoneLike } from "@prismicio/react";
@@ -136,11 +136,13 @@ export default function Configuration({
       />
       <Line />
       <ul className="flex flex-col gap-4">
-        <SliceZone
-          context={setPriceMap}
-          slices={slices}
-          components={components}
-        />
+        <Suspense fallback={<p>Loading...</p>}>
+          <SliceZone
+            context={setPriceMap}
+            slices={slices}
+            components={components}
+          />
+        </Suspense>
       </ul>
       <span className="text-sm dark:text-slate-200 text-slate-800">
         <PrismicRichText field={shortDescription} />
