@@ -18,21 +18,20 @@ const recursiveHTMLParser = (data: any, key?: string): string => {
 
 async function validateCaptcha(captchaToken: string): Promise<any> {
   const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${"6LdxQugqAAAAAEpa7OnyaBlIe0m3HhY2IevbLlq-"}&response=${captchaToken}`;
-
   const response = await fetch(verifyUrl, { method: "POST" });
   return await response.json();
 }
 
 export async function POST(request: Request) {
   const { email, data, token, link } = await request.json();
-  const reCaptcha = await validateCaptcha(token);
-  if (!reCaptcha.success)
-    NextResponse.json(
+  const reCaptcha: any = await validateCaptcha(token);
+  if (reCaptcha.score < 0.7)
+    return NextResponse.json(
       { success: false, message: "Neplatná reCAPTCHA." },
       { status: 500 }
     );
   let message = recursiveHTMLParser(data);
-  const htmlLink = `<a href="${(link)}">Detail sedla</a>`;
+  const htmlLink = `<a href="${link}">Detail sedla</a>`;
   console.log("reCaptcha: ", reCaptcha);
   // Konfigurace transportéru nodemailer
   const transporter = nodemailer.createTransport({

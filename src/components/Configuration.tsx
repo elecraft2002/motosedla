@@ -11,17 +11,21 @@ import Input from "./Input";
 import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { env } from "process";
+import { BeatLoader } from "react-spinners";
+
 export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
   const [message, setMessage] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isLoading, setLoadingState] = useState(false);
+  const [sent, setSentState] = useState(false);
   const { executeRecaptcha } = useReCaptcha();
   const params =
     konfigurace && Object.fromEntries(new URLSearchParams(location.search));
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setResponseMessage("");
     const token = await executeRecaptcha("form_submit");
     const info = konfigurace
       ? {
@@ -31,21 +35,33 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
         }
       : { telefon: tel, zprava: message };
     setLoadingState(true);
-    const response = await fetch("/api/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        data: info,
-        token,
-        link: location.href,
-      }),
-    });
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          data: info,
+          token,
+          link: location.href,
+        }),
+      });
 
-    const data = await response.json();
-    setResponseMessage(data.message);
+      const data = await response.json();
+      console.log(data);
+      if (!data.success) {
+        setResponseMessage(data.message);
+      } else {
+        setSentState(true);
+        setEmail("");
+        setTel("");
+        setMessage("");
+      }
+    } catch (error) {
+      console.error(error);
+    }
     setLoadingState(false);
   };
   return (
@@ -53,8 +69,13 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
       onSubmit={(e) => {
         handleSubmit(e);
       }}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 relative"
     >
+      {isLoading && (
+        <div className="loading w-full h-full bg-black/50 absolute left-0 top-0 rounded-2xl flex justify-center items-center">
+          <BeatLoader />
+        </div>
+      )}
       <span>
         <label htmlFor="email">Email</label>
         <Input
@@ -94,11 +115,16 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
           id="message"
         />
       </span>
+      {responseMessage && <p className="text-red-500">{responseMessage}</p>}
       {/* <ReCAPTCHA
         sitekey="6LdxQugqAAAAACpHTecSnh3cHKU6owV66U-S380d"
         onChange={(token) => setMessage(token || "")}
       /> */}
-      <Button>Odeslat</Button>
+      {!sent ? (
+        <Button>Odeslat</Button>
+      ) : (
+        <p className="text-center">Odesláno!</p>
+      )}
     </form>
   );
 };
