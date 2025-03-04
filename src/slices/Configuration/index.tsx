@@ -38,9 +38,10 @@ const Configuration = ({
       const price = slice.primary.options.find((option) => {
         return formatString(option.option_name) == formatString(selectedParam);
       });
+      if (!price) return;
       context((map) => {
         const newMap = new Map(map);
-        newMap.set(formatString(slice.primary.name), price?.price ?? 0);
+        newMap.set(formatString(slice.primary.name), price.price ?? 0);
         return newMap;
       });
     }

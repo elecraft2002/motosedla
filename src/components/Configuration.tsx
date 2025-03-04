@@ -129,11 +129,13 @@ export default function Configuration({
     <div className="flex flex-col gap-4 col-span-3">
       {/* <LanguageSwitcher locales={locales} /> */}
       <h1 className="mb-2 text-2xl font-semibold">{name}</h1>
-      <Price
-        currencyCourse={currencyCourse}
-        currencyName={currencyName}
-        price={totalPrice}
-      />
+      <div className="sticky top-6 mr-auto">
+        <Price
+          currencyCourse={currencyCourse}
+          currencyName={currencyName}
+          price={totalPrice}
+        />
+      </div>
       <Line />
       <ul className="flex flex-col gap-4">
         <Suspense fallback={<p>Loading...</p>}>
