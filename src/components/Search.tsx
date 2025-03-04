@@ -109,7 +109,7 @@ export default function Search({
                     >
                       <Image
                       unoptimized
-                        src={`https://motosedla-7644.rostiapp.cz/image/${result.id_google}_small.jpg`}
+                        src={`https://motosedla-7644.rostiapp.cz/image/${result.id_google}_small.webp`}
                         alt={result.name}
                         width={50}
                         height={50}

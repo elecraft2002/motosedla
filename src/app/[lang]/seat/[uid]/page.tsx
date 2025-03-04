@@ -46,19 +46,19 @@ export default async function Page({ params }: { params: Promise<Params> }) {
       <div className="flex flex-col lg:grid lg:grid-cols-8 gap-8">
         <div className="col-span-5">
           <div className="flex flex-col relative">
-            <Image
+           {/*  <Image
               alt={`Sedlo na motorku ${product.name} náhled`}
               height={1000}
               width={1000}
-              src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_medium.jpg`}
+              src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_medium.webp`}
               className="rounded-lg absolute"
               unoptimized
-            />
+            /> */}
             <Image
               alt={`Sedlo na motorku ${product.name}`}
               height={1000}
               width={1000}
-              src={product.image_url}
+              src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_big.webp`}
               className="rounded-lg relative"
               unoptimized
             />

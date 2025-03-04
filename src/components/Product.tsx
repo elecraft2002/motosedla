@@ -22,7 +22,7 @@ export default function Product({
           height={300}
           loading="lazy"
           // src={product.image_url}
-          src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_medium.jpg`}
+          src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_medium.webp`}
           unoptimized
           alt={product.name}
           className="h-full w-full object-contain object-center lg:h-full lg:w-full"
