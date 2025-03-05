@@ -50,7 +50,6 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
       });
 
       const data = await response.json();
-      console.log(data);
       if (!data.success) {
         setResponseMessage(data.message);
       } else {
