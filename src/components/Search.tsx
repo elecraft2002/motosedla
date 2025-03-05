@@ -17,6 +17,7 @@ export default function Search({
 }) {
   const [search, handleSearch] = useState("");
   const router = useRouter();
+  
   const [results, handleResults] = useState<motosedla.Product[]>([]);
   const [shownSearch, setShownSearchState] = useState(false);
   useEffect(() => {
@@ -100,7 +101,7 @@ export default function Search({
                     className="hover:bg-slate-200/10 transition-all"
                   >
                     <Link
-                      href={`./${lang}/seat/${result.uid}`}
+                      href={`/${lang}/seat/${result.uid}`}
                       className="flex items-center gap-2"
                       onClick={() => {
                         setShownSearchState(false);
