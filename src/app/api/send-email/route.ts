@@ -30,22 +30,34 @@ export async function POST(request: Request) {
       { success: false, message: "Neplatná reCAPTCHA." },
       { status: 500 }
     );
-  let message = recursiveHTMLParser(data);
+  let message = recursiveHTMLParser({ email, ...data });
   const htmlLink = `<a href="${link}">Detail sedla</a>`;
   console.log("reCaptcha: ", reCaptcha);
   // Konfigurace transportéru nodemailer
+  // const transporter = nodemailer.createTransport({
+  //   service: "gmail", // nebo jiná služba (např. SMTP server)
+  //   auth: {
+  //     user: process.env.EMAIL_USER,
+  //     pass: process.env.EMAIL_PASS,
+  //   },
+  // });
   const transporter = nodemailer.createTransport({
-    service: "gmail", // nebo jiná služba (např. SMTP server)
+    host: "smtp.forpsi.com",
+    port: 587, // Doporučený port s TLS
+    secure: false, // Musí být false pro TLS
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false, // Umožní spojení i v případě neověřeného certifikátu
     },
   });
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: process.env.EMAIL_TO_USER,
-    subject: `Motosedla - ${email}`,
+    to: `${process.env.EMAIL_TO_USER}, ${email}`,
+    subject: `Motosedla - Zpráva`,
     html: message + htmlLink,
   };
   try {
