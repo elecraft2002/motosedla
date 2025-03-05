@@ -10,8 +10,8 @@ import Negotiator from "negotiator";
 // should be the locale IDs registered in your Prismic account, and values
 // should be the string that appears in the URL.
 const LOCALES = {
-  "en-us": "en-us",
   "cs-cz": "cs",
+  "en-us": "en",
 };
 // const LOCALES = {
 // 	"en-us": "en",
