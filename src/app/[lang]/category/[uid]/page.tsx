@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     : await motosedla.default.getProductsByCategoryId(category.id);
   return (
     <Bounded>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 ">
         <Categories lang={lang} path={path} />
         <div className="col-span-3">
           <div className="px-6">
