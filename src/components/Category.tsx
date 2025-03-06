@@ -57,7 +57,14 @@ export default function Category({
         </span>
       )}
       <Link href={`${previous}`} className="pl-5 font-medium">
-        <span className={clsx(active && "text-red-500")}>{item.name}</span>
+        <span
+          className={clsx(
+            active && "text-red-500",
+            previous.replace("./", "") === item.name && "uppercase"
+          )}
+        >
+          {item.name}
+        </span>
         {isActive && (
           <motion.ul
             className="ml-4 overflow-hidden"
