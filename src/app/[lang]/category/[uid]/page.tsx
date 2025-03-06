@@ -19,10 +19,11 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const settings = await client
     .getSingle("settings", { lang: langReverse })
     .catch(() => notFound());
-  const path = decodeURIComponent(uid.replaceAll("-", "/"));
+  const path = decodeURIComponent(uid.replaceAll("--", "/"));
   const category = await motosedla.default
-    .getCategoryByPath(uid.replaceAll("-", "/"))
-    .catch(() => notFound());
+  .getCategoryByPath(uid.replaceAll("--", "/"))
+  .catch(() => notFound());
+  // console.log(path)
   const childrenCategories = await motosedla.default
     .getSubcategoriesById(category.id)
     .catch(() => notFound());
@@ -103,7 +104,7 @@ export async function generateMetadata({
     .catch(() => notFound());
   // console.log(uid);
   const category = await motosedla.default
-    .getCategoryByPath(uid.replaceAll("-", "/"))
+    .getCategoryByPath(uid.replaceAll("--", "/"))
     .catch(() => notFound());
 
   return {

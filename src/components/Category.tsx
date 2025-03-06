@@ -69,7 +69,7 @@ export default function Category({
             {childrenData?.map((e) => {
               return (
                 <Category
-                  previous={`${previous}-${e.name}`}
+                  previous={`${previous}--${e.name}`}
                   key={e.id}
                   childrenProp={e.children}
                   item={e}
