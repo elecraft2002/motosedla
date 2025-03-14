@@ -47,7 +47,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         <div className="col-span-5">
           <div className="flex flex-col relative">
            {/*  <Image
-              alt={`Sedlo na motorku ${product.name} náhled`}
+              alt={`ÚPRAVA SEDLA -${product.name} náhled`}
               height={1000}
               width={1000}
               src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_medium.webp`}
@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
               unoptimized
             /> */}
             <Image
-              alt={`Sedlo na motorku ${product.name}`}
+              alt={`ÚPRAVA SEDLA -${product.name}`}
               height={1000}
               width={1000}
               src={`https://motosedla-7644.rostiapp.cz/image/${product.id_google}_big.webp`}
@@ -66,7 +66,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         </div>
         <div className="mt-8 col-span-3">
           <h1 className="mb-2 text-2xl font-semibold">
-            {"Sedlo na motorku " + product.name}
+            {"ÚPRAVA SEDLA -" + product.name}
           </h1>
           <PrismicRichText field={configuration.data.description} />
           {/* <AnimatePresence>
@@ -103,7 +103,7 @@ export async function generateMetadata({
   const product = await motosedla.default
     .getProductByUid(uid)
     .catch(() => notFound());
-  const title = `Sedlo na motorku ${product.name}`;
+  const title = `ÚPRAVA SEDLA - ${product.name}`;
   const client = createClient();
   const configuration = await client.getSingle("configuration", {
     lang: reverseLocaleLookup(lang),

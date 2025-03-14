@@ -40,7 +40,7 @@ export default function Product({
               }
             >
               <span aria-hidden="true" className="absolute inset-0"></span>
-              Úprava sedla {product.name}
+              ÚPRAVA SEDLA - {product.name}
             </Link>
           </h3>
         </div>
