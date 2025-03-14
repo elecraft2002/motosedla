@@ -44,7 +44,7 @@ export default function Category({
       {showIcon && (
         <span
           className={clsx(
-            "text-slate-500 w-3 h-3 absolute transition-all mt-1",
+            "text-slate-500 w-3 h-3 absolute transition-all mt-1 cursor-pointer z-10",
             isActive && "rotate-90",
             !isActive && "rotate-0"
           )}
@@ -56,7 +56,7 @@ export default function Category({
           <Image {...arrow} />
         </span>
       )}
-      <Link href={`${previous}`} className="pl-5 font-medium">
+      <Link href={`${previous}`} className="ml-5 font-medium">
         <span
           className={clsx(
             active && "text-red-500",
