@@ -13,9 +13,16 @@ import { useReCaptcha } from "next-recaptcha-v3";
 import { env } from "process";
 import { BeatLoader } from "react-spinners";
 
-export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
+export const Form = ({
+  konfigurace,
+}: {
+  konfigurace: "bez-konfigurace" | "konfigurator" | "form";
+}) => {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
+  const [typeAndYear, setTypeAndYear] = useState("");
+  const [address, setAddress] = useState("");
+  const [seatNumber, setSeatNumber] = useState("");
   const [message, setMessage] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isLoading, setLoadingState] = useState(false);
@@ -27,13 +34,25 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
     e.preventDefault();
     setResponseMessage("");
     const token = await executeRecaptcha("form_submit");
-    const info = konfigurace
-      ? {
-          telefon: tel,
-          zprava: message,
-          konfigurace: params,
-        }
-      : { telefon: tel, zprava: message };
+    let info = null;
+    if (konfigurace === "form")
+      info = {
+        telefon: tel,
+        zprava: message,
+        "SKLADOVÉ ČÍSLO SEDLA": seatNumber,
+        "DODACÍ ADRESA": address,
+      };
+    if (konfigurace === "konfigurator")
+      info = {
+        telefon: tel,
+        zprava: message,
+        "TYP MOTOCYKLU A ROK VÝROBY": typeAndYear,
+        "DODACÍ ADRESA": address,
+        konfigurace: params,
+      };
+    if (konfigurace === "bez-konfigurace")
+      info = { telefon: tel, zprava: message };
+
     setLoadingState(true);
     try {
       const response = await fetch("/api/send-email", {
@@ -102,6 +121,54 @@ export const Form = ({ konfigurace }: { konfigurace: boolean }) => {
           placeholder="+420 123 456 789"
         />
       </span>
+      {(konfigurace === "konfigurator" || konfigurace === "form") && (
+        <span>
+          <label htmlFor="address">Dodací adresa</label>
+
+          <Input
+            onChange={(e) => {
+              setAddress(e.target.value);
+            }}
+            value={address}
+            required
+            id="address"
+            type="text"
+            placeholder="Praha..."
+          />
+        </span>
+      )}
+      {konfigurace === "konfigurator" && (
+        <span>
+          <label htmlFor="typeAndYear">Typ motocyklu a rok výroby</label>
+
+          <Input
+            onChange={(e) => {
+              setTypeAndYear(e.target.value);
+            }}
+            value={typeAndYear}
+            required
+            id="typeAndYear"
+            type="text"
+            placeholder="Honda Hornet CB600F 2004"
+          />
+        </span>
+      )}
+      {konfigurace === "form" && (
+        <span>
+          <label htmlFor="seatNumber">Skladové číslo sedla</label>
+
+          <Input
+            onChange={(e) => {
+              setSeatNumber(e.target.value);
+            }}
+            value={seatNumber}
+            required
+            id="seatNumber"
+            type="text"
+            placeholder="AP 1"
+          />
+        </span>
+      )}
       <span>
         <label htmlFor="message">Vaše zpráva</label>
         <textarea
@@ -203,7 +270,7 @@ export default function Configuration({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25, duration: 0.25 }}
           >
-            <Form konfigurace />
+            <Form konfigurace={"konfigurator"} />
           </motion.div>
         )}
       </div>

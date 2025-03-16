@@ -10,7 +10,22 @@
       "docURL": "...",
       "version": "initial",
       "description": "Default",
-      "imageUrl": ""
+      "imageUrl": "",
+      "primary": {
+        "type": {
+          "type": "Select",
+          "config": {
+            "label": "Type",
+            "placeholder": "",
+            "options": [
+              "bez-konfigurace",
+              "form"
+            ],
+            "default_value": "bez-konfigurace"
+          }
+        }
+      },
+      "items": {}
     }
   ]
 }

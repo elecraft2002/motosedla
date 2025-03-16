@@ -18,7 +18,7 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
       data-slice-variation={slice.variation}
     >
       <Bounded>
-        <Form konfigurace={false} />
+        <Form konfigurace={slice.primary.type} />
       </Bounded>
     </section>
   );

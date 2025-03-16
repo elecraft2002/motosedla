@@ -838,6 +838,22 @@ export type ConfigurationSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *Contact → Default → Primary*
+ */
+export interface ContactSliceDefaultPrimary {
+  /**
+   * Type field in *Contact → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: bez-konfigurace
+   * - **API ID Path**: contact.default.primary.type
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  type: prismic.SelectField<"bez-konfigurace" | "form", "filled">;
+}
+
+/**
  * Default variation for Contact Slice
  *
  * - **API ID**: `default`
@@ -846,7 +862,7 @@ export type ConfigurationSlice = prismic.SharedSlice<
  */
 export type ContactSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
+  Simplify<ContactSliceDefaultPrimary>,
   never
 >;
 
@@ -1618,6 +1634,7 @@ declare module "@prismicio/client" {
       ConfigurationSliceVariation,
       ConfigurationSliceDefault,
       ContactSlice,
+      ContactSliceDefaultPrimary,
       ContactSliceVariation,
       ContactSliceDefault,
       HeroSlice,
