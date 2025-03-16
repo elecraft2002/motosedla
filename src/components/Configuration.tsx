@@ -29,7 +29,7 @@ export const Form = ({
   const [sent, setSentState] = useState(false);
   const { executeRecaptcha } = useReCaptcha();
   const params =
-    konfigurace && Object.fromEntries(new URLSearchParams(location.search));
+    konfigurace==="konfigurator" && Object.fromEntries(new URLSearchParams(location.search));
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setResponseMessage("");
