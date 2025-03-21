@@ -123,7 +123,7 @@ export const Form = ({
       </span>
       {(konfigurace === "konfigurator" || konfigurace === "form") && (
         <span>
-          <label htmlFor="address">Dodací adresa</label>
+          <label htmlFor="address">Jméno a dodací adresa</label>
 
           <Input
             onChange={(e) => {
