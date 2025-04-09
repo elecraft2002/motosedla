@@ -29,7 +29,8 @@ export const Form = ({
   const [sent, setSentState] = useState(false);
   const { executeRecaptcha } = useReCaptcha();
   const params =
-    konfigurace==="konfigurator" && Object.fromEntries(new URLSearchParams(location.search));
+    konfigurace === "konfigurator" &&
+    Object.fromEntries(new URLSearchParams(location.search));
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setResponseMessage("");
@@ -195,6 +196,37 @@ export const Form = ({
   );
 };
 
+function Items({
+  priceMap,
+  currencyCourse,
+  currencyName,
+}: {
+  priceMap: Map<string, number>;
+  currencyCourse: number;
+  currencyName: string;
+}) {
+  const elements: { val: number; key: string }[] = [];
+  priceMap.forEach((val, key) => {
+    elements.push({ key, val });
+  });
+  return (
+    <div className="flex gap-4 flex-wrap">
+      {elements.map((e) => {
+        return (
+          <span className="flex items-center  flex-wrap">
+            {e.key.replaceAll("-", " ")} {" "}
+            <Price
+              price={e.val}
+              currencyCourse={currencyCourse}
+              currencyName={currencyName}type="secondary" 
+            />
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function Configuration({
   slices,
   price,
@@ -232,6 +264,11 @@ export default function Configuration({
             price={totalPrice}
           />
         </div>
+        <Items
+          priceMap={priceMap}
+          currencyCourse={currencyCourse}
+          currencyName={currencyName}
+        />
         <Line />
         <ul className="flex flex-col gap-4">
           <Suspense fallback={<p>Loading...</p>}>
