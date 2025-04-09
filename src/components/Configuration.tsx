@@ -264,11 +264,11 @@ export default function Configuration({
             price={totalPrice}
           />
         </div>
-        <Items
+       {/*  <Items
           priceMap={priceMap}
           currencyCourse={currencyCourse}
           currencyName={currencyName}
-        />
+        /> */}
         <Line />
         <ul className="flex flex-col gap-4">
           <Suspense fallback={<p>Loading...</p>}>
