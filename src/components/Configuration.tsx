@@ -213,7 +213,7 @@ function Items({
     <div className="flex gap-4 flex-wrap">
       {elements.map((e) => {
         return (
-          <span className="flex items-center  flex-wrap">
+          <span key={e.key} className="flex items-center  flex-wrap">
             {e.key.replaceAll("-", " ")} {" "}
             <Price
               price={e.val}
