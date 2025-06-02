@@ -35,21 +35,6 @@ export default async function Page({ params }: { params: Promise<Params> }) {
                 {prismic.asText(settings.data.siteTitle)}
               </h2>
             </Link>
-            {/* <div className="flex flex-wrap gap-4 text-gray-700 dark:text-slate-300 text-sm mt-4">
-                {childrenCategories
-                  .sort((a, b) => (a.name > b.name ? 1 : -1))
-                  .map((subCategory) => {
-                    return (
-                      <Link
-                        key={subCategory.id}
-                        className="hover:text-blue-400 transition-all"
-                        href={`/${encodeURIComponent(lang)}/category/${encodeURIComponent(subCategory.name)}`}
-                      >
-                        {subCategory.name}
-                      </Link>
-                    );
-                  })}
-              </div> */}
             <Products
               currency_course={settings.data.currency_course || 1}
               currency_name={settings.data.currency_name || ""}

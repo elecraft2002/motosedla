@@ -56,7 +56,7 @@ export default function Category({
           <Image {...arrow} />
         </span>
       )}
-      <Link href={`${previous}`} className="ml-5 font-medium">
+      <Link href={`${previous}`} className="left-5 relative font-medium">
         <span
           className={clsx(
             active && "text-red-500",
@@ -65,29 +65,29 @@ export default function Category({
         >
           {item.name}
         </span>
-        {isActive && (
-          <motion.ul
-            className="ml-4 overflow-hidden"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            {childrenData?.map((e) => {
-              return (
-                <Category
-                  previous={`${previous}--${e.name}`}
-                  key={e.id}
-                  childrenProp={e.children}
-                  item={e}
-                  lang={lang}
-                  pathArray={newPathArr}
-                />
-              );
-            })}
-          </motion.ul>
-        )}
       </Link>
+      {isActive && (
+        <motion.ul
+          className="ml-4 overflow-hidden"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          {childrenData?.map((e) => {
+            return (
+              <Category
+                previous={`${previous}--${e.name}`}
+                key={e.id}
+                childrenProp={e.children}
+                item={e}
+                lang={lang}
+                pathArray={newPathArr}
+              />
+            );
+          })}
+        </motion.ul>
+      )}
     </li>
   );
 }
