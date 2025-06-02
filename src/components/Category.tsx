@@ -39,6 +39,7 @@ export default function Category({
       setChildrenData(e);
     });
   };
+  if (item.name === "FOTOGALERIE BEZ LOGA - kopie") return null;
   return (
     <li className="p-2 border-t-1 border-black first:border-none">
       {showIcon && (
