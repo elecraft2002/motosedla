@@ -12,6 +12,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { reverseLocaleLookup } from "@/i18n";
 import * as prismic from "@prismicio/client";
+import { Providers } from "@/components/Providers";
 /* const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -42,18 +43,20 @@ export default async function RootLayout({
         sizes="any"
       />
       <Analytics />
-      <ReCaptchaProvider reCaptchaKey="6LdxQugqAAAAACpHTecSnh3cHKU6owV66U-S380d">
+      {/* <ReCaptchaProvider reCaptchaKey="6LdxQugqAAAAACpHTecSnh3cHKU6owV66U-S380d"> */}
         <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-red-300 ">
-          <HeroUIProvider>
-            <main className="background flex flex-col min-h-screen">
-              <Header lang={lang} />
-              {children}
-              <Footer lang={lang} />
-            </main>
-            <PrismicPreview repositoryName={repositoryName} />
-          </HeroUIProvider>
+          {/* <HeroUIProvider> */}
+            <Providers>
+              <main className="background flex flex-col min-h-screen">
+                <Header lang={lang} />
+                {children}
+                <Footer lang={lang} />
+              </main>
+              <PrismicPreview repositoryName={repositoryName} />
+            </Providers>
+          {/* </HeroUIProvider> */}
         </body>
-      </ReCaptchaProvider>
+      {/* </ReCaptchaProvider> */}
     </html>
   );
 }
