@@ -6,7 +6,7 @@ export interface Category {
 }
 export interface Product {
   id: number;
-  id_google:string;
+  id_google: string;
   category_id: number;
   uid: string;
   name: string;
@@ -24,14 +24,14 @@ class Motosedla {
     this.baseUrl = baseUrl;
     this.fetchOptions =
       process.env.NODE_ENV === "production"
-        ? { next: { tags: ["motosedla"] }, cache: "force-cache" }
+        ? { next: { tags: ["motosedla"], revalidate: 60 * 60 * 5 } }
         : { next: { revalidate: 5 } };
   }
 
   // Vyhledání produktů podle názvu
   public async searchProductsByName(name: string): Promise<Product[]> {
     const response = await fetch(
-      `${this.baseUrl}/products/search?name=${name}`
+      `${this.baseUrl}/products/search?name=${name}`,
     );
     // console.log("Fetching... ", `${this.baseUrl}/products/search?name=${name}`);
     if (!response.ok) {
@@ -45,10 +45,10 @@ class Motosedla {
   // Vyhledání podkategorií podle id
   public async getSubcategoriesById(
     id: number,
-    recursive: boolean = false
+    recursive: boolean = false,
   ): Promise<Category[]> {
     const response = await fetch(
-      `${this.baseUrl}/categories/subcategories?categoryId=${id}&recursive=${recursive}`
+      `${this.baseUrl}/categories/subcategories?categoryId=${id}&recursive=${recursive}`,
     );
     // console.log(
     //   "Fetching... ",
@@ -62,7 +62,7 @@ class Motosedla {
   // Vyhledání podkategorie podle jména
   public async getCategoryByName(name: string): Promise<Category> {
     const response = await fetch(
-      `${this.baseUrl}/categories/name?name=${name}`
+      `${this.baseUrl}/categories/name?name=${name}`,
     );
     // console.log("Fetching... ", `${this.baseUrl}/categories/name?name=${name}`);
     if (!response.ok) {
@@ -73,7 +73,7 @@ class Motosedla {
   // Vyhledání produktů podle id více kategorií
   public async getProductsByCategoryIds(ids: number[]): Promise<Product[]> {
     const response = await fetch(
-      `${this.baseUrl}/products/byCategories?categoryIds=${ids.join(",")}`
+      `${this.baseUrl}/products/byCategories?categoryIds=${ids.join(",")}`,
     );
     // console.log(
     //   "Fetching... ",
@@ -88,7 +88,7 @@ class Motosedla {
   // Vyhledání kategorií podle názvu
   public async searchCategoriesByName(name: string): Promise<Category[]> {
     const response = await fetch(
-      `${this.baseUrl}/categories/search?name=${name}`
+      `${this.baseUrl}/categories/search?name=${name}`,
     );
     // console.log(
     //   "Fetching... ",
@@ -103,7 +103,7 @@ class Motosedla {
   public async getProductByUid(uid: string): Promise<Product> {
     const response = await fetch(
       `${this.baseUrl}/products/uid?productUid=${uid}`,
-      this.fetchOptions
+      this.fetchOptions,
     );
     // console.log(
     //   "Fetching... ",
@@ -118,7 +118,7 @@ class Motosedla {
   public async getProductsByCategoryId(categoryId: number): Promise<Product[]> {
     const response = await fetch(
       `${this.baseUrl}/products/categoryId?categoryId=${categoryId}`,
-      this.fetchOptions
+      this.fetchOptions,
     );
     // console.log(
     //   "Fetching... ",
@@ -133,7 +133,7 @@ class Motosedla {
   public async getImagesByProductId(uid: number): Promise<Image[]> {
     const response = await fetch(
       `${this.baseUrl}/images/id?productId=${uid}`,
-      this.fetchOptions
+      this.fetchOptions,
     );
     // console.log("Fetching... ", `${this.baseUrl}/images/id?productId=${uid}`);
     if (!response.ok) {
@@ -144,7 +144,7 @@ class Motosedla {
   public async getAllProducts(): Promise<Product[]> {
     const response = await fetch(
       `${this.baseUrl}/products/all`,
-      this.fetchOptions
+      this.fetchOptions,
     );
     // console.log("Fetching... ", `${this.baseUrl}/products/all`);
     if (!response.ok) {
@@ -155,7 +155,7 @@ class Motosedla {
   public async getAllCategories(): Promise<Category[]> {
     const response = await fetch(
       `${this.baseUrl}/categories/all`,
-      this.fetchOptions
+      this.fetchOptions,
     );
     // console.log("Fetching... ", `${this.baseUrl}/categories/all`);
     if (!response.ok) {
@@ -166,7 +166,7 @@ class Motosedla {
   public async getCategoryByPath(path: string): Promise<Category> {
     const response = await fetch(
       `${this.baseUrl}/categories/path?path=${path}`,
-      this.fetchOptions
+      this.fetchOptions,
     );
     // console.log("Fetching... ", `${this.baseUrl}/categories/path?path=${path}`);
     const json = await response.json();
@@ -178,7 +178,7 @@ class Motosedla {
   public async getRootCategories(): Promise<Category[]> {
     const response = await fetch(
       `${this.baseUrl}/categories/root`,
-      this.fetchOptions
+      this.fetchOptions,
     );
     const json = await response.json();
     if (!response.ok || json === null) {
@@ -189,7 +189,7 @@ class Motosedla {
   public async getCategoryById(id: number | any): Promise<Category> {
     const response = await fetch(
       `${this.baseUrl}/categories/id?id=${id}`,
-      this.fetchOptions
+      this.fetchOptions,
     );
     // console.log("Fetching... ", `${this.baseUrl}/categories/id?id=${id}`);
     const json = await response.json();
@@ -200,5 +200,5 @@ class Motosedla {
   }
 }
 export default new Motosedla(
-  env.SERVER_URL || "https://motosedla-7644.rostiapp.cz/api"
+  env.SERVER_URL || "https://motosedla-7644.rostiapp.cz/api",
 );
