@@ -45,7 +45,7 @@ export default function Product({
           </h3>
         </div>
         <p className="text-sm font-medium text-gray-900">
-          {(product.price / currency_course).toFixed(0)} {currency_name}
+          {(5390 / currency_course).toFixed(0)} {currency_name}
         </p>
       </div>
     </div>
