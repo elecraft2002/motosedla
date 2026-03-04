@@ -85,7 +85,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         <Configuration
           name={"Konfigurace"}
           shortDescription={configuration.data.short_description}
-          price={product.price}
+          price={5390}
           slices={configuration.data.slices}
           currencyCourse={settings.data.currency_course || 1}
           currencyName={settings.data.currency_name || ""}

@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         <Configuration
           name={price.data.name || ""}
           shortDescription={price.data.description}
-          price={4900}
+          price={5390}
           slices={configuration.data.slices}
           currencyCourse={settings.data.currency_course || 1}
           currencyName={settings.data.currency_name || ""}
