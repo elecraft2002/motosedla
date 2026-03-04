@@ -24,7 +24,7 @@ class Motosedla {
     this.baseUrl = baseUrl;
     this.fetchOptions =
       process.env.NODE_ENV === "production"
-        ? { next: { tags: ["motosedla"], revalidate: 60 * 60 * 5 } }
+        ? { next: { tags: ["motosedla"] }, cache: "force-cache" }
         : { next: { revalidate: 5 } };
   }
 
