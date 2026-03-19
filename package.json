@@ -9,7 +9,7 @@
     "next:dev": "next",
     "build": "next build",
     "postbuild": "next-sitemap",
-    "start": "next start",
+    "start": "next start -p 8080",
     "lint": "next lint",
     "slicemachine": "start-slicemachine",
     "format": "prettier --write ."
