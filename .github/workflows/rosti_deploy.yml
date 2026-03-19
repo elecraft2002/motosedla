@@ -34,6 +34,10 @@ jobs:
       - name: Build
         run: |
           npm run build
+      - name: Trust Rosti SSH Host
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 11999 ssh.rosti.cz >> ./known_hosts
       - name: Setup Node.js
         run: |
           ssh -o UserKnownHostsFile=./known_hosts -p $PORT $USER@$HOST /usr/local/bin/rosti node $NODE_VERSION
