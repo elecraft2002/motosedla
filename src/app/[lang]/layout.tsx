@@ -10,6 +10,7 @@ import { createClient, repositoryName } from "@/prismicio";
 import { Bounded } from "@/components/Bounded";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import VacationBanner from "@/components/VacationBanner";
 import { reverseLocaleLookup } from "@/i18n";
 import * as prismic from "@prismicio/client";
 import { Providers } from "@/components/Providers";
@@ -48,6 +49,7 @@ export default async function RootLayout({
           {/* <HeroUIProvider> */}
             <Providers>
               <main className="background flex flex-col min-h-screen">
+                <VacationBanner lang={lang} />
                 <Header lang={lang} />
                 {children}
                 <Footer lang={lang} />
