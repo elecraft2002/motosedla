@@ -9,8 +9,7 @@ import { RichTextField } from "@prismicio/client";
 import { PrismicRichText } from "./PrismicRichText";
 import Input from "./Input";
 import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion";
-import { useReCaptcha } from "next-recaptcha-v3";
-import { env } from "process";
+import { executeRecaptcha, loadRecaptcha } from "@/lib/recaptcha";
 import { BeatLoader } from "react-spinners";
 
 export const Form = ({
@@ -27,7 +26,6 @@ export const Form = ({
   const [responseMessage, setResponseMessage] = useState("");
   const [isLoading, setLoadingState] = useState(false);
   const [sent, setSentState] = useState(false);
-  const { executeRecaptcha } = useReCaptcha();
   const params =
     konfigurace === "konfigurator" &&
     Object.fromEntries(new URLSearchParams(location.search));
@@ -87,6 +85,9 @@ export const Form = ({
     <form
       onSubmit={(e) => {
         handleSubmit(e);
+      }}
+      onFocus={() => {
+        loadRecaptcha().catch(() => {});
       }}
       className="flex flex-col gap-4 relative"
     >

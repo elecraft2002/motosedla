@@ -1,4 +1,5 @@
 import { type Content, isFilled } from "@prismicio/client";
+import AppLink from "@/components/AppLink";
 import { PrismicText, type SliceComponentProps } from "@prismicio/react";
 import { PrismicNextLink, PrismicNextImage } from "@prismicio/next";
 
@@ -22,9 +23,9 @@ const ImageCard = ({ card }: ImageCardProps) => {
           
             condition={isFilled.link(card.buttonLink)}
             wrap={({ children }) => (
-              <PrismicNextLink field={card.buttonLink} tabIndex={-1}>
+              <AppLink field={card.buttonLink} tabIndex={-1}>
                 {children}
-              </PrismicNextLink>
+              </AppLink>
             )}
           >
             <PrismicNextImage field={image} sizes="100vw" className="w-full" />
@@ -36,9 +37,9 @@ const ImageCard = ({ card }: ImageCardProps) => {
       </div>
       {isFilled.link(card.buttonLink) && (
         <div>
-          <PrismicNextLink field={card.buttonLink} className="font-semibold">
+          <AppLink field={card.buttonLink} className="font-semibold">
             {card.buttonText || "More Info"}
-          </PrismicNextLink>
+          </AppLink>
         </div>
       )}
     </li>

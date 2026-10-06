@@ -26,7 +26,7 @@ interface Context {
 const Configuration = ({
   slice,
   context,
-}: ConfigurationProps & { context: Context }): JSX.Element => {
+}: ConfigurationProps & { context: Context }): React.JSX.Element => {
   const [price, setPrice] = useState<number | undefined>(undefined);
   const searchParams = useSearchParams();
   const formatString = (text: string | null) => {

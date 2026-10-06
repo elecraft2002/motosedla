@@ -1,4 +1,5 @@
 // import React from "react";
+import AppLink from "@/components/AppLink";
 // import { Bounded } from "./Bounded";
 // import { PrismicNextLink } from "@prismicio/next";
 // import { PrismicText } from "@prismicio/react";
@@ -20,12 +21,12 @@
 //     <header className="fixed w-full backdrop-blur-2xl py-2 md:py-4 px-4 ba z-50 bg-white/50 dark:bg-black/50">
 //       <div className="mx-auto w-full max-w-6xl">
 //         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3 leading-none">
-//           <PrismicNextLink
+//           <AppLink
 //             field={navigation.data.homepage}
 //             className="text-xl font-semibold tracking-tight mr-auto"
 //           >
 //             <PrismicText field={settings.data.siteTitle} />
-//           </PrismicNextLink>
+//           </AppLink>
 //           <div className="flex">
 //             <Search
 //               lang={localeLookup(lang) || ""}
@@ -39,9 +40,9 @@
 //                   key={asText(item.label)}
 //                   className="font-semibold tracking-tight "
 //                 >
-//                   <PrismicNextLink lang={lang} field={item.link}>
+//                   <AppLink lang={lang} field={item.link}>
 //                     <PrismicText field={item.label} />
-//                   </PrismicNextLink>
+//                   </AppLink>
 //                 </li>
 //               ))}
 //             </ul>
@@ -98,21 +99,21 @@
 //       <NavbarContent>
 //         <NavbarMenuToggle className="md:hidden" />
 //         <NavbarBrand>
-//           <PrismicNextLink
+//           <AppLink
 //             field={navigation.data.homepage}
 //             className="text-xl font-semibold tracking-tight mr-auto"
 //           >
 //             <PrismicText field={settings.data.siteTitle} />
-//           </PrismicNextLink>
+//           </AppLink>
 //         </NavbarBrand>
 //       </NavbarContent>
 
 //       <NavbarContent className="hidden md:flex gap-4" justify="center">
 //         {navigation.data?.links.map((item) => (
 //           <NavbarItem key={asText(item.label)}>
-//             <PrismicNextLink lang={lang} field={item.link}>
+//             <AppLink lang={lang} field={item.link}>
 //               <PrismicText field={item.label} />
-//             </PrismicNextLink>
+//             </AppLink>
 //           </NavbarItem>
 //         ))}
 //       </NavbarContent>
@@ -127,9 +128,9 @@
 //       <NavbarMenu className="bg-white/50 dark:bg-black/50">
 //         {navigation.data?.links.map((item, index) => (
 //           <NavbarMenuItem key={`${item}-${index}`}>
-//             <PrismicNextLink lang={lang} field={item.link}>
+//             <AppLink lang={lang} field={item.link}>
 //               <PrismicText field={item.label} />
-//             </PrismicNextLink>
+//             </AppLink>
 //           </NavbarMenuItem>
 //         ))}
 //         <NavbarMenuItem>
@@ -178,9 +179,13 @@ export default async function Header({ lang }: { lang: string }) {
             {bottomNavigation.data.links.map((item, i) => {
               return (
                 <li key={i} className="hover:underline transition-all">
-                  <PrismicNextLink lang={lang} field={item.link}>
+                  <AppLink
+                    lang={lang}
+                    field={item.link}
+                    className="inline-block py-2"
+                  >
                     {item.label}
-                  </PrismicNextLink>
+                  </AppLink>
                 </li>
               );
             })}
@@ -189,22 +194,44 @@ export default async function Header({ lang }: { lang: string }) {
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="logo">
             <Link href={`/${lang }`}>
-              <PrismicNextImage field={settings.data.site_logo} />
+              <PrismicNextImage
+                field={settings.data.site_logo}
+                width={560}
+                height={158}
+                sizes="(min-width: 768px) 560px, 100vw"
+                preload
+                fetchPriority="high"
+                className="h-auto w-full max-w-[560px]"
+              />
             </Link>
           </div>
           <div className="info flex flex-col gap-4 justify-between items-center md:items-end">
             <div className="flex flex-wrap gap-4">
               {settings.data.main_contacts.map((item, i) => {
-                return (
-                  <PrismicNextLink key={i} field={item.link}>
-                    <span className="flex gap-2 items-center hover:underline">
-                      <PrismicNextImage
-                        field={item.contact_image.small}
-                        className="h-6 w-6"
-                      />
-                      {item.link.text}
-                    </span>
-                  </PrismicNextLink>
+                const content = (
+                  <span className="flex gap-2 items-center hover:underline">
+                    <PrismicNextImage
+                      field={item.contact_image.small}
+                      alt=""
+                      className="h-6 w-6"
+                    />
+                    {item.link.text}
+                  </span>
+                );
+                // Odkaz v Prismicu může být nevyplněný – pak vykreslíme jen ikonu, ne prázdný <a>.
+                return prismic.isFilled.link(item.link) ? (
+                  <AppLink
+                    key={i}
+                    field={item.link}
+                    aria-label={item.link.text || item.contact_image.alt || undefined}
+                    className="p-1"
+                  >
+                    {content}
+                  </AppLink>
+                ) : (
+                  <span key={i} className="p-1">
+                    {content}
+                  </span>
                 );
               })}
             </div>
@@ -228,9 +255,9 @@ export default async function Header({ lang }: { lang: string }) {
                       lastSegment.toLowerCase() && "text-red-500"
                   )}
                 >
-                  <PrismicNextLink lang={lang} field={item.link}>
+                  <AppLink lang={lang} field={item.link}>
                     <PrismicText field={item.label} />
-                  </PrismicNextLink>
+                  </AppLink>
                 </li>
               );
             })}

@@ -1,5 +1,4 @@
-"use client";
-import { useEffect, useState } from "react";
+import { connection } from "next/server";
 
 const messages: Record<string, string> = {
   cs: "7. – 14. 10. DOVOLENÁ",
@@ -9,14 +8,11 @@ const messages: Record<string, string> = {
 // První okamžik po konci dovolené (15. 10. 2026 00:00 SELČ), od kdy se banner skryje.
 const HIDE_FROM = new Date("2026-10-15T00:00:00+02:00");
 
-export default function VacationBanner({ lang }: { lang: string }) {
-  // Datum se kontroluje v prohlížeči, aby statické stránky nezůstaly po skončení termínu zacachované.
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    setVisible(new Date() < HIDE_FROM);
-  }, []);
-
-  if (!visible) return null;
+export default async function VacationBanner({ lang }: { lang: string }) {
+  // Vynutí vykreslení při každém požadavku, takže datum se vyhodnotí vždy aktuálně
+  // a banner se po termínu sám přestane zobrazovat (bez posunu layoutu po hydrataci).
+  await connection();
+  if (new Date() >= HIDE_FROM) return null;
 
   return (
     <div

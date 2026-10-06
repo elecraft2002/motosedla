@@ -6,7 +6,7 @@ export default function TextAnimation({ text }: { text: string }) {
   const words = text.split(" ");
   return (
     <AnimatePresence mode="wait">
-      <div className="font-semibold leading-tight tracking-tight md:leading-tight text-4xl md:text-5xl lg:text-7xl mb-2 mt-12 first:mt-0 last:mb-0 overflow-hidden">
+      <div className="flex flex-wrap justify-center font-semibold leading-tight tracking-tight md:leading-tight text-4xl md:text-5xl lg:text-7xl mb-2 mt-12 first:mt-0 last:mb-0 overflow-hidden">
         {words.map((word, i) => {
           return (
             <span key={i} className="relative">

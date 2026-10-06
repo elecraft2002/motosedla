@@ -1,4 +1,5 @@
 import { createClient } from "@/prismicio";
+import AppLink from "@/components/AppLink";
 import { PrismicLink } from "@prismicio/react";
 import React from "react";
 import * as prismic from "@prismicio/client";
@@ -21,11 +22,16 @@ export default async function Footer({ lang }: { lang: string }) {
         <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <Link
-              href="/"
+              href={`/${lang}`}
               className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
             >
               {prismic.isFilled.image(settings.data.site_logo) && (
-                <PrismicNextImage field={settings.data.site_logo.small} />
+                <PrismicNextImage
+                  field={{
+                    ...settings.data.site_logo.small,
+                    alt: settings.data.site_logo.alt || "Rutan motosedla",
+                  }}
+                />
               )}
              {/*  <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 {prismic.asText(settings.data.siteTitle)}
@@ -35,12 +41,12 @@ export default async function Footer({ lang }: { lang: string }) {
               {footer.data.links.map((link, i) => {
                 return (
                   <li key={i}>
-                    <PrismicLink
+                    <AppLink
                       field={link.link}
-                      className="hover:underline me-4 md:me-6"
+                      className="hover:underline me-4 md:me-6 inline-block py-2"
                     >
                       {link.label}
-                    </PrismicLink>
+                    </AppLink>
                   </li>
                 );
               })}
@@ -49,12 +55,16 @@ export default async function Footer({ lang }: { lang: string }) {
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © {new Date().getFullYear()}{" "}
-            <PrismicNextLink
-              field={footer.data.homepage}
-              className="hover:underline"
-            >
-              {prismic.asText(settings.data.siteTitle)}
-            </PrismicNextLink>
+            {prismic.isFilled.link(footer.data.homepage) ? (
+              <AppLink
+                field={footer.data.homepage}
+                className="hover:underline"
+              >
+                {prismic.asText(settings.data.siteTitle)}
+              </AppLink>
+            ) : (
+              prismic.asText(settings.data.siteTitle)
+            )}
             . {texts.data.copyright_footer}
           </span>
         </div>

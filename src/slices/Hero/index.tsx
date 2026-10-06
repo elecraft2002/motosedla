@@ -1,4 +1,5 @@
 import { type Content, isFilled } from "@prismicio/client";
+import AppLink from "@/components/AppLink";
 import { PrismicNextLink, PrismicNextImage } from "@prismicio/next";
 import type { SliceComponentProps, JSXMapSerializer } from "@prismicio/react";
 import * as prismic from "@prismicio/client";
@@ -7,6 +8,7 @@ import { Heading } from "@/components/Heading";
 import { PrismicRichText } from "@/components/PrismicRichText";
 import ScrollIcon from "@/components/ScrollIcon";
 import EmblaCarousel from "./EmblaCarousel";
+import HeroVideo from "./HeroVideo";
 import TextAnimation from "@/components/TextAnimation";
 import Button from "@/components/Button";
 
@@ -45,14 +47,14 @@ const Hero = ({ slice }: HeroProps) => {
           <div className="absolute ">
             <PrismicNextImage
               field={slice.primary.loading_image.Preview}
+              sizes="100vw"
+              preload
+              fetchPriority="high"
               className="h-[100vh] w-screen object-cover blur-sm"
             />
-            <video
+            <HeroVideo
               className="h-[100vh] w-screen object-cover absolute top-0"
               src={slice.primary.background_video.url}
-              autoPlay
-              loop
-              muted
             />
           </div>
         )}
@@ -72,9 +74,9 @@ const Hero = ({ slice }: HeroProps) => {
               )}
               {isFilled.link(slice.primary.buttonLink) && (
                 <Button>
-                  <PrismicNextLink field={slice.primary.buttonLink}>
+                  <AppLink field={slice.primary.buttonLink}>
                     {slice.primary.buttonText || "Learn More"}
-                  </PrismicNextLink>
+                  </AppLink>
                 </Button>
               )}
             </div>
@@ -106,12 +108,12 @@ const Hero = ({ slice }: HeroProps) => {
             />
           </div>
           {isFilled.link(slice.primary.buttonLink) && (
-            <PrismicNextLink
+            <AppLink
               field={slice.primary.buttonLink}
               className="rounded bg-white px-5 py-3 font-medium text-slate-800"
             >
               {slice.primary.buttonText || "Learn More"}
-            </PrismicNextLink>
+            </AppLink>
           )}
         </div>
       </Bounded>

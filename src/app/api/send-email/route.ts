@@ -1,7 +1,6 @@
 // app/api/send-email/route.ts
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import {} from "next-recaptcha-v3";
 
 const recursiveHTMLParser = (data: any, key?: string): string => {
   let string = "";

@@ -3,7 +3,7 @@
 // import { NextRequest, NextResponse } from "next/server";
 // import { createClient } from "@/prismicio";
 
-// export async function middleware(request: NextRequest) {
+// export async function proxy(request: NextRequest) {
 //   const client = createClient();
 //   const repository = await client.getRepository();
 
@@ -30,12 +30,26 @@
 // };
 
 // import { createLocaleRedirect } from "@prismicio/next";
-import { createLocaleRedirect, pathnameHasLocale } from "@/i18n";
+import {
+  createLocaleRedirect,
+  detectLocale,
+  pathnameHasLocale,
+} from "@/i18n";
 // import { createClient } from "@/prismicio";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   if (!pathnameHasLocale(request)) {
+    // Odkazy v menu nemají jazykový prefix. Přesměrování u prefetch/RSC požadavků
+    // klientský router v Next 16 donekonečna opakuje, proto je přepíšeme (rewrite) bez redirectu.
+    // Next hlavičku `rsc` ani parametr `_rsc` do proxy nepředává, rozpoznáme je podle fetch()
+    // požadavku (Sec-Fetch-Dest: empty), kdežto běžná navigace má dest "document".
+    const isRscRequest = request.headers.get("sec-fetch-dest") === "empty";
+    if (isRscRequest) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${detectLocale(request)}${request.nextUrl.pathname}`;
+      return NextResponse.rewrite(url);
+    }
     return createLocaleRedirect(request);
   }
   // const client = createClient();
@@ -48,5 +62,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   // Do not localize these paths  
-  matcher: ["/((?!_next|api|slice-simulator|icon.svg|sitemap).*)"],
+  // Bez statických souborů (cokoli s příponou: robots.txt, favicon.ico, sitemap.xml, ...)
+  matcher: ["/((?!_next|api|slice-simulator|.*\\..*).*)"],
 };

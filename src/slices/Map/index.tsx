@@ -10,7 +10,7 @@ export type MapProps = SliceComponentProps<Content.MapSlice>;
 /**
  * Component for "Map" Slices.
  */
-const Map = ({ slice }: MapProps): JSX.Element => {
+const Map = ({ slice }: MapProps): React.JSX.Element => {
   return (
     <section
       data-slice-type={slice.slice_type}

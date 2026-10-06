@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import AppLink from "@/components/AppLink";
 import { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
@@ -71,9 +72,9 @@ export default function EmblaCarousel(props: PropType) {
                     />
                   )}
                   <div className="absolute left-0 top-0 w-full h-full flex items-end ">
-                    <PrismicNextLink field={item.link} className="ml-4 mb-8">
+                    <AppLink field={item.link} className="ml-4 mb-8">
                       <p>{item.link_text}</p>
-                    </PrismicNextLink>
+                    </AppLink>
                   </div>
                 </motion.div>
               </div>

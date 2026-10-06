@@ -1,27 +1,16 @@
 import "../globals.css";
-import { HeroUIProvider } from "@heroui/react";
-import { /* Inter, */ Montserrat } from "next/font/google";
-import { asText } from "@prismicio/client";
-import { PrismicText } from "@prismicio/react";
-import { PrismicNextLink, PrismicPreview } from "@prismicio/next";
-import { ReCaptchaProvider, useReCaptcha } from "next-recaptcha-v3";
-import { Analytics } from "@vercel/analytics/react";
+import { Montserrat } from "next/font/google";
+import { PrismicPreview } from "@prismicio/next";
+import { draftMode } from "next/headers";
 import { createClient, repositoryName } from "@/prismicio";
-import { Bounded } from "@/components/Bounded";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import VacationBanner from "@/components/VacationBanner";
 import { reverseLocaleLookup } from "@/i18n";
 import * as prismic from "@prismicio/client";
-import { Providers } from "@/components/Providers";
-/* const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-}); */
 
 const montserrat = Montserrat({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-montserrat",
 });
@@ -35,33 +24,33 @@ export default async function RootLayout({
   const langReverse = reverseLocaleLookup(lang);
 
   const settings = await client.getSingle("settings", { lang: langReverse });
+  const { isEnabled: isPreview } = await draftMode();
 
   return (
     <html lang={lang.split("-")[0]} className={montserrat.variable}>
-      <link
-        rel="icon"
-        href={prismic.asImageSrc(settings.data.favicon) || ""}
-        sizes="any"
-      />
-      <Analytics />
-      {/* <ReCaptchaProvider reCaptchaKey="6LdxQugqAAAAACpHTecSnh3cHKU6owV66U-S380d"> */}
-        <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-red-300 ">
-          {/* <HeroUIProvider> */}
-            <Providers>
-              <main className="background flex flex-col min-h-screen">
-                <VacationBanner lang={lang} />
-                <Header lang={lang} />
-                {children}
-                <Footer lang={lang} />
-              </main>
-              <PrismicPreview repositoryName={repositoryName} />
-            </Providers>
-          {/* </HeroUIProvider> */}
-        </body>
-      {/* </ReCaptchaProvider> */}
+      <head>
+        <link
+          rel="icon"
+          href={prismic.asImageSrc(settings.data.favicon) || ""}
+          sizes="any"
+        />
+        <link rel="preconnect" href="https://images.prismic.io" />
+        <link rel="preconnect" href="https://motosedla.cdn.prismic.io" />
+      </head>
+      <body className="overflow-x-hidden antialiased bg-neutral-50 text-black selection:bg-red-300 ">
+        <main className="background flex flex-col min-h-screen">
+          <VacationBanner lang={lang} />
+          <Header lang={lang} />
+          {children}
+          <Footer lang={lang} />
+        </main>
+        {/* Prismic toolbar (třetí strany, cookies) jen v režimu náhledu */}
+        {isPreview && <PrismicPreview repositoryName={repositoryName} />}
+      </body>
     </html>
   );
 }
+
 export async function generateStaticParams() {
   const client = createClient();
 
@@ -69,5 +58,4 @@ export async function generateStaticParams() {
   return repository.languages.map((lang) => {
     return { lang: lang.id };
   });
-  // return [locales];
 }

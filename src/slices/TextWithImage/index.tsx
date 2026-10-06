@@ -1,4 +1,5 @@
 import { type Content, isFilled } from "@prismicio/client";
+import AppLink from "@/components/AppLink";
 import type { SliceComponentProps } from "@prismicio/react";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 
@@ -18,12 +19,12 @@ const TextWithImage = ({ slice }: TextWithImageProps) => {
           <PrismicRichText field={slice.primary.text} />
           {slice.variation === "withButton" && slice.primary.buttonLink ? (
             <Button>
-              <PrismicNextLink
+              <AppLink
                 field={slice.primary.buttonLink}
                 className="font-semibold"
               >
                 {slice.primary.buttonText || "Learn more"}
-              </PrismicNextLink>
+              </AppLink>
             </Button>
           ) : null}
         </div>

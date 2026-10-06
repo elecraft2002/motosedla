@@ -1,3 +1,4 @@
+import AppLink from "@/components/AppLink";
 import {
   PrismicRichText as BasePrismicRichText,
   type PrismicRichTextProps,
@@ -45,12 +46,12 @@ const defaultComponents: JSXMapSerializer = {
     <strong className="font-semibold">{children}</strong>
   ),
   hyperlink: ({ children, node }) => (
-    <PrismicNextLink
+    <AppLink
       field={node.data}
       className="underline decoration-1 underline-offset-2"
     >
       {children}
-    </PrismicNextLink>
+    </AppLink>
   ),
 };
 
